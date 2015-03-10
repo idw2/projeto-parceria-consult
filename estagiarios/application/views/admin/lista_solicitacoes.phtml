@@ -1,0 +1,85 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li>Lista de Solicitações de Vagas</li>
+</ol>
+
+<?php if ($view_info_empresa) { ?>
+    <br/>
+    <label>Empresa:</label> <?php echo $view_info_empresa->NOME_RAZAO_SOCIAL; ?><br/>
+    <label>CNPJ:</label> <?php echo $view_info_empresa->CNPJ; ?><br/>
+<?php } ?>
+<br/>
+
+<form method="post" class="form" >
+
+    <h2><span class="label label-default">Lista de Solicitações de Vagas</span></h2>
+
+    <?php if ($view_papel != "ESTAGIARIO" && $view_papel != "MASTER") { ?>
+    <a href="/<?php echo $view_language; ?>/admin/adicionar-solicitacao/<?php echo strtolower($view_codcadastro); ?>/" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Adicionar solicitação de estagiários</a>
+    <?php } else { echo "<br/>"; } ?>
+        
+    <?php if ($view_solicitacoes == "") { ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                ATENÇÃO
+            </div>
+            <table class="table">
+                <thead>
+                <th>Nada na lista!</th>
+                </thead>
+            </table>
+        </div>
+
+        <?php
+    } else {
+        foreach ($view_solicitacoes as $solicitacao) {
+            ?>           
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <div class="row">
+                        <div class="col col-sm-12" style="text-align: right">
+                            
+                            <strong>Ações: </strong>
+                            <a target="_blank" href="/<?php echo $view_language; ?>/admin/pdf-solicitacao-estagiario/<?php echo strtolower($solicitacao->CODSOLICITACAOESTAGIO); ?>"><img src="/web-files/img/pdf.png" alt="PDF Solicitação de Estagiarios"  title="PDF Solicitação de Estagiarios" border="0"/></a>
+                            <?php if ($view_papel == "EMPRESA_ENTIDADE") { ?> 
+                                <span style="cursor: pointer;" onclick="javascript:trash('/<?php echo $view_language; ?>/admin/hide-solicitacao-estagio/<?php echo strtolower($solicitacao->CODSOLICITACAOESTAGIO); ?>')"><img src="/web-files/img/trash-can-32.png" alt="Excluir Solicitação de Estagiarios"  title="Excluir Solicitação de Estagiarios" border="0"/></span>   
+                            <?php } else { ?>   
+                                <span style="cursor: pointer;" onclick="javascript:trash('/<?php echo $view_language; ?>/admin/delete-solicitacao-estagio/<?php echo strtolower($solicitacao->CODSOLICITACAOESTAGIO); ?>')"><img src="/web-files/img/trash-can-32.png" alt="Excluir Solicitação de Estagiarios"  title="Excluir Solicitação de Estagiarios" border="0"/></span>   
+                            <?php } ?>   
+                        </div>
+                    </div>
+
+                </div>     
+                <table class="table">
+                    <thead>
+                        <th>Data da solicitação</th>
+                        <?php if($view_papel == "MASTER"){?>
+                        <th>Solicitante</th>
+                        <?php }?>
+                    </thead>
+                    <tr>
+                        <td><?php echo $solicitacao->DTA; ?></td>
+                        <?php if($view_papel == "MASTER"){?>
+                        <td><?php echo "{$solicitacao->EMPRESA} - {$solicitacao->CNPJ}"; ?></td>
+                        <?php }?>
+                    </tr>
+                </table>
+            </div>
+            <?php
+        }
+    }
+    ?>
+
+</form>
+
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

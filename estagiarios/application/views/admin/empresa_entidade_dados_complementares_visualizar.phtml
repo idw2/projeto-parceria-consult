@@ -1,0 +1,198 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/empresas-entidades-lista-estagiarios/">Lista de Estagiarios Empresas / Entidades</a></li>
+    <li><a href="/<?php echo $view_language; ?>/admin/lista-dados-complementares-estagiario-empresa-entidade/<?php echo $view_codestagiario; ?>/<?php echo $view_codempresa; ?>">Lista de Dados Complementares do Estágio</a></li>
+    <li>Visualizar Dados Complementares do Estágio</li>
+</ol>
+
+<form method="post" class="form" >
+
+    <div class="jumbotron">
+        <h4>Estagiario: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->STG_NOME}</span>"; ?></h4>
+        <h4>CPF: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->STG_CPF}</span>"; ?></h4>
+        <hr/>
+        <h4>Responsável: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->ADM_NOME}</span>"; ?></h4>
+        <h4>CPF: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->ADM_CPF}</span>"; ?></h4>
+        <hr/>
+        <h4>Empresa: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->EMP_NOME}</span>"; ?></h4>
+        <h4>CNPJ: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->EMP_CNPJ}</span>"; ?></h4>
+    </div>
+
+    <h2><span class="label label-default">Visualizar Dados Complementares do Estágio</span></h2>
+    <br/>
+
+    <?php if ($view_info_empresa) { ?>
+        <br/>
+        <label>Empresa:</label> <?php echo $view_info_empresa->NOME_RAZAO_SOCIAL; ?><br/>
+        <label>CNPJ:</label> <?php echo $view_info_empresa->CNPJ; ?><br/>
+    <?php } ?>
+    <br/>
+
+    <!--    <h2>Ficha</h2>-->
+    <div class="form-group"> 
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center;"><h3>Dados do Estágio</h3></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col col-sm-6">
+                        <label>Data inicial do Estágio</label>
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->DTA_INICIO; ?></div>
+                    </div>
+
+                    <div class="col col-sm-6">
+                        <label>Data final do Estágio</label>
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->DTA_FIM; ?></div>
+                    </div>
+                </div>
+
+                <hr/>        
+
+                <div class="row">
+                    <div class="col col-sm-6">
+                        <label>Valor da Bolsa / Estágio</label>
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->BOLSA_VALOR; ?></div>
+                    </div>
+                    <div class="col col-sm-6">
+                        <label>Carga Horário do Estágio</label>
+                        <div>
+                            <?php
+                                if ((int) $view_dados_complementares->CARGA_HORARIA == 6) {
+                                    echo "<div style='font-size: 18px; color: #428bca'>6 horas</div>";
+                                } else {
+                                    echo "<div style='font-size: 18px; color: #428bca'>8 horas</div>";
+                                }
+                            ?>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr/>        
+                
+                <div class="row">
+                    <div class="col col-sm-6">
+                        <label>Este estágio é para o cargo de:</label>
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->CARGO; ?></div>
+                    </div>
+                    <div class="col col-sm-6">
+                        <label>Curso do Estagiario</label>
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->CURSO; ?></div>
+                    </div>
+                </div>
+                
+                
+                <hr/> 
+                <div class="row">
+                    <div class="col col-sm-6">
+                        <label>CTPS:</label>
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->CTPS; ?></div>
+                    </div>
+                    <div class="col col-sm-6">
+                        <label>Série:</label>
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->SERIE; ?></div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center;"><h3>Dados da Instituição de Ensino do Estagiário</h3></div>
+            <div class="panel-body">
+                <label>Nome da Instituição de Ensino</label>
+                <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->INTITUICAO_ENSINO; ?></div>
+               
+                <br/>        
+                <label>Nome do Representante da Instituição de Ensino</label>
+                <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->REPRESENTANTE_INTITUICAO; ?></div>
+                
+                <br/>        
+                <label>Cargo do Representante da Instituição de Ensino</label>
+                <div style='font-size: 18px; color: #428bca'><?php echo $view_dados_complementares->CARGO_REPRESENTANTE; ?></div>
+                
+
+                <br/>
+                <label>
+                    Telefone da instituição
+                </label><br/>
+                <div id="data">
+                    <?php
+                    if ($view_datagrid == "") {
+
+                        if ($view_telefones) {
+
+                            $i = 0;
+                            foreach ($view_telefones as $telefone) {
+                                ?>
+
+                                <div class="row datagrid">
+                                    <div class="col col-sm-12">
+                                        <div style='font-size: 18px; color: #428bca'><?php echo "({$telefone->DDD}) {$telefone->TELEFONE} "; if($telefone->RAMAL != ""){ echo "- {$telefone->RAMAL}"; } ?></div>
+                                    </div>
+                                </div>
+
+                                <?php
+                                $i++;
+                            }
+                        }
+                    } else {
+                        echo $view_datagrid;
+                    }
+                    ?>
+                </div>
+
+                <hr/>
+                <label>Endereço da Instituição de Ensino</label>
+                <br/>
+                <label for="cep" class="required">CEP</label>
+                <div class="form-inline">
+                    <div style='font-size: 18px; color: #428bca'><?php echo $view_cep; ?></div>
+                </div>
+
+                <label for="cep" class="required">Logradouro</label>
+
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_logradouro; ?>, <?php echo $view_numero; ?></div>
+                    </div>
+                </div>
+
+                <label for="cep" class="required">Completemento</label>
+                <div style='font-size: 18px; color: #428bca'><?php echo $view_complemento; ?></div>
+
+                <label for="cep" class="required">Bairro</label>
+                <div style='font-size: 18px; color: #428bca'><?php echo $view_bairro; ?></div>
+
+                <label for="cep" class="required">Cidade / Estado</label>
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <div style='font-size: 18px; color: #428bca'><?php echo $view_cidade; ?> / <?php echo $view_estado; ?></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <hr/>        
+    <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+    <hr/>
+    <br/>
+</form>
+
+
+<a href="empresa_entidade_lista_dados_complementares.phtml"></a>
+<?php require_once 'footer.phtml'; ?>
+        
+

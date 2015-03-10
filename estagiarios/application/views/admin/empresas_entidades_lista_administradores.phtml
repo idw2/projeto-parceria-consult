@@ -1,0 +1,120 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+
+<div>
+
+    <ol class="breadcrumb">
+        <li>Empresas e Entidades</li>
+        <li>Lista de Responsáveis por Estagiários - Empresas / Entidades</li>
+    </ol>
+
+    <h2><span class="label label-default">Lista de Responsáveis por Estagiários - Empresas / Entidades</span></h2>
+    <br/>
+
+    <!--<a href="/<?php echo $view_language; ?>/admin/cadastrar-administrador-empresa-entidade" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Adicionar Administrador Empresa/Entidade</a>-->
+    <a href="/<?php echo $view_language; ?>/admin/indicar-administrador-empresa-entidade" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Adicionar Administrador Empresa/Entidade</a>
+
+
+    <?php if ($view_lista_cadastro == "") { ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                ATENÇÃO
+            </div>
+            <table class="table">
+                <thead>
+                <th>Nada na lista!</th>
+                </thead>
+            </table>
+        </div>
+
+    <?php
+} else {
+
+
+    foreach ($view_lista_cadastro as $empresa) {
+        ?>           
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+
+                <div class="row">
+                    <div class="col col-sm-6">
+                        <?php echo $empresa->ADMIN_DTA; ?>
+                    </div>
+                    <div class="col col-sm-6" style="text-align: right">
+                        <strong>Ações: </strong>
+                        <a href="/<?php echo $view_language; ?>/admin/cadastrar-administrador-empresa-entidade/<?php echo strtolower($empresa->ADM_CODCADASTRO); ?>"><img src="/web-files/img/document-edit-32.png" alt="Editar Administrador Empresa/Entidade"  title="Editar Administrador Empresa/Entidade" border="0"/></a> 
+                        <?php if ($empresa->ADM_STATUS_ADMINISTRADOR) { ?>
+
+                            <a href="/<?php echo $view_language; ?>/admin/status-administrador-empresa-entidade/<?php echo strtolower($empresa->ADM_CODCADASTRO); ?>/1/<?php echo strtolower($empresa->EMP_CODCADASTRO); ?>"><img src="/web-files/img/icon-star-on.png" alt="Desativar Administrador Empresa/Entidade"  title="Desativar Administrador Empresa/Entidade" border="0"/></a> 
+
+                        <?php } else { ?>
+
+                            <a href="/<?php echo $view_language; ?>/admin/status-administrador-empresa-entidade/<?php echo strtolower($empresa->ADM_CODCADASTRO); ?>/0/<?php echo strtolower($empresa->EMP_CODCADASTRO); ?>"><img src="/web-files/img/icon-star-off.png" alt="Ativar Administrador Empresa/Entidade"  title="Ativar Administrador Empresa/Entidade" border="0"/></a> 
+
+                        <?php } ?>
+                    </div>
+                </div>
+
+            </div>
+
+            <table class="table">
+                <?php if ($view_papel == "MASTER") { ?>
+                    <thead>
+                    <th>Empresa / Entidade - CNPJ</th>
+                    <th>Responsável / Ficha - CPF</th>
+                    </thead>
+                    <tr>
+                        <td style="width: 50%"><?php
+                            echo $empresa->EMP_NOME;
+                            echo "<br/><strong>CNPJ:</strong> " . $empresa->EMP_CNPJ;
+                            echo "<br/><strong>ID:</strong> " . $empresa->EMP_ID;
+                            echo "<br/><strong>E-mail:</strong> " . $empresa->EMP_EMAIL;
+                            //echo "<br/><strong>Fund.:</strong> " . $empresa->EMP_FUNDADA_EM;
+                            ?>
+                        </td>
+                        <td><?php
+                            echo $empresa->ADM_NOME;
+                            echo "<br/><strong>CPF:</strong> " . $empresa->ADM_CPF;
+                            echo "<br/><strong>ID:</strong> " . $empresa->ADM_ID;
+                            echo "<br/><strong>E-mail:</strong> " . $empresa->ADM_EMAIL;
+                            echo "<br/><strong>Nasc.:</strong> " . $empresa->ADM_NASCIDO_EM;
+                            ?>
+                        </td>
+                    </tr>
+                <?php } else { ?>
+                    <thead>
+                    <th>Responsável / Ficha</th>
+                    <th style="width: 15%">CPF</th>
+                    <th style="width: 5%">ID</th>
+                    <th style="width: 30%">E-mail</th>
+                    <th style="width: 10%">Nasc.</th>
+                    </thead>
+                    <tr>
+                        <td><?php echo $empresa->ADM_NOME; ?></td>
+                        <td><?php echo $empresa->ADM_CPF; ?></td>
+                        <td><?php echo $empresa->ADM_ID; ?></td>
+                        <td><?php echo $empresa->ADM_EMAIL; ?></td>
+                        <td><?php echo $empresa->ADM_NASCIDO_EM; ?></td>
+                    </tr>
+                <?php } ?>
+            </table>
+        </div>
+        <?php
+    }
+}
+?>
+
+
+
+
+</div>
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

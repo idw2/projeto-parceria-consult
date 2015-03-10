@@ -1,0 +1,195 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/empresas-entidades-lista-estagiarios/">Lista de Estagiarios Empresas / Entidades</a></li>
+    <li><a href="/<?php echo $view_language; ?>/admin/lista-dados-complementares-estagiario-empresa-entidade/<?php echo $view_codestagiario; ?>/<?php echo $view_codempresa; ?>">Lista de Dados Complementares do Estágio</a></li>
+    <li>Dados Complementares do Estágio</li>
+</ol>
+
+<form method="post" class="form" >
+
+    <div class="jumbotron">
+        <h4>Estagiario: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->STG_NOME}</span>"; ?></h4>
+        <h4>CPF: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->STG_CPF}</span>"; ?></h4>
+        <hr/>
+        <h4>Responsável: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->ADM_NOME}</span>"; ?></h4>
+        <h4>CPF: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->ADM_CPF}</span>"; ?></h4>
+        <hr/>
+        <h4>Empresa: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->EMP_NOME}</span>"; ?></h4>
+        <h4>CNPJ: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->EMP_CNPJ}</span>"; ?></h4>
+    </div>
+
+    <h2><span class="label label-default">Dados Complementares do Estágio</span></h2>
+    <br/>
+
+    <?php if ($view_info_empresa) { ?>
+        <br/>
+        <label>Empresa:</label> <?php echo $view_info_empresa->NOME_RAZAO_SOCIAL; ?><br/>
+        <label>CNPJ:</label> <?php echo $view_info_empresa->CNPJ; ?><br/>
+    <?php } ?>
+    <br/>
+
+    <?php if ($view_erro == "") { ?>
+        <div class="alert alert-info" role="alert">Preencha todos os campos</div>
+    <?php } else { ?>
+        <div class="alert alert-danger" role="alert"><?php echo $view_erro; ?></div>
+    <?php } ?>
+
+    <!--    <h2>Ficha</h2>-->
+    <div class="form-group"> 
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center;"><h3>Dados do Estágio</h3></div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col col-sm-6">
+                        <label>Data inicial do Estágio</label>
+                        <input type="text" class="form-control" id="data_inicio" name="data_inicio" value="<?php echo $view_data_inicio; ?>" placeholder="Data inicio" onkeypress="return formataData(event, this);"/>
+                    </div>
+
+                    <div class="col col-sm-6">
+                        <label>Data final do Estágio</label>
+                        <input type="text" class="form-control" id="data_fim" name="data_fim" value="<?php echo $view_data_fim; ?>" placeholder="Data fim" onkeypress="return formataData(event, this);"/>
+                    </div>
+                </div>
+
+                <hr/>        
+
+                <div class="row">
+                    <div class="col col-sm-6">
+                        <label>Valor da Bolsa / Estágio</label>
+                        <input type="text" class="form-control" id="bolsa" name="bolsa" value="<?php echo $view_bolsa; ?>" placeholder="Valor" onkeypress="formataValor(event, this, 12);" onkeydown="backspaceFormataValor(event, this)" style="width: 200px"/>
+                    </div>
+                    <div class="col col-sm-6">
+                        <label>Carga Horário do Estágio</label>
+                        <div>
+                            <input type="radio" class="form-control-static" name="carga_horaria"  id="carga_horaria" value="4" checked="true"/> 4 horas
+                            <input type="radio" class="form-control-static" name="carga_horaria"  id="carga_horaria" value="6"/> 6 horas
+                            <br>
+                            <input type="text" class="form-control" id="carga_horaria_obs" name="carga_horaria_obs" value="<?php echo $view_carga_horaria_obs; ?>" placeholder="Mais observações"/>
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>        
+                <label>Este estágio é para o cargo de: </label>
+                <input type="text" class="form-control" id="cargo" name="cargo" value="<?php echo $view_cargo; ?>" placeholder="Cargo"/>
+
+                <hr/>        
+                <label>Curso do Estagiario</label>
+                <input type="text" class="form-control" id="curso" name="curso" value="<?php echo $view_curso; ?>" placeholder="Curso"/>
+
+                <hr/>  
+                
+                <div class="row">
+                    <div class="col col-sm-6">
+                        <label>CTPS:</label>
+                        <input type="text" class="form-control" id="ctps" name="ctps" value="<?php echo $view_ctps; ?>" placeholder="Carteira de Trabalho por Tempo de Serviço"/>
+                    </div>
+                    <div class="col col-sm-6">
+                        <label>Série:</label>
+                        <input type="text" class="form-control" id="serie" name="serie" value="<?php echo $view_ctps; ?>" placeholder="Série nº"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center;"><h3>Dados da Instituição de Ensino do Estagiário</h3></div>
+            <div class="panel-body">
+
+                <label>Nome da Instituição de Ensino</label>
+                <input type="text" class="form-control" id="instituicao_ensino" name="instituicao_ensino" value="<?php echo $view_instituicao_ensino; ?>" placeholder="Instituição de Ensino"/>
+
+                <br/>        
+                <label>Nome do Representante da Instituição de Ensino</label>
+                <input type="text" class="form-control" id="representante_instituicao" name="representante_instituicao" value="<?php echo $view_representante_instituicao; ?>" placeholder="Instituição de Ensino"/>
+
+                <br/>        
+                <label>Cargo do Representante da Instituição de Ensino</label>
+                <input type="text" class="form-control" id="cargo_representante" name="cargo_representante" value="<?php echo $view_cargo_representante; ?>" placeholder="Instituição de Ensino"/>
+
+                <br/> 
+                <label>
+                    Telefone da Instituição de Ensino 
+                    <img src="/web-files/img/less.png" class="datagrid datagrid-less" onclick="javascript: datagrid_less()" style="cursor: pointer" alt="Tirar telefone" title="Tirar telefone" border="0"/>
+                    <img src="/web-files/img/plus.png" class="datagrid datagrid-plus" onclick="javascript: datagrid_plus()" style="cursor: pointer" alt="Adicionar telefone" title="Adicionar telefone" border="0"/>
+                </label>
+                <br/>
+                <div id="data">
+                    <?php if ($view_datagrid == "") { ?>
+                        <div class="row datagrid">
+                            <div class="col col-sm-2">
+                                <input type="text" class="form-control" id="ddd_0" name="ddd_0" maxlength="4" value="<?php echo $view_ddd; ?>" placeholder="DDD" onkeypress="return formataNumDV(event, this, 2);"/>
+                            </div>
+                            <div class="col col-sm-3">
+                                <input type="text" class="form-control" id="tel_0" name="tel_0" maxlength="10" value="<?php echo $view_tel; ?>" placeholder="Telefone ou celular" onkeypress="return formataNumDV(event, this, 9);"/>
+                            </div>
+                            <div class="col col-sm-7">
+                                <input type="text" class="form-control" id="ramal_0" name="ramal_0" maxlength="100" value="<?php echo $view_ramal; ?>" placeholder="Informações adicionais"/>    
+                            </div>
+                        </div>
+                        <?php
+                    } else {
+                        echo $view_datagrid;
+                    }
+                    ?>
+                </div> 
+                <br/>
+                <label>Endereço da Instituição de Ensino</label>
+                <br/>
+                <label for="cep" class="required">CEP</label>
+                <div class="form-inline">
+                    <input type="text" class="form-control" id="cep" name="cep" maxlength="9" value="<?php echo $view_cep; ?>" placeholder="CEP" style="margin-right: 15px;" onkeypress="return formataCEP(event, this);"/>
+                    <span class="input-group" style="cursor: pointer; font-size: 15px;" id="pesquisar_endereco"><img src="/web-files/img/search-32.png" alt="Pesquisar" title="Pesquisar" border="0"></span>  
+                    <span class="Loader hide"><img src="/web-files/img/Loader.GIF" alt="Carregando..." title="Carregando..." border="0" style="width: 25px"/></span>
+                </div>
+
+                <label for="cep" class="required">Logradouro</label>
+                <div class="row">
+                    <div class="col col-sm-8">
+                        <input type="text" class="form-control" id="logradouro" name="logradouro" maxlength="140" value="<?php echo $view_logradouro; ?>" placeholder="Endereço"/>
+                    </div>
+                    <div class="col col-sm-4">
+                        <input type="text" class="form-control" id="numero" name="numero" maxlength="5" value="<?php echo $view_numero; ?>" placeholder="Nº" onkeypress="return formataNumDV(event, this, 6);"/>
+                    </div>
+                </div>
+
+                <label for="cep" class="required">Completemento</label>
+                <input type="text" class="form-control" id="complemento" name="complemento" maxlength="100" value="<?php echo $view_complemento; ?>" placeholder="Complemento"/>
+
+                <label for="cep" class="required">Bairro</label>
+                <input type="text" class="form-control" id="bairro" name="bairro" maxlength="50" value="<?php echo $view_bairro; ?>" placeholder="Bairro"/>
+
+                <label for="cep" class="required">Cidade / Estado</label>
+                <div class="row">
+                    <div class="col col-sm-8">
+                        <input type="text" class="form-control" id="cidade" name="cidade" maxlength="80" value="<?php echo $view_cidade; ?>" placeholder="Cidade"/>
+                    </div>
+                    <div class="col col-sm-4">
+                        <input type="text" class="form-control" id="estado" name="estado" maxlength="2" value="<?php echo $view_estado; ?>" placeholder="UF"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <hr/>        
+    <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+    <hr/>
+    <br/>
+</form>
+
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

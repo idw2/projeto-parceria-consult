@@ -1,0 +1,204 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<form method="post" class="form" >
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/empresas-entidades-lista-estagiarios/">Lista de Estagiarios Empresas / Entidades</a></li>
+    <!--<li><a href="/<?php echo $view_language; ?>/admin/lista-avaliar-estagiario-empresa-entidade/<?php echo $view_codestagiario; ?>/<?php echo $view_codempresa; ?>">Lista de Avaliações</a></li>-->
+    <li><a href="/<?php echo $view_language; ?>/admin/lista-dados-complementares-estagiario-empresa-entidade/<?php echo $view_codestagiario; ?>/<?php echo $view_codempresa; ?>">Lista de Dados Complementares do Estágio</a></li>
+    <li>Ficha de Desligamento</li>
+</ol>
+
+
+<h2><span class="label label-default">Ficha de Desligamento</span></h2>
+<br/>
+
+
+
+
+<div class="panel panel-info">
+    <div class="panel-heading"><h3 style="text-align: center;">1- DADOS DE IDENTIFICAÇÃO</h3></div>
+    <table class='table' align="center" style="width: 100%">
+        <thead>
+        <th>Empresa</th>
+        <th>Endereço ou local da Empresa</th>
+        </thead>
+        <tr>
+            <td valign="top"><?php echo $view_estagiario_empresa->EMP_NOME; ?></td>
+            <td valign="top">
+
+                <?php
+                echo "{$view_EMP_LOGRADOURO}, {$view_EMP_NUMERO}<br/>";
+                echo "{$view_EMP_BAIRRO}, {$view_EMP_CEP}<br/>";
+                if ($view_EMP_COMPLEMENTO != "") {
+                    echo "{$view_EMP_COMPLEMENTO}<br/>";
+                }
+                echo "{$view_EMP_CIDADE}/{$view_EMP_UF}<br/>";
+                ?>
+
+            </td>
+        </tr>
+        <thead>
+        <th><br/>Supervisor do Estágio e Cargo</th>
+        <th><br/>Telefone ou Email</th>
+        </thead>
+        <tr>
+            <td valign="top"><?php echo "{$view_estagiario_empresa->ADM_NOME}<br/><b style='font-size: 9px'>{$view_estagiario_empresa->ADM_CARGO}</b>"; ?></td>
+            <td valign="top">
+                <?php
+                echo $view_estagiario_empresa->ADM_EMAIL;
+
+                if ($view_telefones_supervisor) {
+                    echo "<br/>";
+                    foreach ($view_telefones_supervisor as $obj) {
+                        echo "({$obj->DDD}) {$obj->TELEFONE}<br/>";
+                    }
+                }
+                ?>
+            </td>
+        </tr>
+        <thead>
+        <th><br/>Nome do Estagiário e Cargo</th>
+        <th><br/>Curso</th>
+        <?php
+        $dta_inicio = "";
+        $dta_fim = "";
+        $dta_fim_atual = date('d') . "/" . date('m') . "/" . date('Y');
+        $stg_cargo = "";
+        $stg_curso = "";
+
+        if ($view_dados_complementares) {
+            foreach ($view_dados_complementares as $obj) {
+                $stg_curso = $obj->CURSO;
+                $dta_inicio = $obj->DTA_INICIO;
+                $dta_fim = $obj->DTA_FIM;
+                $stg_cargo = $obj->CARGO;
+            }
+        }
+        ?>
+        </thead>
+        <tr>
+            <td valign="top"><?php echo "{$view_estagiario_empresa->STG_NOME}<br/><b style='font-size: 9px'>{$stg_cargo}</b>"; ?></td>
+            <td valign="top"><?php echo $stg_curso; ?></td>
+        </tr>
+        <thead>
+        <th><br/>Data de Entrada</th>
+        <th><br/>Data de Saida</th>
+        </thead>
+        <tr>
+            <td valign="top"><b><?php echo $dta_inicio; ?></b></td>
+            <td valign="top"><b><?php echo $dta_fim_atual; ?></b></td>
+        </tr>
+    </table>
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading"><h3 style="text-align: center;">2- INFORMAÇÕES SOBRE O ESTÁGIO</h3></div>
+</div>     
+
+<div class="form-group"> 
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><label><strong>a) Descreva as atividades realizadas na empresa. Estão de acordo com sua formação?</strong></label></div>
+        <div class="panel-body">
+            <textarea class="form-control" id="DESCREVA_ATIVIDADES" name="DESCREVA_ATIVIDADES"> <?php echo $view_ficha_desligamento->DESCREVA_ATIVIDADES; ?> </textarea>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><label><strong>b) Você encontrou obstáculos para desenvolver seu estagio?</strong></label></div>
+        <div class="panel-body">
+            <textarea class="form-control" id="DESCREVA_OBSTACULOS" name="DESCREVA_OBSTACULOS"> <?php echo $view_ficha_desligamento->DESCREVA_OBSTACULOS; ?> </textarea>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><label><strong>c) Pontos positivos e negativos do estagio.</strong></label></div>
+        <div class="panel-body">
+            <textarea class="form-control" id="DESCREVA_PONTOS_POSITIVOS" name="DESCREVA_PONTOS_POSITIVOS"> <?php echo $view_ficha_desligamento->DESCREVA_PONTOS_POSITIVOS; ?> </textarea>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label><strong>d) Como foi o seu relacionamento com o seu superior direto?</strong></label>
+            <br/>
+            
+            <?php
+            
+                if((int)$view_ficha_desligamento->DESCREVA_NOTA == 1){
+                    $fx_um = "checked='true'";
+                } else if((int)$view_ficha_desligamento->DESCREVA_NOTA == 2){
+                    $fx_dois = "checked='true'";
+                } else if((int)$view_ficha_desligamento->DESCREVA_NOTA == 3){
+                    $fx_tres = "checked='true'";
+                } else if((int)$view_ficha_desligamento->DESCREVA_NOTA == 4){
+                    $fx_quatro = "checked='true'";
+                } else {
+                    $fx_um = "checked='true'";   
+                }
+            
+            ?>
+            
+            <input type="radio" class="form-control-static" name="DESCREVA_NOTA"  id="DESCREVA_NOTA" value="1" <?php echo $fx_um; ?>/> Excelente
+            <input type="radio" class="form-control-static" name="DESCREVA_NOTA"  id="DESCREVA_NOTA" value="2" <?php echo $fx_dois; ?>/> Bom
+            <input type="radio" class="form-control-static" name="DESCREVA_NOTA"  id="DESCREVA_NOTA" value="3" <?php echo $fx_tres; ?>/> Razoável
+            <input type="radio" class="form-control-static" name="DESCREVA_NOTA"  id="DESCREVA_NOTA" value="4" <?php echo $fx_quatro; ?>/> Ruim
+            <br/>
+            <strong>Comente:</strong>
+        </div>
+        <div class="panel-body">
+            <textarea class="form-control" id="DESCREVA_RELACIONAMENTO_CHEFE" name="DESCREVA_RELACIONAMENTO_CHEFE"> <?php echo $view_ficha_desligamento->DESCREVA_RELACIONAMENTO_CHEFE; ?> </textarea>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><label><strong>e) Você voltaria a estagiar nessa empresa?</strong></label></div>
+        <div class="panel-body">
+            <textarea class="form-control" id="DESCREVA_SE_VOLTARIA" name="DESCREVA_SE_VOLTARIA"> <?php echo $view_ficha_desligamento->DESCREVA_SE_VOLTARIA; ?> </textarea>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><label><strong>f) Você recebeu sua bolsa sempre no dia do pagamento?</strong></label></div>
+        <div class="panel-body">
+            <textarea class="form-control" id="DESCREVA_RECEBEU_BOLSA" name="DESCREVA_RECEBEU_BOLSA"> <?php echo $view_ficha_desligamento->DESCREVA_RECEBEU_BOLSA; ?> </textarea>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><label><strong>g) Qual o motivo do desligamento?</strong></label></div>
+        <div class="panel-body">
+            <textarea class="form-control" id="DESCREVA_MOTIVO_DESLIGAMENTO" name="DESCREVA_MOTIVO_DESLIGAMENTO"> <?php echo $view_ficha_desligamento->DESCREVA_MOTIVO_DESLIGAMENTO; ?> </textarea>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><label><strong>h) Referente a Parceria, comente a nossa atuação como "Agente de Integração".</strong></label></div>
+        <div class="panel-body">
+            <textarea class="form-control" id="DESCREVA_AGENTE_INTEGRACAO" name="DESCREVA_AGENTE_INTEGRACAO"> <?php echo $view_ficha_desligamento->DESCREVA_AGENTE_INTEGRACAO; ?> </textarea>
+        </div>
+    </div>
+
+
+    
+     <hr/>        
+    <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+    <hr/>
+    <br/>
+
+</div>
+</form>
+
+
+
+
+
+<?php require_once 'footer.phtml'; ?>

@@ -1,0 +1,157 @@
+<?php require_once 'header.phtml'; ?>        
+
+</div>
+</div>
+</div>
+
+<header id="header" class="navbar navbar-static-top navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="brand" href="http://www.parceriaconsult.com.br/">Parceria Consult</a>
+        </div>
+    </div>
+</header>
+<div class="container">
+
+    <div class="row">
+
+
+
+        <div class="col col-lg-6"> 
+
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="padding-left: 36px"><h2>Já sou usuário!</h2></div>
+                <table class="table">
+                    <tr>
+                        <td style="padding: 36.5px">
+
+                            <?php if ($view_erro == "") { ?>
+                                <div class="alert alert-info" role="alert">* <strong>Preencha</strong> todos os campos</div>
+                            <?php } else { ?>
+                                <div class="alert alert-danger" role="alert"><?php echo $view_erro; ?></div>
+                            <?php } ?>
+
+                            <form name="RestrictArea" class="form" id="RestrictArea" method="post" action="/<?php echo $view_language; ?>/login/">
+                                <div class="form-group">
+                                    <label>ID ou E-mail:</label>
+                                    <input type="hidden" name="actionType" value="acessar"/>
+                                    <input type="text" class="form-control" name="id" id="id" value=" " maxlength="30"/>
+
+                                    <label>Senha</label>
+                                    <input type="password"  class="form-control" name="senha" value=" " id="senha" maxlength="30"/>
+                                </div>
+
+                                <table>
+                                    <tr>
+                                        <td><input type="submit" class="btn btn-primary btn-lg" value="Entrar"/></td>
+                                        <td style="padding-left: 12px"><span class="input-group" style="cursor: pointer; font-size: 15px;"><a class="list" href="/<?php echo $view_language; ?>/login/esqueceu-senha">Esqueceu sua senha?</a></span></td>
+                                    </tr>
+                                </table>
+                            </form>
+
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="col col-lg-6"> 
+
+            <div class="panel panel-info">
+                <div class="panel-heading" style="padding-left: 36px"><h2>Para o primeiro acesso</h2></div>
+                <table class="table">
+                    <tr>
+                        <td style="padding: 36.5px">
+
+                            <?php if ($view_erro_primeiro_acesso == "") { ?>
+                                <div class="alert alert-warning" role="alert">* <strong>Insira seu</strong> CPF ou CNPJ</div>
+                            <?php } else { ?>
+                                <div class="alert alert-danger" role="alert"><?php echo $view_erro_primeiro_acesso; ?></div>
+                            <?php } ?>
+
+                            <form name="RestrictAreaPrimeiroAcesso" class="form" id="RestrictArea" method="post" action="/<?php echo $view_language; ?>/login/">
+
+                                <div class="form-group">
+                                    <div>
+                                        <label>Tipo de acesso: </label>
+                                        <?php if ($_POST) { ?>
+
+                                            <input type="hidden" name="actionType" value="primeiro_acesso"/>
+                                            <input type="radio" name="cpf_cnpj_radio" id="cpf_cnpj_radio" value="CNPJ" <?php
+                                            if ($view_cpf_cnpj_radio == "CNPJ") {
+                                                echo "checked='true'";
+                                            }
+                                            ?> /> CNPJ
+                                            <input type="radio" name="cpf_cnpj_radio" id="cpf_cnpj_radio" value="CPF" <?php
+                                            if ($view_cpf_cnpj_radio == "CPF") {
+                                                echo "checked='true'";
+                                            }
+                                            ?>/> CPF
+
+                                        <?php } else { ?>
+
+                                            <input type="hidden" name="actionType" value="primeiro_acesso"/>
+                                            <input type="radio" name="cpf_cnpj_radio" id="cpf_cnpj_radio" value="CNPJ" checked="true" /> CNPJ
+                                            <input type="radio" name="cpf_cnpj_radio" id="cpf_cnpj_radio" value="CPF" /> CPF
+
+                                        <?php } ?>
+
+                                    </div>
+                                    <br/>
+
+                                    <?php if ($_POST) { ?>
+
+                                        <div class="showCNPJ <?php
+                                        if ($view_cpf_cnpj_radio == "CPF") {
+                                            echo "hide";
+                                        }
+                                        ?>">
+                                            <label>CNPJ</label>
+                                            <input type="text" class="form-control" name="cnpj" id="cnpj" value="<?php echo $view_cnpj; ?>" onkeypress="return formataCNPJ(event, this);" maxlength="30"/>
+                                        </div>
+
+                                        <div class="showCPF <?php
+                                        if ($view_cpf_cnpj_radio == "CNPJ") {
+                                            echo "hide";
+                                        }
+                                        ?>">
+                                            <label>CPF</label>
+                                            <input type="text" class="form-control" name="cpf" id="cpf" value="<?php echo $view_cpf; ?>" onkeypress="return formataCPF(event, this);" maxlength="30"/>
+                                        </div>
+
+                                    <?php } else { ?>
+
+                                        <div class="showCNPJ">
+                                            <label>CNPJ</label>
+                                            <input type="text" class="form-control" name="cnpj" id="cnpj" value="" onkeypress="return formataCNPJ(event, this);" maxlength="30"/>
+                                        </div>
+
+                                        <div class="showCPF hide">
+                                            <label>CPF</label>
+                                            <input type="text" class="form-control" name="cpf" id="cpf" value="" onkeypress="return formataCPF(event, this);" maxlength="30"/>
+                                        </div>
+
+                                    <?php } ?>
+
+
+                                </div>
+
+                                <table>
+                                    <tr>
+                                        <td><input type="submit" class="btn btn-primary btn-lg" value="Entrar"/></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <?php require_once 'footer.phtml'; ?>
+        
+

@@ -5,6 +5,7 @@
     -ms-transform: $val;
     -o-transform: $val;
     transform: $val;
+     -webkit-backface-visibility: hidden;
 }
 
 @mixin transition($time...){
@@ -13,6 +14,14 @@
     -ms-transition: $time;
     -o-transition: $time;
     transition: $time;
+}
+
+@mixin transition-transform($time...){
+    -webkit-transition: -webkit-transform $time;
+    -moz-transition: -moz-transform $time;
+    -ms-transition: -ms-transform $time;
+    -o-transition: -o-transform $time;
+    transition: transform $time;
 }
 
 @mixin anim-spin($duration){
@@ -48,4 +57,39 @@
         border-color: darken($color, 5%);
         background-color: darken($color, 5%);
     }
+}
+
+// Font Sizes (REMs with PX fallback for older browsers)
+@mixin font-size($size) {
+    font-size: $size + px;
+    font-size: ($size / 10) + rem;
+}
+
+// Line Height Sizes (REMs with PX fallback for older browsers)
+@mixin line-height($size) {
+    line-height: $size + px;
+    line-height: ($size / 10) + rem;
+}
+
+// Rounded Corners
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin gradient($color1,$color2){
+    background: $color1;
+    background: -webkit-gradient(linear,0% 0%,0% 100%,from($color1),to($color2));
+    background: -webkit-linear-gradient(0% 0%,0% 100%,from($color1),to($color2));
+    background: -moz-linear-gradient(center top,$color1,$color2);
+    background: linear-gradient($color1,$color2);
+}
+
+// Font Sizes (REMs with PX fallback for older browsers)
+@mixin font($size, $line) {
+    font-size: $size + px;
+    font-size: ($size / 10) + rem;
+    line-height: $line + px;
+    line-height: ($line / 10) + rem;
 }

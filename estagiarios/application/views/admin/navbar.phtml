@@ -1,0 +1,70 @@
+<?php if (strlen($view_codcadastro) == 32) { ?>
+    <div class="col col-lg-3">
+        <br/>
+       
+        <div class="btn-group-vertical navbar-vertical" role="group" aria-label="Vertical button group">
+
+            <button type="button" class="btn btn-default <?php if ($view_page_reference == "welcome") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/welcome'">Home</button>
+
+
+            <?php if ($view_papel == "MASTER") { ?>
+               
+            <button type="button" class="btn btn-default <?php if ($view_page_internal == "empresas-entidades") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/empresas-entidades'">Lista de Empresas</button>
+            <button type="button" class="btn btn-default <?php if ($view_page_internal == "administradores-empresas-entidades") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/empresas-entidades-lista-administradores'">Responável por Estagiários</button>
+            <button type="button" class="btn btn-default <?php if ($view_page_internal == "estagiarios-empresas-entidades") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/empresas-entidades-lista-estagiarios'">Lista de Estagiarios</button>
+            <button type="button" class="btn btn-default <?php if ($view_page_internal == "lista-solicitacoes") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/lista-solicitacoes'">Lista de Solicitações de Vagas</button>
+            
+            <?php } ?>
+            
+            <?php if ($view_papel == "EMPRESA_ENTIDADE") { ?>
+                <button type="button" class="btn btn-default <?php if ($view_page_internal == "administradores-empresas-entidades") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/empresas-entidades-lista-administradores'">Responável por Estagiários</button>
+                <button type="button" class="btn btn-default <?php if ($view_page_internal == "estagiarios-empresas-entidades") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/empresas-entidades-lista-estagiarios'">Lista de Estagiarios</button>
+                <button type="button" class="btn btn-default <?php if ($view_page_internal == "lista-solicitacoes") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/lista-solicitacoes'">Lista de Solicitações</button>
+           
+            <?php } ?>
+            
+            <?php if ($view_papel == "GESTOR") { ?>
+                <button type="button" class="btn btn-default <?php if ($view_page_internal == "estagiarios-empresas-entidades") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/empresas-entidades-lista-estagiarios'">Meus estagiários</button>
+            <?php } ?>
+                
+            <?php if ($view_papel == "ESTAGIARIO") { ?>
+                <button type="button" class="btn btn-default <?php if ($view_page_internal == "estagiarios-empresas-entidades") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/empresas-entidades-lista-estagiarios'">Meus estágios</button>
+                <button type="button" class="btn btn-default <?php if ($view_page_internal == "estagiarios-upload-documentos") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/upload-documento'">Enviar documentos</button>
+            <?php } ?>
+
+            <button type="button" class="btn btn-default <?php if ($view_page_reference == "alterar-senha") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/alterar-senha'">Alterar senha</button>
+            <button type="button" class="btn btn-default <?php if ($view_page_reference == "sair") echo "active"; ?>" onclick="window.location = '/<?php echo $view_language ?>/admin/sair'">Sair</button>
+            
+        </div>
+
+        <style>
+            .navbar-vertical{
+                width: 100%;
+                display: block;
+                text-align: left;
+            }
+
+            .navbar-vertical .btn{
+                text-align: left !important;
+            }
+
+            .navbar-vertical .btn .caret{
+                float: right;
+                margin: 8px 0;
+            }
+
+            .btn.btn-default.active, .myBtnClassActive.active, .btn.btn-default.active:hover, .myBtnClassActive.active:hover{
+                color: #fff;
+                background-color: #428bca;
+                border-color: #428bca;
+            }
+
+        </style>
+
+    </div>
+
+
+    <div class="col col-lg-9">
+    <?php } else { ?>
+        <div class="col col-lg-12">    
+        <?php } ?>

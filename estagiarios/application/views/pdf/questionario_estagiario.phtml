@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title><?php echo TITLE . " - " . $view_pagina; ?></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" type="text/css" href="/web-files/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/web-files/font-awesome-4.1.0/css/font-awesome.css">
+    </head>
+    <body>
+
+
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="">
+                        <img src="/web-files/img/parceria250.png" border="0" alt="Parceria Consult" title="Parceria Consult" width="100px"/>
+                    </td>
+                    <td align="center">
+                        <div>PARCERIA CONSULTORIA EMPRESARIAL LTDA</div>
+                        <div style="font-size: 9pt"><b>QUESTIONÁRIO DO ESTAGIÁRIOS</b></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 style="text-align: center;"><span class="label label-default">1- DADOS DE IDENTIFICAÇÃO</span></h2>
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="font-size: 10px;">Empresa</td>
+                    <td style="font-size: 10px;">Endereço ou local da Empresa</td>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo $view_estagiario_empresa->EMP_NOME; ?></td>
+                    <td valign="top">
+
+                        <?php
+                        echo "{$view_EMP_LOGRADOURO}, {$view_EMP_NUMERO}<br/>";
+                        echo "{$view_EMP_BAIRRO}, {$view_EMP_CEP}<br/>";
+                        if ($view_EMP_COMPLEMENTO != "") {
+                            echo "{$view_EMP_COMPLEMENTO}<br/>";
+                        }
+                        echo "{$view_EMP_CIDADE}/{$view_EMP_UF}<br/>";
+                        ?>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;"><br/>Supervisor do Estágio e Cargo</td>
+                    <td style="font-size: 10px;"><br/>Telefone ou Email</td>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo "{$view_estagiario_empresa->ADM_NOME}<br/><b style='font-size: 9px'>{$view_estagiario_empresa->ADM_CARGO}</b>"; ?></td>
+                    <td valign="top">
+                        <?php
+                        echo $view_estagiario_empresa->ADM_EMAIL;
+
+                        if ($view_telefones_supervisor) {
+                            echo "<br/>";
+                            foreach ($view_telefones_supervisor as $obj) {
+                                echo "({$obj->DDD}) {$obj->TELEFONE}<br/>";
+                            }
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;"><br/>Nome do Estagiário e Cargo</td>
+                    <td style="font-size: 10px;"><br/>Curso</td>
+                    <?php
+                    $dta_inicio = "";
+                    $dta_fim = "";
+                    $dta_fim_atual = date('d') . "/" . date('m') . "/" . date('Y');
+                    $stg_cargo = "";
+                    $stg_curso = "";
+
+                    if ($view_dados_complementares) {
+                        foreach ($view_dados_complementares as $obj) {
+                            $stg_curso = $obj->CURSO;
+                            $dta_inicio = $obj->DTA_INICIO;
+                            $dta_fim = $obj->DTA_FIM;
+                            $stg_cargo = $obj->CARGO;
+                        }
+                    }
+                    ?>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo "{$view_estagiario_empresa->STG_NOME}<br/><b style='font-size: 9px'>{$stg_cargo}</b>"; ?></td>
+                    <td valign="top"><?php echo $stg_curso; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;"><br/>Data de Entrada</td>
+                    <td style="font-size: 10px;"><br/>Data de Saida</td>
+                </tr>
+                <tr>
+                    <td valign="top"><b><?php echo $dta_inicio; ?></b></td>
+                    <td valign="top"><b><?php echo $dta_fim_atual; ?></b></td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 style="text-align: center;"><span class="label label-default">2- QUESTIONÁRIO</span></h2>    
+
+        <div class="form-group"> 
+
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>1) Você já recebeu a cópia do Termo de Compromisso de Estágio - TCE ?</strong></label>
+                <br/>
+                <?php
+                if (isset($view_questionario_estagiario->COPIA_TERMO)) {
+                    switch ($view_questionario_estagiario->COPIA_TERMO) {
+                        case 1: $radio1 = "checked='true'";
+                            break;
+                        case 0: $radio0 = "checked='true'";
+                            break;
+                        default: $radio1 = "checked='true'";
+                            break;
+                    }
+                } else {
+                    $radio1 = "checked='true'";
+                }
+                ?>
+
+                <input type="radio" name="COPIA_TERMO" value="1" <?php echo $radio1; ?>> Sim 
+                <input type="radio" name="COPIA_TERMO" value="0" <?php echo $radio0; ?>> Não
+                <br/>
+                <strong>Outras informações:</strong>
+
+                <p style="height: 50px;"><?php echo $view_questionario_estagiario->COPIA_TERMO_DESC; ?> </p>
+            </div>
+
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>2) Você tem recebido o pagamento de sua Bolsa-Auxílio na data estabelecida pela Parceria ?</strong></label>
+                <br/>
+                <?php
+                unset($radio1);
+                unset($radio0);
+
+                if (isset($view_questionario_estagiario->TEM_RECEBIDO)) {
+                    switch ($view_questionario_estagiario->TEM_RECEBIDO) {
+                        case 1: $radio1 = "checked='true'";
+                            break;
+                        case 0: $radio0 = "checked='true'";
+                            break;
+                        default: $radio1 = "checked='true'";
+                            break;
+                    }
+                } else {
+                    $radio1 = "checked='true'";
+                }
+                ?>
+                <input type="radio" name="TEM_RECEBIDO" value="1" <?php echo $radio1; ?>> Sim 
+                <input type="radio" name="TEM_RECEBIDO" value="0" <?php echo $radio0; ?>> Não
+                <br/>
+                <strong>Se não qual o motivo?</strong>
+
+                <p style="height: 50px;"><?php echo $view_questionario_estagiario->TEM_RECEBIDO_DESC; ?> </p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>3) O horário estabelecido pela empresa para seu Estágio está interferindo em seus estudos ?</strong></label>
+                <br/>
+                <?php
+                unset($radio1);
+                unset($radio0);
+
+                if (isset($view_questionario_estagiario->HORARIO_INTERFERINDO)) {
+                    switch ($view_questionario_estagiario->HORARIO_INTERFERINDO) {
+                        case 1: $radio1 = "checked='true'";
+                            break;
+                        case 0: $radio0 = "checked='true'";
+                            break;
+                        default: $radio1 = "checked='true'";
+                            break;
+                    }
+                } else {
+                    $radio1 = "checked='true'";
+                }
+                ?>
+                <input type="radio" name="HORARIO_INTERFERINDO" value="1" <?php echo $radio1; ?>> Sim 
+                <input type="radio" name="HORARIO_INTERFERINDO" value="0" <?php echo $radio0; ?>> Não
+                <br/>
+                <strong>Se sim por que?</strong>
+
+                <p style="height: 50px;"><?php echo $view_questionario_estagiario->HORARIO_INTERFERINDO_DESC; ?> </p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>4) Descreva resumidamente as atividades que você desenvolve em seu estágio.</strong></label>
+
+                <p style="height: 50px;"> <?php echo $view_questionario_estagiario->ATIVIDADES_DESC; ?></p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>5) Você está encontrando dificuldades para desenvolver as suas atividades ?</strong></label>
+                <br/>
+                <?php
+                unset($radio1);
+                unset($radio0);
+
+                if (isset($view_questionario_estagiario->ENCONTRANDO_DIFICULDADE)) {
+                    switch ($view_questionario_estagiario->ENCONTRANDO_DIFICULDADE) {
+                        case 1: $radio1 = "checked='true'";
+                            break;
+                        case 0: $radio0 = "checked='true'";
+                            break;
+                        default: $radio1 = "checked='true'";
+                            break;
+                    }
+                } else {
+                    $radio1 = "checked='true'";
+                }
+                ?>
+                <input type="radio" name="ENCONTRANDO_DIFICULDADE" value="1" <?php echo $radio1; ?>> Sim 
+                <input type="radio" name="ENCONTRANDO_DIFICULDADE" value="0" <?php echo $radio0; ?>> Não
+                <br/>
+                <strong>Se sim por que?</strong>
+
+                <p style="height: 50px;"><?php echo $view_questionario_estagiario->ENCONTRANDO_DIFICULDADE_DESC; ?> </p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>6) As atividades desenvolvidas estão pedagógicamente relacionada com seu curso ?</strong></label>
+                <br/>
+                <?php
+                unset($radio1);
+                unset($radio0);
+
+                if (isset($view_questionario_estagiario->RELACIONADA_CURSO)) {
+                    switch ($view_questionario_estagiario->RELACIONADA_CURSO) {
+                        case 1: $radio1 = "checked='true'";
+                            break;
+                        case 0: $radio0 = "checked='true'";
+                            break;
+                        default: $radio1 = "checked='true'";
+                            break;
+                    }
+                } else {
+                    $radio1 = "checked='true'";
+                }
+                ?>
+                <input type="radio" name="RELACIONADA_CURSO" value="1" <?php echo $radio1; ?>> Sim 
+                <input type="radio" name="RELACIONADA_CURSO" value="0" <?php echo $radio0; ?>> Não
+                <br/>
+                <strong>Se não por que?</strong>
+
+                <p style="height: 50px;"><?php echo $view_questionario_estagiario->RELACIONADA_CURSO_DESC; ?> </p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>7) Você está obtendo acompanhamento nas suas atividades ?</strong></label>
+                <br/>
+                <?php
+                unset($radio1);
+                unset($radio0);
+
+                if (isset($view_questionario_estagiario->ACOMPANHAMENTO_ATIVIDADES)) {
+                    switch ($view_questionario_estagiario->ACOMPANHAMENTO_ATIVIDADES) {
+                        case 1: $radio1 = "checked='true'";
+                            break;
+                        case 0: $radio0 = "checked='true'";
+                            break;
+                        default: $radio1 = "checked='true'";
+                            break;
+                    }
+                } else {
+                    $radio1 = "checked='true'";
+                }
+                ?>
+                <input type="radio" name="ACOMPANHAMENTO_ATIVIDADES" value="1" <?php echo $radio1; ?>> Sim 
+                <input type="radio" name="ACOMPANHAMENTO_ATIVIDADES" value="0" <?php echo $radio0; ?>> Não
+                <br/>
+                <strong>Outras informações:</strong>
+
+                <p style="height: 50px;"> <?php echo $view_questionario_estagiario->ACOMPANHAMENTO_ATIVIDADES_DESC; ?> </p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>8) Você está gostando das atividades que vem desenvolvendo em seu estágio ?</strong></label>
+                <br/>
+                <?php
+                unset($radio1);
+                unset($radio0);
+
+                if (isset($view_questionario_estagiario->GOSTANDO_ATIVIDADES)) {
+                    switch ($view_questionario_estagiario->GOSTANDO_ATIVIDADES) {
+                        case 1: $radio1 = "checked='true'";
+                            break;
+                        case 0: $radio0 = "checked='true'";
+                            break;
+                        default: $radio1 = "checked='true'";
+                            break;
+                    }
+                } else {
+                    $radio1 = "checked='true'";
+                }
+                ?>
+                <input type="radio" name="GOSTANDO_ATIVIDADES" value="1" <?php echo $radio1; ?>> Sim 
+                <input type="radio" name="GOSTANDO_ATIVIDADES" value="0" <?php echo $radio0; ?>> Não
+                <br/>
+                <strong>Por que?</strong>
+
+                <p style="height: 50px;"> <?php echo $view_questionario_estagiario->GOSTANDO_ATIVIDADES_DESC; ?> </p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>9) Dê "01" à "10", que nota você atribui ao aproveitamento obtido do Estágio ?</strong></label>
+                <br/>
+                
+                <strong>Nota: </strong><?php echo $view_questionario_estagiario->ATRIBUIR_NOTA; ?>
+                <br/>
+                <strong>Por que?</strong>
+
+                <p style="height: 50px;"> <?php echo $view_questionario_estagiario->GOSTANDO_ATIVIDADES_DESC; ?> </p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>10) Você possui alguma dúvida relacionada ao processo de estágio ou Banco de Estágio ?</strong></label>
+                <br/>
+                <?php
+                unset($radio1);
+                unset($radio0);
+
+                if (isset($view_questionario_estagiario->DUVIDA_ESTAGIO)) {
+                    switch ($view_questionario_estagiario->DUVIDA_ESTAGIO) {
+                        case 1: $radio1 = "checked='true'";
+                            break;
+                        case 0: $radio0 = "checked='true'";
+                            break;
+                        default: $radio1 = "checked='true'";
+                            break;
+                    }
+                } else {
+                    $radio1 = "checked='true'";
+                }
+                ?>
+                <input type="radio" name="DUVIDA_ESTAGIO" value="1" <?php echo $radio1; ?>> Sim 
+                <input type="radio" name="DUVIDA_ESTAGIO" value="0" <?php echo $radio0; ?>> Não
+                <br/>
+                <strong>Se sim quais?</strong>
+
+                <p style="height: 50px;"> <?php echo $view_questionario_estagiario->DUVIDA_ESTAGIO_DESC; ?> </p>
+            </div>
+            <br/>
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>11) Se você tem algo para sugerir e/ou criticar ao Banco de Estágio, aproveite o espaço abaixo. Sua opinião é muito importante para aperfeiçoamento de nosso relacionamento, tanto com o estagiário quanto com as Empresas, na busca pelo melhor resultado.</strong></label>
+
+                <p style="height: 50px;"> <?php echo $view_questionario_estagiario->CRITICAR_DESC; ?> </p>
+            </div>
+            
+            
+            <br/>  
+            
+            <?php if ($view_papel == "MASTER") { ?>
+
+                <div style=" border: 1px solid black; padding: 5px">
+                        <label><strong>Espaço para uso da Parceria.</strong></label>
+                    <p style="height: 50px;"> <?php echo $view_questionario_estagiario->PARCERIA_DESC; ?> </p>
+                </div>
+
+            <?php } ?>
+            
+            <br/>  
+
+            <div style=" border: 1px solid black; padding: 5px">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="font-size: 10px; width: 30%; background: #ccc;">Data</td>
+                        <td style="font-size: 10px; width: 40%; background: #ccc;">Assinatura do Estagiário</td>
+                        <td style="font-size: 10px; width: 40%; background: #ccc;">Visto da Parceria</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 10px; width: 30%; height: 40px; border-right: 1px solid black;"><strong><?php echo date('d') . "/" . date('m') . "/" . date('Y'); ?></strong></td>
+                        <td style="font-size: 10px; width: 40%; height: 40px; border-right: 1px solid black;"></td>
+                        <td style="font-size: 10px; width: 40%; height: 40px;"></td>
+                </table>
+            </div>
+
+            <br/> 
+
+    </body>
+</html>

@@ -1,0 +1,96 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/empresas-entidades-lista-estagiarios/">Lista de Estagiarios Empresas / Entidades</a></li>
+    <li>Cadastro de Estagiarios Empresas/Entidades</li>
+</ol>
+
+<h2><span class="label label-default">Cadastro de Estagiarios Empresas / Entidades</span></h2>
+<br/>
+
+<?php if ($view_info_empresa) { ?>
+    <br/>
+    <label>Empresa:</label> <?php echo $view_info_empresa->NOME_RAZAO_SOCIAL; ?><br/>
+    <label>CNPJ:</label> <?php echo $view_info_empresa->CNPJ; ?><br/>
+<?php } ?>
+<br/>
+
+<?php if ($view_erro == "") { ?>
+    <div class="alert alert-info" role="alert">Preencha todos os campos</div>
+<?php } else { ?>
+    <div class="alert alert-danger" role="alert"><?php echo $view_erro; ?></div>
+<?php } ?>
+
+<form method="post" class="form jumbotron" >
+
+    <h2>Verificar disponibilidade!</h2>
+    <br/>
+    <div class="form-group"> 
+
+        <?php if ($view_papel == "MASTER" || $view_papel == "GESTOR") { ?>
+
+            <label>Empresas/Entidades</label>
+            <select name="empresa_ativa" class="form-control" <?php if($view_papel == "MASTER"){?>onchange="javascript:get_administradores(this.value);"<?php } ?> >
+                <optgroup label="Empresas ativas">
+                    <?php
+                    if ($view_empresas_ativas) {
+                        foreach ($view_empresas_ativas as $obj) {
+                            ( $view_empresa_ativa == $obj->CODCADASTRO ) ? $selected = "selected" : $selected = "";
+                            if( $view_papel == "GESTOR" ){
+                                echo "<option value='{$obj->EMP_CODCADASTRO}' {$selected}>{$obj->EMP_NOME} - {$obj->EMP_CNPJ}</option>";
+                            } else {
+                                echo "<option value='{$obj->CODCADASTRO}' {$selected}>{$obj->NOME_RAZAO_SOCIAL} - {$obj->CPF_CNPJ}</option>";
+                            }
+                        }
+                    } else {
+                        echo "Nenhuma empresa ativada!<br><br>";
+                    }
+                    ?>
+                </optgroup>
+            </select>
+
+            
+
+        <?php } else if ($view_papel == "EMPRESA_ENTIDADE") { ?>
+            <input type="hidden" name="empresa_ativa" class="form-control" value="<?php echo $view_codcadastro; ?>"/>
+        <?php } ?>
+
+
+
+        
+        <?php if ($view_papel == "MASTER") { ?>
+            <label>Responsável pela ficha do estagiário</label>
+            <select name="codadministrador" id="select_administradores" class="form-control"></select>
+        <?php } else if ($view_papel == "EMPRESA_ENTIDADE") { ?>
+            <label>Responsável pela ficha do estagiário</label>
+            <select name="codadministrador" id="select_administradores" class="form-control">
+                <?php
+                if ($view_administradores_empresa) {
+                    foreach ($view_administradores_empresa as $obj) {
+                        echo "<option value='{$obj->CODCADASTRO}'>{$obj->NOME}</option>";
+                    }
+                }
+                ?>
+            </select>
+            <?php } else if ($view_papel == "GESTOR") { ?>
+                <input type="hidden" name="codadministrador" class="form-control" value="<?php echo $view_codcadastro; ?>"/>
+            <?php } ?>
+
+
+        <label>CPF</label>
+        <input type="text" name="cpf" class="form-control" value="<?php echo $view_cpf; ?>" placeholder="CPF" onkeypress="return formataCPF(event, this);"/>
+
+    </div>
+
+    <br/>        
+
+    <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+</form>
+
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

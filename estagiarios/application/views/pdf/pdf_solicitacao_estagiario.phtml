@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title><?php echo TITLE . " - " . $view_pagina; ?></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" type="text/css" href="/web-files/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/web-files/font-awesome-4.1.0/css/font-awesome.css">
+    </head>
+    <body>
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="">
+                        <img src="/web-files/img/parceria250.png" border="0" alt="Parceria Consult" title="Parceria Consult" width="100px"/>
+                    </td>
+                    <td align="center">
+                        <div>SOLICITAÇÃO DE ESTAGIARIOS</div>
+                    </td>
+                </tr>
+            </table>
+        </div>        
+   
+       <div style="text-align: center">
+            <h2><u>Empresa Solicitante</u></h2>
+        </div>
+        
+         <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="font-size: 10px;">Empresa</td>
+                </tr>
+                <tr>    
+                    <td valign="top"><?php echo "{$view_solicitante->NOME_RAZAO_SOCIAL}<br/>CNPJ: {$view_solicitante->CNPJ}<br/>E-mail: {$view_solicitante->EMAIL}"; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;">Telefones</td>
+                </tr>
+                <tr>    
+                    <td valign="top"><?php  echo $view_EMP_TELS; ?></td>
+                </tr>
+                <tr>    
+                    <td style="font-size: 10px;">Endereço ou local da Empresa</td>
+                </tr>
+                <tr>
+                    
+                    <td valign="top">
+
+                        <?php
+                        echo "{$view_EMP_LOGRADOURO}, {$view_EMP_NUMERO}<br/>";
+                        echo "{$view_EMP_BAIRRO}, CEP: {$view_EMP_CEP}<br/>";
+                        if ($view_EMP_COMPLEMENTO != "") {
+                            echo "{$view_EMP_COMPLEMENTO}<br/>";
+                        }
+                        echo "{$view_EMP_CIDADE}/{$view_EMP_UF}<br/>";
+                        ?>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+
+        <div class="form-group"> 
+
+            <div style="text-align: center">
+                <h2><u>Perfil do Estagiário</u></h2>
+            </div>
+
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div class="panel-body">
+                    <?php
+
+                        if($view_solicitacao->SEXO == "M"){
+                            $sexoM = "checked='true'";
+                        } else if($view_solicitacao->SEXO == "F"){
+                            $sexoF = "checked='true'";
+                        } else if($view_solicitacao->SEXO == "A"){
+                            $sexoA = "checked='true'";
+                        } else {
+                            $sexoM = "checked='true'";
+                        }
+
+                    ?>
+                    <label><b>1- O estágio é para ambos os sexos ou existe alguma preferência?</b></label><br/><br/>
+                    <input type="radio" class="form-control-static" name="qual_sexo"  id="qual_sexo" value="M" <?php echo $sexoM; ?>/> Masulino
+                    <input type="radio" class="form-control-static" name="qual_sexo"  id="qual_sexo" value="F" <?php echo $sexoF; ?>/> Feminino
+                    <input type="radio" class="form-control-static" name="qual_sexo"  id="qual_sexo" value="A" <?php echo $sexoA; ?>/> Ambos os sexos
+                </div>
+            </div>
+
+            <br/>
+            
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+                    <label><b>2- Qual a faixa etária desejável?</b></label><br/><br/>
+                    <div>
+                        <?php echo "Entre $view_solicitacao->FAIXA_ETARIA_INICIAL e $view_solicitacao->FAIXA_ETARIA_FINAL de iadade.";?> 
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+                    <label><b>3- Desejável Estado Civil?</b></label><br/><br/>
+                    <?php
+
+                        if($view_solicitacao->EST_CIVIL == "Solteiro(a)"){
+                            $std_civil_1 = "checked='true'";
+                        } else if($view_solicitacao->EST_CIVIL == "Casado(a)"){
+                            $std_civil_2 = "checked='true'";
+                        } else if($view_solicitacao->EST_CIVIL == "Divorciado(a)"){
+                            $std_civil_3 = "checked='true'";
+                        } else if($view_solicitacao->EST_CIVIL == "Viúvo(a)"){
+                            $std_civil_4 = "checked='true'";
+                        } else if($view_solicitacao->EST_CIVIL == "Indiferente"){
+                            $std_civil_5 = "checked='true'";
+                        } else {
+                            $std_civil_1 = "checked='true'";
+                        }
+
+                    ?>
+
+                    <div>
+                        <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Solteiro(a)" <?php echo $std_civil_1; ?>/> Solteiro(a)
+                        <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Casado(a)" <?php echo $std_civil_2; ?>/> Casado(a)
+                        <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Divorciado(a)" <?php echo $std_civil_3; ?>/> Divorciado(a)
+                        <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Viúvo(a)" <?php echo $std_civil_4; ?>/> Viúvo(a)
+                        <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Indiferente" <?php echo $std_civil_5; ?>/> Indiferente
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+                    <label><b>4- Desejável que o estagiário fale outros idiomas?</b></label><br/><br/>
+                    <div>
+                        <?php
+
+                            if($view_solicitacao->IS_IDIOMA == "N"){
+                                $is_idioma_1 = "checked='true'";
+                            } else if($view_solicitacao->IS_IDIOMA == "S"){
+                                $is_idioma_2 = "checked='true'";
+                            } else {
+                                $is_idioma_1 = "checked='true'";
+                            }
+
+                        ?>
+                        <input type="radio" class="form-control-static" name="open_idioma" id="open_idioma" value="N" onclick="javascript:open_language('1')" <?php echo $is_idioma_1; ?>/> Não
+                        <input type="radio" class="form-control-static" name="open_idioma" id="open_idioma" value="S" onclick="javascript:open_language('2')" <?php echo $is_idioma_2; ?>/> Sim
+                    </div>
+                    <?php if( $view_solicitacao->IS_IDIOMA == "N"){ ?>
+                        <div class="display: none">
+                    <?php } else if( $view_solicitacao->IS_IDIOMA == "S") { ?>        
+                        <div>    
+                    <?php }  else { ?>        
+                        <div class="display: none">   
+                    <?php }  ?>        
+                        
+                        <div id="data_idioma">
+
+                            <?php 
+                            
+                                if($view_idiomas){
+                                    foreach ($view_idiomas as $obj){
+                                        echo "{$obj->IDIOMA}<br/>";        
+                                    }
+                                }
+                                
+                            ?> 
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <br/>       
+                    
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+                    <?php
+
+                        if($view_solicitacao->IS_INFORMATICA == "N"){
+                            $is_informatica_1 = "checked='true'";
+                        } else if($view_solicitacao->IS_INFORMATICA == "S"){
+                            $is_informatica_2 = "checked='true'";
+                        } else {
+                            $is_informatica_1 = "checked='true'";
+                        }
+
+                    ?>
+                    <label><b>5- Desejável que o estagiário tenha noções de informática?</b></label><br/><br/>
+                    <div>
+                        <input type="radio" class="form-control-static" name="open_informatica" id="open_informatica" value="N" onclick="javascript:open_info('1')" <?php echo $is_informatica_1; ?>/> Não
+                        <input type="radio" class="form-control-static" name="open_informatica" id="open_informatica" value="S" onclick="javascript:open_info('2')" <?php echo $is_informatica_2; ?>/> Sim
+                    </div>
+
+                    <?php if($view_solicitacao->IS_INFORMATICA == "N"){ ?>
+                            <div style="display: none">
+                    <?php } else if($view_solicitacao->IS_INFORMATICA == "S"){ ?>
+                            <div>
+                    <?php } else { ?>
+                            <div style="display: none">
+                    <?php } ?>
+
+                        <div id="data_informatica">
+
+                            <?php 
+                            
+                            
+                            if($view_informaticas){
+
+                                foreach ($view_informaticas as $obj){
+                                    echo "{$obj->INFORMATICA}<br/>";    
+                                    }
+                                }
+                            
+                            ?> 
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+           <br/>         
+                    
+            <div>
+                <div style="border: solid 1px #CCC; padding: 5px;">
+                    <label><b>6- Quais serão os cursos?</b></label><br/><br/>
+                    <div>
+                        <div>
+                            <div>
+
+                                <table style="width: 100%" border="1">
+                                    <tr>
+                                        <td  align="center">Nome do Curso</td>
+                                        <td  align="center">Período</td>
+                                        <td colspan="2"  align="center">Escolaridade</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td align="center">2º Grau</td>
+                                        <td align="center">Superior</td>
+                                    </tr>
+                                <?php 
+                                
+                                    if($view_cursos){
+                                        foreach ( $view_cursos as $obj){
+                                            ?>
+
+                                                <tr>
+                                                    <td  align="center"><?php echo $obj->CURSO; ?></td>
+                                                    <td align="center"><?php echo $obj->PERIODO; ?>º</td>
+                                                    
+                                                    <?php
+                                                        if($obj->GRAU == "2"){
+                                                            $nivel1 = "checked='true'";
+                                                        } else if($obj->GRAU == "S"){
+                                                            $nivel2 = "checked='true'";
+                                                        } else {
+                                                            $nivel1 = "checked='true'";
+                                                        }
+                                                    ?>
+                                                    
+                                                    <td align="center"><input type="radio" class="form-control-static" name="<?php echo $obj->CURSO; ?>" value="2º Grau" id="<?php echo $obj->CURSO; ?>" <?php echo $nivel1; ?>/></td>
+                                                    <td align="center"><input type="radio" class="form-control-static" name="<?php echo $obj->CURSO; ?>" value="Superior" id="<?php echo $obj->CURSO; ?>" <?php echo $nivel2; ?>/></td>
+                                                </tr>
+                                              
+                                            <?php
+
+                                        }
+                                    }
+                                
+                                ?> 
+
+                                </table>                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/> 
+            
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div class="panel-body">
+                    <label><b>7- Caso deseje, descreva outros requisitos necessários.</b></label><br/><br/>
+                    <?php echo $view_solicitacao->DEMAIS_REQUISITOS; ?> 
+
+                </div>
+            </div>
+
+            <div style="text-align: center">
+                <h2><u>Sobre o Estágio</u></h2>
+            </div>         
+                    
+            <div>
+                <div>
+                    <div>
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <?php
+
+                                if($view_solicitacao->DURACAO == "6"){
+                                    $is_duracao_1 = "checked='true'";
+                                } else if($view_solicitacao->DURACAO == "12"){
+                                    $is_duracao_2 = "checked='true'";
+                                } else {
+                                    $is_duracao_1 = "checked='true'";
+                                }
+                            ?>
+                            <label><b>8- Duração</b></label><br/><br/>
+                            <input type="radio" class="form-control-static" name="duracao_estagio"  id="duracao_estagio" value="6" checked="true" <?php echo $is_duracao_1; ?>/> 6 meses
+                            <input type="radio" class="form-control-static" name="duracao_estagio"  id="duracao_estagio" value="12" <?php echo $is_duracao_2; ?>/> 12 meses
+                        </div>
+                        
+                        <br/>
+                        
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <label><b>9- Horário</b></label><br/><br/>
+                            <?php 
+                                $view_solicitacao->HORARIO_DE = str_replace(":", "h", $view_solicitacao->HORARIO_DE);
+                                $view_solicitacao->HORARIO_ATE = str_replace(":", "h", $view_solicitacao->HORARIO_ATE);
+                                echo "Início {$view_solicitacao->HORARIO_DE} até as {$view_solicitacao->HORARIO_ATE}"; 
+                            ?>    
+                        </div>
+                        
+                        <br/> 
+                        
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <label><b>10- Horas/Mês</b></label><br/><br/>
+                            <?php echo "{$view_solicitacao->HORARIO_MES} horas."; ?>
+                        </div>
+                        
+                        <br/>  
+                        
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                             <?php
+
+                                if($view_solicitacao->EFETIVACAO == "S"){
+                                    $is_efetivacao_1 = "checked='true'";
+                                } else if($view_solicitacao->EFETIVACAO == "N"){
+                                    $is_efetivacao_2 = "checked='true'";
+                                } else {
+                                    $is_efetivacao_1 = "checked='true'";
+                                }
+                            ?>
+                            
+                            <label><b>11- Efetivação</b></label><br/><br/>
+                            <div>
+                                <input type="radio" class="form-control-static" name="efetivacao"  id="efetivacao" value="S" <?php echo $is_efetivacao_1; ?>/> Sim
+                                <input type="radio" class="form-control-static" name="efetivacao"  id="efetivacao" value="N" <?php echo $is_efetivacao_2; ?>/> Não
+                            </div>
+                        </div>
+                        
+                        <br/>   
+            
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <label><b>12- Nº de vagas</b></label><br/><br/>
+                            <?php 
+                                
+                                if( (int)$view_solicitacao->N_VAGAS == 1){
+                                    echo "{$view_solicitacao->N_VAGAS} vaga."; 
+                                } else {
+                                    echo "{$view_solicitacao->N_VAGAS} vagas."; 
+                                }
+                                
+                            ?>
+                        </div>            
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            
+            <div>
+                <div>
+
+                    <div>
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <?php
+                            
+                                if($view_solicitacao->BOLSA_AUXILIO == "Parceria"){
+                                    $is_auxilio_1 = "checked='true'";
+                                } else if($view_solicitacao->BOLSA_AUXILIO == "Cliente"){
+                                    $is_auxilio_2 = "checked='true'";
+                                } else {
+                                    $is_auxilio_1 = "checked='true'";
+                                }
+                            ?>
+                            <label><b>13- Auxílio Bolsa</b></label><br/><br/>
+                            <input type="radio" class="form-control-static" name="auxilio_bolsa"  id="auxilio_bolsa" value="Parceria" <?php echo $is_auxilio_1; ?>/> Parceria 
+                            <input type="radio" class="form-control-static" name="auxilio_bolsa"  id="auxilio_bolsa" value="Cliente" <?php echo $is_auxilio_2; ?>/> Cliente
+                        </div>
+                        
+                        <br/>
+                        
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <label><b>14- Valor da Bolsa</b></label><br/><br/>
+                            R$ <?php echo $view_solicitacao->BOLSA_VALOR; ?>
+                        </div>
+                        
+                        <br/>
+                        
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <?php
+
+                                if($view_solicitacao->BOLSA_BENEFICIOS == "Parceria"){
+                                    $is_beneficios_1 = "checked='true'";
+                                } else if($view_solicitacao->BOLSA_BENEFICIOS == "Cliente"){
+                                    $is_beneficios_2 = "checked='true'";
+                                } else {
+                                    $is_beneficios_1 = "checked='true'";
+                                }
+                            ?>
+                            <label><b>15- Benefícios</b></label><br/><br/>
+                            <input type="radio" class="form-control-static" name="beneficios"  id="beneficios" value="Parceria" <?php echo $is_beneficios_1; ?>/> Parceria 
+                            <input type="radio" class="form-control-static" name="beneficios"  id="beneficios" value="Cliente" <?php echo $is_beneficios_2; ?>/> Cliente
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div style="text-align: center">
+                    <h2><u>Benefícios para o Estagiário</u></h2>
+                </div>
+                <div >
+                    <div>    
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <?php
+
+                                if($view_solicitacao->VALE_REFEICAO == "S"){
+                                    $is_vr_1 = "checked='true'";
+                                } else if($view_solicitacao->VALE_REFEICAO == "N"){
+                                    $is_vr_2 = "checked='true'";
+                                } else {
+                                    $is_vr_1 = "checked='true'";
+                                }
+                            ?>
+                            <label><b>16- Vale refeição</b></label><br/><br/>
+                            <input type="radio" class="form-control-static" name="vale_refeicao"  id="vale_refeicao" value="S" <?php echo $is_vr_1; ?>/> Sim
+                            <input type="radio" class="form-control-static" name="vale_refeicao"  id="vale_refeicao" value="N" <?php echo $is_vr_2; ?>/> Não
+                        </div>
+                        
+                        <br/>
+                        
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                            <?php
+
+                                if($view_solicitacao->VALE_TRANSPORTE == "S"){
+                                    $is_vt_1 = "checked='true'";
+                                } else if($view_solicitacao->VALE_TRANSPORTE == "N"){
+                                    $is_vt_2 = "checked='true'";
+                                } else {
+                                    $is_vt_1 = "checked='true'";
+                                }
+                            ?>
+                            
+                            <label><b>17- Vale Transporte</b></label><br/><br/>
+                            <input type="radio" class="form-control-static" name="vale_transporte"  id="vale_transporte" value="S" <?php echo $is_vt_1; ?>/> Sim
+                            <input type="radio" class="form-control-static" name="vale_transporte"  id="vale_transporte" value="N" <?php echo $is_vt_2; ?>/> Não
+                        </div>
+                        
+                        <br/>
+                        
+                        <div style="border: solid 1px #CCC; padding: 5px;">
+                             <?php
+
+                                if($view_solicitacao->ASS_MEDICA == "S"){
+                                    $is_am_1 = "checked='true'";
+                                } else if($view_solicitacao->ASS_MEDICA == "N"){
+                                    $is_am_2 = "checked='true'";
+                                } else {
+                                    $is_am_1 = "checked='true'";
+                                }
+                            ?>
+                            <label><b>18- Assistência Médica</b></label><br/><br/>
+                            <input type="radio" class="form-control-static" name="a_medica"  id="a_medica" value="S" <?php echo $is_am_1; ?>/> Sim
+                            <input type="radio" class="form-control-static" name="a_medica"  id="a_medica" value="N" <?php echo $is_am_2; ?>/> Não
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <div style="border: solid 1px #CCC; padding: 5px;">    
+                        <div>
+                            
+                            <label><b>19- Outros Beneficios</b></label><br/><br/>
+                           
+                            <div>
+
+                                <?php 
+                                    
+                                    if($view_beneficios){
+                                        foreach ($view_beneficios as $obj){
+                                            echo "{$obj->BENEFICIO}<br/>";
+                                        }
+                                    }    
+                                    
+                                    
+                                ?> 
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div style="text-align: center">
+                <h2><u>Local e Supervisor do Estágio</u></h2>
+            </div>
+
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+
+                    <label><b>20- Local da apresentação dos estagiários</b></label><br/><br/>
+                    
+                    <?php
+                    
+                    echo "{$view_logradouro}, Nº {$view_numero} ";
+                    if( $view_complemento != "") { echo " - {$view_complemento} ";}
+                    echo "<br/>{$view_bairro} - CEP: {$view_cep}";
+                    echo "<br/>{$view_cidade}/{$view_estado}";
+                    
+                    ?>
+                    
+                </div>
+            </div>
+
+            <br/>
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div class="panel-body">
+                    <label><b>21- Nome do supervisor do estágio</b></label><br/><br/>
+                    <?php echo $view_solicitacao->SUPERVISOR_NOME; ?>
+                </div>
+            </div>
+
+            <br/>
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div class="panel-body">
+                    <label><b>22- Cargo do supervisor do estágio</b></label><br/><br/>
+                    <?php echo $view_solicitacao->SUPERVISOR_CARGO; ?>
+                </div>
+            </div>
+
+            <br/>
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div class="panel-body">
+                    <label><b>23- E-mail do supervisor do estágio</b></label><br/><br/>
+                    <?php echo $view_solicitacao->SUPERVISOR_EMAIL; ?>
+                </div>
+            </div>
+
+            <br/>
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+                    <label><b>24- Telefones para contato do supervisor</b></label><br/><br/>
+                    <div>
+                        <?php 
+                        
+                            if($view_telefoness){
+                                
+                                foreach ($view_telefoness as $obj){
+
+                                    echo "({$obj->DDD}) {$obj->TELEFONE}";
+                                    if($obj->RAMAL != ""){ 
+                                        echo " - {$obj->RAMAL}."; 
+                                    }
+                                    echo "<br/>";
+                                }
+                            }
+
+
+                        
+                        ?> 
+
+                    </div> 
+                </div>
+            </div>
+
+
+            <div style="text-align: center">
+                <h2><u>Outros Pontos do Estágio</u></h2>
+            </div>
+            
+            <br/>             
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+                    <label><b>25- Atividades que serão desenvolvidas.</b></label><br/><br/>        
+                    <?php echo $view_solicitacao->ATIVIDADES; ?>
+
+                </div>
+            </div>
+
+            <br/>
+
+
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+                    <label><b>26- Etapas seletivas.</b></label><br/><br/>     
+                    <?php echo $view_solicitacao->ETAPAS; ?>
+                </div>
+            </div>
+            
+            <br/>        
+            <div style="border: solid 1px #CCC; padding: 5px;">
+                <div>
+                    <label><b>27- Outros comentários.</b></label><br/><br/>
+                    <?php echo $view_solicitacao->METODO; ?>
+
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+</html>

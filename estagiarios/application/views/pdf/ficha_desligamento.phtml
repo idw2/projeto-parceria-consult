@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title><?php echo TITLE . " - " . $view_pagina; ?></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" type="text/css" href="/web-files/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/web-files/font-awesome-4.1.0/css/font-awesome.css">
+    </head>
+    <body>
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="">
+                        <img src="/web-files/img/parceria250.png" border="0" alt="Parceria Consult" title="Parceria Consult" width="100px"/>
+                    </td>
+                    <td align="center">
+                        <div>PARCERIA CONSULTORIA EMPRESARIAL LTDA</div>
+                        <div style="font-size: 9pt"><b>FICHA DE DELIGAMENTO PARA ESTAGIÁRIOS</b></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 style="text-align: center;"><span class="label label-default">1- DADOS DE IDENTIFICAÇÃO</span></h2>
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="font-size: 10px;">Empresa</td>
+                    <td style="font-size: 10px;">Endereço ou local da Empresa</td>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo $view_estagiario_empresa->EMP_NOME; ?></td>
+                    <td valign="top">
+
+                        <?php
+                        echo "{$view_EMP_LOGRADOURO}, {$view_EMP_NUMERO}<br/>";
+                        echo "{$view_EMP_BAIRRO}, {$view_EMP_CEP}<br/>";
+                        if ($view_EMP_COMPLEMENTO != "") {
+                            echo "{$view_EMP_COMPLEMENTO}<br/>";
+                        }
+                        echo "{$view_EMP_CIDADE}/{$view_EMP_UF}<br/>";
+                        ?>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;"><br/>Supervisor do Estágio e Cargo</td>
+                    <td style="font-size: 10px;"><br/>Telefone ou Email</td>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo "{$view_estagiario_empresa->ADM_NOME}<br/><b style='font-size: 9px'>{$view_estagiario_empresa->ADM_CARGO}</b>"; ?></td>
+                    <td valign="top">
+                        <?php
+                        echo $view_estagiario_empresa->ADM_EMAIL;
+
+                        if ($view_telefones_supervisor) {
+                            echo "<br/>";
+                            foreach ($view_telefones_supervisor as $obj) {
+                                echo "({$obj->DDD}) {$obj->TELEFONE}<br/>";
+                            }
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;"><br/>Nome do Estagiário e Cargo</td>
+                    <td style="font-size: 10px;"><br/>Curso</td>
+                    <?php
+                    $dta_inicio = "";
+                    $dta_fim = "";
+                    $dta_fim_atual = date('d') . "/" . date('m') . "/" . date('Y');
+                    $stg_cargo = "";
+                    $stg_curso = "";
+
+                    if ($view_dados_complementares) {
+                        foreach ($view_dados_complementares as $obj) {
+                            $stg_curso = $obj->CURSO;
+                            $dta_inicio = $obj->DTA_INICIO;
+                            $dta_fim = $obj->DTA_FIM;
+                            $stg_cargo = $obj->CARGO;
+                        }
+                    }
+                    ?>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo "{$view_estagiario_empresa->STG_NOME}<br/><b style='font-size: 9px'>{$stg_cargo}</b>"; ?></td>
+                    <td valign="top"><?php echo $stg_curso; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;"><br/>Data de Entrada</td>
+                    <td style="font-size: 10px;"><br/>Data de Saida</td>
+                </tr>
+                <tr>
+                    <td valign="top"><b><?php echo $dta_inicio; ?></b></td>
+                    <td valign="top"><b><?php echo $dta_fim_atual; ?></b></td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 style="text-align: center;"><span class="label label-default">2- INFORMAÇÕES SOBRE O ESTÁGIO</span></h2>
+
+        <div class="form-group"> 
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <label><strong>a) Descreva as atividades realizadas na empresa. Estão de acordo com sua formação?</strong></label>
+                <p style="height: 50px;">
+                    <?php echo $view_ficha_desligamento->DESCREVA_ATIVIDADES; ?>
+                </p>
+            </div>
+            <br/>
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <label><strong>b) Você encontrou obstáculos para desenvolver seu estagio?</strong></label>
+                <p style="height: 50px;">
+                    <?php echo $view_ficha_desligamento->DESCREVA_OBSTACULOS; ?>
+                </p>
+            </div>
+            <br/>
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <label><strong>c) Pontos positivos e negativos do estagio.</strong></label>
+                <p style="height: 50px;">
+                    <?php echo $view_ficha_desligamento->DESCREVA_PONTOS_POSITIVOS; ?>
+                </p>
+            </div>
+            <br/>
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <?php
+                    if ((int) $view_ficha_desligamento->DESCREVA_NOTA == 1) {
+                        $fx_um = "x";
+                    } else if ((int) $view_ficha_desligamento->DESCREVA_NOTA == 2) {
+                        $fx_dois = "x";
+                    } else if ((int) $view_ficha_desligamento->DESCREVA_NOTA == 3) {
+                        $fx_tres = "x";
+                    } else if ((int) $view_ficha_desligamento->DESCREVA_NOTA == 4) {
+                        $fx_quatro = "x";
+                    } else {
+                        $fx_um = "x";
+                    }
+                ?>
+
+                <label><strong>d) Como foi o seu relacionamento com o seu superior direto?</strong></label>
+                <br/>(&nbsp;<?php echo $fx_um;?>&nbsp;) Excelente (&nbsp;<?php echo $fx_dois;?>&nbsp;) Bom (&nbsp;<?php echo $fx_tres;?>&nbsp;) Razoável (&nbsp;<?php echo $fx_quatro;?>&nbsp;) Ruim<br/>
+                <strong>Comente:</strong>
+                <p style="height: 50px;">
+                    <?php echo $view_ficha_desligamento->DESCREVA_RELACIONAMENTO_CHEFE; ?>
+                </p>
+            </div>
+            <br/>
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <label><strong>e) Você voltaria a estagiar nessa empresa?</strong></label>
+                <p style="height: 50px;">
+                       <?php echo $view_ficha_desligamento->DESCREVA_SE_VOLTARIA; ?>
+                </p>
+            </div>
+            <br/>
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <label><strong>f) Você recebeu sua bolsa sempre no dia do pagamento?</strong></label>
+                <br/><strong>Comente:</strong>
+                <p style="height: 50px;">
+                    <?php echo $view_ficha_desligamento->DESCREVA_RECEBEU_BOLSA; ?>
+                </p>
+            </div>
+            <br/>
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <label><strong>g) Qual o motivo do desligamento?</strong></label>
+                <p style="height: 50px;">
+                    <?php echo $view_ficha_desligamento->DESCREVA_MOTIVO_DESLIGAMENTO; ?>
+                </p>
+            </div>
+            <br/>
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <label><strong>h) Referente a Parceria, comente a nossa atuação como "Agente de Integração".</strong></label>
+                <p style="height: 50px;">
+                    <?php echo $view_ficha_desligamento->DESCREVA_AGENTE_INTEGRACAO; ?>
+                </p>
+            </div>
+            <br/>
+
+            <p>
+
+            <table style="width: 100%">
+                <tr>
+                    <td align="center">____________________________________</td>
+                </tr>
+                <tr>
+                    <td align="center"><?php echo "{$view_estagiario_empresa->STG_NOME}<br/><span style='font-size: 9pt;'>ESTAGIÁRIO(A)</span>"; ?></td>
+                </tr>
+
+            </table>
+
+        </p>
+
+
+    </div>
+
+
+
+
+
+</body>
+</html>

@@ -1,9 +1,17 @@
 /* Theme */
 
 .navbar-default{
-    background-color: #fff;
+    background-color: transparent;
     border:none;
-    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: none;
+    border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+.navbar-static-top{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
 }
 
 .navbar-brand{
@@ -12,36 +20,73 @@
 
 .navbar-header{}
 
-.navbar-default .navbar-nav{}
-.navbar-default .navbar-nav > li{}
-.navbar-default .navbar-nav > li.active > a{
-    color: $primary;
-    background: none;
-    border-bottom: solid 5px $primary;
+.navbar-default .navbar-collapse{
+    margin-left: 250px;
 }
-.navbar-default .navbar-nav > li > a{
+
+.navbar-default .navbar-row{
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+}
+
+.navbar-default .navbar-nav > li{}
+.navbar-default .navbar-nav > li.active > a:not(.btn){
+    color: #fff;
+    background: none;
+    border-bottom: solid 2px #fff;
+}
+.navbar-default .navbar-nav > li > a:not(.btn){
     padding: 0 20px;
-    height: $navbar-height;
-    line-height: $navbar-height;
+    height: $navbar-height*0.6 - 10;
+    line-height: $navbar-height*0.6 - 10;
     font-size: 12px;
     font-size: 1.2rem;
     font-weight: 700;
-    color: #6a6a6a;
+    color: #e9e9e9;
     text-transform: uppercase;
     @include transition(.1s linear);
+    border-top: solid 1px rgba(255, 255, 255, 0.1);
 }
 
-.navbar-default .navbar-nav > li > a{
+.navbar-default .navbar-nav > li > a:not(.btn){
     &:hover,&:focus,&:active{
+        color: #fff;
         background: none;
     }
 }
 
-.navbar-default .navbar-nav > li.active > a{
+.navbar-default .navbar-nav > li.active > a:not(.btn){
     &:hover,&:focus,&:active{
-        color: $primary;
+        color: #fff;
         background: none;
     }
+}
+
+.navbar-default .navbar-nav-top{
+    @extend .list-unstyled;
+    @extend .list-inline;
+    height: 32px;
+    line-height: 30px;
+    margin: ($navbar-height*0.4 - 26) 0;
+
+}
+
+.navbar-default .navbar-nav-top > li > a{
+    height: 32px;
+    line-height: 30px;
+}
+
+.navbar-default .navbar-nav-top > li > .btn{
+    font-size: 12px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    padding: 0 20px;
+}
+
+.navbar-default .navbar-nav-top .btn-primary{
+    color: #fff !important;
+    border-radius: 32px;
 }
 
 h1, .h1, h2, .h2, h3, .h3{
@@ -51,18 +96,17 @@ h1, .h1, h2, .h2, h3, .h3{
 
 .btn{
     border: none;
-    border-radius: 0;
+    border-radius: 3px;
     padding: 12px 28px;
 }
 .btn-primary{
-    padding: 12px 28px;
+    padding: 6px 28px;
     color: #fff;
-    font-size: 16px;
-    font-size: 1.6rem;
+    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 400;
     background: $primary;
     border: solid 2px $primary;
-    text-transform: uppercase;
     @include transition(.1s ease);
 }
 
@@ -76,7 +120,30 @@ h1, .h1, h2, .h2, h3, .h3{
     box-shadow: none !important;
     outline: none !important;
 }
-.btn-default{
+
+.btn-gradient-primary{
+    padding: 12px 28px;
+    color: #fff !important;
+    font-size: 14px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    @include gradient(#2D66BE, #1551A1);
+    border: solid 1px $primary;
+    @include transition(.1s ease);
+    box-shadow: inset 0 1px rgba(75, 140, 215, 1);
+}
+
+.btn-gradient-primary:hover{
+    color: $primary;
+    @include gradient(lighten($primary, 15%), darken($primary, 0%));
+}
+.btn-gradient-primary:focus,
+.btn-gradient-primary:active{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn-outline{
     position: relative;
     padding: 8px 22px;
     color: #6a6a6a;
@@ -84,7 +151,6 @@ h1, .h1, h2, .h2, h3, .h3{
     font-size: 1.6rem;
     font-weight: 400;
     background: none;
-    text-transform: uppercase;
     background-repeat: no-repeat;
     border: solid 2px #c3c3c3;
     overflow: hidden;
@@ -102,13 +168,13 @@ h1, .h1, h2, .h2, h3, .h3{
     }
 }
 
-.btn-default:hover,
-.btn-default:focus,
-.btn-default:active{
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active{
     color: #fff;
-    background-color: $primary;
+    background-color: #2D66BE;
     padding-right: 40px;
-    border-color: $primary;
+    border-color: #2D66BE;
     box-shadow: none !important;
     outline: none !important;
 
@@ -123,13 +189,12 @@ h1, .h1, h2, .h2, h3, .h3{
 
 .navbar .brand{
     position: relative;
-    margin-top: 14px;
+    margin: 26px 0;
     display: inline-block;
-    height: 60px;
-    width: 150px;
-    background: url(http://placehold.it/150x60) no-repeat;
-    background-size: 100%;
-    background-position: 0 0;
+    height: 58px;
+    width: 240px;
+    background: url(../img/brand-white.png) no-repeat 0 0 / 240px 58px;
+    /*background-image: url(../img/brand-white.svg);*/
     text-indent: -9999rem;
 }
 
@@ -145,7 +210,7 @@ h1, .h1, h2, .h2, h3, .h3{
 .form-control:focus,
 .form-control:active{
     box-shadow: none;
-    border-color: $primary;
+    border-color: #3B89FF;
 }
 
 .form-group{
@@ -155,4 +220,83 @@ h1, .h1, h2, .h2, h3, .h3{
 textarea.form-control{
     resize: vertical;
     min-height: 100px;
+}
+
+.btn-with-icon{
+    position: relative;
+    padding-left: 44px !important;
+    overflow: hidden;
+}
+
+.btn-with-icon .btn-icon{
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    background: rgba(0,0,0,0.2);
+    color: #fff;
+    width: 34px;
+    height: 32px;
+    padding-left: 2px;
+    font-size: 14px;
+    line-height: 30px;
+    float: left;
+}
+
+.btn-gradient-success{
+    padding: 12px 28px;
+    color: #fff !important;
+    font-size: 12px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    @include gradient(lighten($success, 5%), darken($success, 0%));
+    border: solid 1px $success;
+    text-transform: uppercase;
+    @include transition(.1s ease);
+}
+
+.btn-gradient-success:hover{
+    color: $success;
+    @include gradient(lighten($success, 15%), darken($success, 0%));
+}
+.btn-gradient-success:focus,
+.btn-gradient-success:active{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn-outline-success{
+    color: $success !important;
+    border-color: $success !important;
+    &:hover,&:active,&:focus{
+        color: #fff !important;
+        background-color: $success !important;
+    }
+}
+
+$btn-dark: #3a3a3a;
+
+.btn-dark{
+    padding: 6px 20px;
+    color: #fff !important;
+    font-size: 12px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    @include gradient(lighten($btn-dark, 5%), darken($btn-dark, 0%));
+    border: solid 1px $btn-dark;
+    text-transform: uppercase;
+    @include transition(.1s ease);
+}
+
+.btn-dark:hover{
+    color: $btn-dark;
+    @include gradient(lighten($btn-dark, 10%), darken($btn-dark, 0%));
+}
+.btn-dark:focus,
+.btn-dark:active{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn + .btn{
+    margin-left: 6px;
 }
