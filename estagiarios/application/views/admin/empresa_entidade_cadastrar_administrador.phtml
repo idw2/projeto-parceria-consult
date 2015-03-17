@@ -1,0 +1,63 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/empresas-entidades-lista-administradores/">Lista de Administradores Empresas/Entidades</a></li>
+    <li>Cadastro de Administradores Empresas/Entidades</li>
+</ol>
+
+<h2><span class="label label-default">Cadastro de Administradores Empresas/Entidades</span></h2>
+<br/>
+
+<?php if ($view_erro == "") { ?>
+    <div class="alert alert-info" role="alert">Preencha todos os campos</div>
+<?php } else { ?>
+    <div class="alert alert-danger" role="alert"><?php echo $view_erro; ?></div>
+<?php } ?>
+
+<form method="post" class="form jumbotron" >
+
+    <h2>Verificar disponibilidade!</h2>
+    <br/>
+    <div class="form-group"> 
+
+        <?php if ($view_papel == "MASTER") { ?>
+
+            <label>Empresas/Entidades</label>
+            <select name="empresa_ativa" class="form-control">
+                <optgroup label="Empresas ativas">
+                    <option value=""></option>
+                    <?php
+                    if ($view_empresas_ativas) {
+                        foreach ($view_empresas_ativas as $obj) {
+                            ( $view_empresa_ativa == $obj->CODCADASTRO ) ? $selected = "selected" : $selected = "";
+                            echo "<option value='{$obj->CODCADASTRO}' {$selected}>{$obj->NOME_RAZAO_SOCIAL} - {$obj->CPF_CNPJ}</option>";
+                        }
+                    } else {
+                        echo "Nenhuma empresa ativada!<br><br>";
+                    }
+                    ?>
+                </optgroup>
+            </select>
+
+
+        <?php } else { ?>
+            <input type="hidden" name="empresa_ativa" value="<?php echo $view_codcadastro; ?>"/>
+        <?php }  ?>
+
+        <label>CPF</label>
+        <input type="text" name="cpf" class="form-control" value="<?php echo $view_cpf; ?>" placeholder="CPF" onkeypress="return formataCPF(event, this);"/>
+
+    </div>
+
+    <br/>        
+
+    <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+</form>
+
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

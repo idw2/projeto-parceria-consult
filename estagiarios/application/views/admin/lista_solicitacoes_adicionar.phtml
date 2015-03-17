@@ -1,0 +1,733 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/lista-solicitacoes/">Lista de Solicitações de Vagas</a></li>
+    <li>Adicionar Solicitação de Vaga</li>
+</ol>
+
+<h2><span class="label label-default">Adicionar Solicitação de Vaga</span></h2>
+<br/>
+<?php if ($view_info_empresa) { ?>
+    <br/>
+    <label>Empresa:</label> <?php echo $view_info_empresa->NOME_RAZAO_SOCIAL; ?><br/>
+    <label>CNPJ:</label> <?php echo $view_info_empresa->CNPJ; ?><br/>
+<?php } ?>
+<br/>
+
+<?php if ($view_erro == "") { ?>
+    <div class="alert alert-info" role="alert">Preencha todos os campos</div>
+<?php } else { ?>
+    <div class="alert alert-danger" role="alert"><?php echo $view_erro; ?></div>
+<?php } ?>
+
+<form method="post" class="form">
+
+    <div class="form-group"> 
+
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <?php
+                    
+                    if($view_solicitacao->SEXO == "M"){
+                        $sexoM = "checked='true'";
+                    } else if($view_solicitacao->SEXO == "F"){
+                        $sexoF = "checked='true'";
+                    } else if($view_solicitacao->SEXO == "A"){
+                        $sexoA = "checked='true'";
+                    } else {
+                        $sexoM = "checked='true'";
+                    }
+                
+                ?>
+                <h4>1- O estágio é para ambos os sexos ou existe alguma preferência?</h4>
+                <input type="radio" class="form-control-static" name="qual_sexo"  id="qual_sexo" value="M" <?php echo $sexoM; ?>/> Masulino
+                <input type="radio" class="form-control-static" name="qual_sexo"  id="qual_sexo" value="F" <?php echo $sexoF; ?>/> Feminino
+                <input type="radio" class="form-control-static" name="qual_sexo"  id="qual_sexo" value="A" <?php echo $sexoA; ?>/> Ambos os sexos
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>2- Qual a faixa etária desejável?</h4>
+                <div class="row">
+
+                    <div class="col col-sm-4">
+                        <select name="idade_inicial" id="idade_inicial" class="form-control">
+                            <optgroup label="Idade Inicial">
+                                <?php
+                                $i = 14;
+                                while ($i < 100) {
+
+                                    ( $view_solicitacao->FAIXA_ETARIA_INICIAL == $i ) ? $selected = "selected" : $selected = "";
+
+                                    if (strlen($i) == 1) {
+                                        echo "<option value='0{$i}' {$selected}>0{$i}</option>";
+                                    } else {
+                                        echo "<option value='{$i}' {$selected}>{$i}</option>";
+                                    }
+                                    $i++;
+                                }
+                                ?>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="col col-sm-4">
+                        <select name="idade_final" id="idade_final"  class="form-control">
+                            <optgroup label="Idade Final">
+                                <?php
+                                $i = 14;
+                                while ($i < 100) {
+
+                                    ( $view_solicitacao->FAIXA_ETARIA_FINAL == $i ) ? $selected = "selected" : $selected = "";
+
+                                    if (strlen($i) == 1) {
+                                        echo "<option value='0{$i}' {$selected}>0{$i}</option>";
+                                    } else {
+                                        echo "<option value='{$i}' {$selected}>{$i}</option>";
+                                    }
+                                    $i++;
+                                }
+                                ?>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="col col-sm-4"> </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>3- Desejável Estado Civil?</h4>
+                <?php
+                    
+                    if($view_solicitacao->EST_CIVIL == "Solteiro(a)"){
+                        $std_civil_1 = "checked='true'";
+                    } else if($view_solicitacao->EST_CIVIL == "Casado(a)"){
+                        $std_civil_2 = "checked='true'";
+                    } else if($view_solicitacao->EST_CIVIL == "Divorciado(a)"){
+                        $std_civil_3 = "checked='true'";
+                    } else if($view_solicitacao->EST_CIVIL == "Viúvo(a)"){
+                        $std_civil_4 = "checked='true'";
+                    } else if($view_solicitacao->EST_CIVIL == "Indiferente"){
+                        $std_civil_5 = "checked='true'";
+                    } else {
+                        $std_civil_1 = "checked='true'";
+                    }
+                
+                ?>
+                
+                <div>
+                    <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Solteiro(a)" <?php echo $std_civil_1; ?>/> Solteiro(a)
+                    <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Casado(a)" <?php echo $std_civil_2; ?>/> Casado(a)
+                    <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Divorciado(a)" <?php echo $std_civil_3; ?>/> Divorciado(a)
+                    <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Viúvo(a)" <?php echo $std_civil_4; ?>/> Viúvo(a)
+                    <input type="radio" class="form-control-static" name="estado_civil"  id="estado_civil" value="Indiferente" <?php echo $std_civil_5; ?>/> Indiferente
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>4- Desejável que o estagiário fale outros idiomas?</h4>
+                <div>
+                    <?php
+                    
+                        if($view_solicitacao->IS_IDIOMA == "N"){
+                            $is_idioma_1 = "checked='true'";
+                        } else if($view_solicitacao->IS_IDIOMA == "S"){
+                            $is_idioma_2 = "checked='true'";
+                        } else {
+                            $is_idioma_1 = "checked='true'";
+                        }
+
+                    ?>
+                    <input type="radio" class="form-control-static" name="open_idioma" id="open_idioma" value="N" onclick="javascript:open_language('1')" <?php echo $is_idioma_1; ?>/> Não
+                    <input type="radio" class="form-control-static" name="open_idioma" id="open_idioma" value="S" onclick="javascript:open_language('2')" <?php echo $is_idioma_2; ?>/> Sim
+                </div>
+                <?php if( $view_solicitacao->IS_IDIOMA == "N"){ ?>
+                    <div class="open-language hide">
+                <?php } else if( $view_solicitacao->IS_IDIOMA == "S") { ?>        
+                    <div class="open-language">    
+                <?php }  else { ?>        
+                    <div class="open-language hide">    
+                <?php }  ?>        
+                    <hr/>
+                    <label>
+                        Adicionar idioma 
+                        <img src="/web-files/img/less.png" class="datagrid datagrid-less" onclick="javascript: datagrid_idioma_less()" style="cursor: pointer" alt="Tirar idioma" title="Tirar idioma" border="0"/>
+                        <img src="/web-files/img/plus.png" class="datagrid datagrid-plus" onclick="javascript: datagrid_idioma_plus()" style="cursor: pointer" alt="Adicionar idioma" title="Tirar idioma" border="0"/>
+                    </label><br/>
+                    <div id="data_idioma">
+                        
+                        <?php if($_POST) { 
+                            
+                            if($view_idiomas){
+                                
+                                
+                                foreach ($view_idiomas as $key => $valor){
+                                        ?>
+                                            
+                                            <br/>
+                                            <div class="row datagrid_idioma">
+                                                <div class="col col-sm-5">
+                                                    <input type="text" class="form-control" id="idioma_<?php echo $key; ?>" name="idioma_<?php echo $key; ?>" maxlength="70" value="<?php echo $valor; ?>" placeholder="Qual idioma?"/>
+                                                </div>
+                                                <div class="col col-sm-7"></div>
+                                            </div>
+                                            
+                                            <?php
+                                                
+                                        
+                                    }
+                                }
+                            
+                            
+                        }  else { ?>        
+                            
+                            <br/>
+                            <div class="row datagrid_idioma">
+                                <div class="col col-sm-5">
+                                    <input type="text" class="form-control" id="idioma_0" name="idioma_0" maxlength="70" value="" placeholder="Qual idioma?"/>
+                                </div>
+                                <div class="col col-sm-7"></div>
+                            </div>
+                        
+                        <?php }  ?> 
+                        
+                        
+                        
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <?php
+                    
+                    if($view_solicitacao->IS_INFORMATICA == "N"){
+                        $is_informatica_1 = "checked='true'";
+                    } else if($view_solicitacao->IS_INFORMATICA == "S"){
+                        $is_informatica_2 = "checked='true'";
+                    } else {
+                        $is_informatica_1 = "checked='true'";
+                    }
+
+                ?>
+                <h4>5- Desejável que o estagiário tenha noções de informática?</h4>
+                <div>
+                    <input type="radio" class="form-control-static" name="open_informatica" id="open_informatica" value="N" onclick="javascript:open_info('1')" <?php echo $is_informatica_1; ?>/> Não
+                    <input type="radio" class="form-control-static" name="open_informatica" id="open_informatica" value="S" onclick="javascript:open_info('2')" <?php echo $is_informatica_2; ?>/> Sim
+                </div>
+                
+                <?php if($view_solicitacao->IS_INFORMATICA == "N"){ ?>
+                        <div class="open-informatica hide">
+                <?php } else if($view_solicitacao->IS_INFORMATICA == "S"){ ?>
+                        <div class="open-informatica">
+                <?php } else { ?>
+                        <div class="open-informatica hide">
+                <?php } ?>
+
+                    <hr/>
+                    <label>
+                        Adicionar as noções de informática desejáveis 
+                        <img src="/web-files/img/less.png" class="datagrid datagrid-less" onclick="javascript: datagrid_informatica_less()" style="cursor: pointer" alt="Tirar Noção de Informatica" title="Tirar Noção de Informatica" border="0"/>
+                        <img src="/web-files/img/plus.png" class="datagrid datagrid-plus" onclick="javascript: datagrid_informatica_plus()" style="cursor: pointer" alt="Adicionar Noção de Informatica" title="Adicionar Noção de Informatica" border="0"/>
+                    </label><br/>
+                    <div id="data_informatica">
+                        
+                        <?php if($_POST) { 
+                            
+                            if($view_informaticas){
+                                
+                                
+                                foreach ($view_informaticas as $key => $valor){
+                                        ?>
+                                            
+                                            <br/>
+                                            <div class="row datagrid_informatica">
+                                                <div class="col col-sm-12">
+                                                    <input type="text" class="form-control" id="informatica_<?php echo $key; ?>" name="informatica_<?php echo $key; ?>" maxlength="255" value="<?php echo $valor; ?>" placeholder="Escreva aqui as noções de informática que deseja"/>
+                                                </div>
+                                            </div>
+                                            
+                                            <?php
+                                                
+                                        
+                                    }
+                                }
+                            
+                            
+                        }  else { ?>        
+                            
+                            <br/>
+                            <div class="row datagrid_informatica">
+                                <div class="col col-sm-12">
+                                    <input type="text" class="form-control" id="informatica_0" name="informatica_0" maxlength="255" value="" placeholder="Escreva aqui as noções de informática que deseja"/>
+                                </div>
+                            </div>
+                        
+                        <?php }  ?> 
+                            
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                
+                <h4>6- Quais serão os cursos?</h4>
+                <div class="open-curso">
+                    <label>
+                        Adicionar mais curso 
+                        <img src="/web-files/img/less.png" class="datagrid datagrid-less" onclick="javascript: datagrid_curso_less()" style="cursor: pointer" alt="Tirar Noção de Informatica" title="Tirar Noção de Informatica" border="0"/>
+                        <img src="/web-files/img/plus.png" class="datagrid datagrid-plus" onclick="javascript: datagrid_curso_plus()" style="cursor: pointer" alt="Adicionar Noção de Informatica" title="Adicionar Noção de Informatica" border="0"/>
+                    </label><br/>
+                    <div id="data_curso">
+                        <div class="row datagrid_curso">
+                            
+                            <?php if($_POST) {  
+                                
+                                if($view_cursos){
+                                    foreach ( $view_cursos as $key => $valor){
+                                        ?>
+                                            
+                                            <br/>
+                                            <div class="col col-sm-7">
+                                                <input type="text" class="form-control" id="curso_<?php echo $key; ?>" name="curso_<?php echo $key; ?>" maxlength="255" value="<?php echo $view_cursos[$key]; ?>" placeholder="Nome do curso"/>
+                                            </div>
+                                            <div class="col col-sm-2">
+                                                <input type="text" class="form-control" id="periodo_<?php echo $key; ?>" name="periodo_<?php echo $key; ?>" maxlength="2" value="<?php echo $view_periodos[$key]; ?>" placeholder="Período" onkeypress="return formataNumDV(event, this, 2);"/>
+                                            </div>
+                                            
+                                            <?php
+                                                if($view_niveis[$key] == "2º Grau"){
+                                                    $nivel1 = "checked='true'";
+                                                } else if($view_niveis[$key] == "Superior"){
+                                                    $nivel2 = "checked='true'";
+                                                } else {
+                                                    $nivel1 = "checked='true'";
+                                                }
+                                            ?>
+                                            
+                                            <div class="col col-sm-3">
+<!--                                                <strong>Nível: </strong> -->
+                                                <input type="radio" class="form-control-static" name="nivel_<?php echo $key; ?>" value="2º Grau" id="nivel_<?php echo $key; ?>" <?php echo $nivel1; ?>/> 2º Grau
+                                                <input type="radio" class="form-control-static" name="nivel_<?php echo $key; ?>" value="Superior" id="nivel_<?php echo $key; ?>" <?php echo $nivel2; ?>/> Superior
+                                            </div>
+                                            
+                                        <?php
+                                        
+                                    }
+                                }
+                                
+                            }  else { ?>        
+
+                                <br/>
+                                <div class="col col-sm-7">
+                                    <input type="text" class="form-control" id="curso_0" name="curso_0" maxlength="255" value="" placeholder="Nome do curso"/>
+                                </div>
+                                <div class="col col-sm-2">
+                                    <input type="text" class="form-control" id="periodo_0" name="periodo_0" maxlength="2" value="" placeholder="Período" onkeypress="return formataNumDV(event, this, 2);"/>
+                                </div>
+                                <div class="col col-sm-3">
+<!--                                    <strong>Nível: </strong> -->
+                                    <input type="radio" class="form-control-static" name="nivel_0" value="2º Grau" id="nivel_0" checked="true"/> 2º Grau
+                                    <input type="radio" class="form-control-static" name="nivel_0" value="Superior" id="nivel_0" /> Superior
+                                </div>
+
+                            <?php }  ?> 
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label>7- Caso deseje, descreva outros requisitos necessários.</label>
+                <textarea class="form-control" id="outros_requisitos" name="outros_requisitos"> <?php echo $view_solicitacao->DEMAIS_REQUISITOS; ?> </textarea>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col col-sm-2">
+                        <?php
+                        
+                            if($view_solicitacao->DURACAO == "6"){
+                                $is_duracao_1 = "checked='true'";
+                            } else if($view_solicitacao->DURACAO == "12"){
+                                $is_duracao_2 = "checked='true'";
+                            } else {
+                                $is_duracao_1 = "checked='true'";
+                            }
+                        ?>
+                        <h4 style="font-size: 120%;">8- Duração</h4>
+                        <input type="radio" class="form-control-static" name="duracao_estagio"  id="duracao_estagio" value="6" checked="true" <?php echo $is_duracao_1; ?>/> 6 meses<br/>
+                        <input type="radio" class="form-control-static" name="duracao_estagio"  id="duracao_estagio" value="12" <?php echo $is_duracao_2; ?>/> 12 meses
+                    </div>
+                    <div class="col col-sm-2">
+                        <h4 style="font-size: 120%;">9- Horário</h4>
+                        <div class="row">
+                            <div class="col col-sm-2">
+                                De:
+                            </div>
+                            <div class="col col-sm-10">
+                                <input type="text" class="form-control" id="horario_inicio" name="horario_inicio" maxlength="5" value="<?php echo $view_solicitacao->HORARIO_DE; ?>" placeholder="00:00" onkeypress="return formataHora(event, this);" style="width: 65px;"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-sm-2">
+                                Até:    
+                            </div>
+                            <div class="col col-sm-10">
+                                <input type="text" class="form-control" id="horario_fim" name="horario_fim" maxlength="5" value="<?php echo $view_solicitacao->HORARIO_ATE; ?>" placeholder="00:00" onkeypress="return formataHora(event, this);"  style="width: 65px;"/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col col-sm-3">
+                        <h4 style="font-size: 120%;">10- Horas/Mês</h4>
+                        <div class="row">
+                            <div class="col col-sm-12">
+                                <input type="text" class="form-control" id="horario_inicio" name="horas_mes" maxlength="5" value="<?php echo $view_solicitacao->HORARIO_MES; ?>" placeholder="Total" onkeypress="return formataNumDV(event, this, 9);"  style="width: 65px;"/>
+                            </div>    
+                        </div>    
+                        
+                    </div>
+                    <div class="col col-sm-2">
+                         <?php
+                        
+                            if($view_solicitacao->EFETIVACAO == "S"){
+                                $is_efetivacao_1 = "checked='true'";
+                            } else if($view_solicitacao->EFETIVACAO == "N"){
+                                $is_efetivacao_2 = "checked='true'";
+                            } else {
+                                $is_efetivacao_1 = "checked='true'";
+                            }
+                        ?>
+                        <h4 style="font-size: 120%;">11- Efetivação</h4>
+                        <div>
+                            <input type="radio" class="form-control-static" name="efetivacao"  id="efetivacao" value="S" <?php echo $is_efetivacao_1; ?>/> Sim<br/>
+                            <input type="radio" class="form-control-static" name="efetivacao"  id="efetivacao" value="N" <?php echo $is_efetivacao_2; ?>/> Não
+                        </div>
+                    </div>
+                    <div class="col col-sm-3">
+                        <h4 style="font-size: 120%;">12- Nº de vagas</h4>
+                        <input type="text" class="form-control" id="n_vagas" name="n_vagas" maxlength="5" value="<?php echo $view_solicitacao->N_VAGAS; ?>" placeholder="Total" onkeypress="return formataNumDV(event, this, 9);"  style="width: 65px;"/>
+                    </div>            
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col col-sm-4">
+                        <?php
+                        echo $view_solicitacao->BOLSA_AUXILIO;
+                            if($view_solicitacao->BOLSA_AUXILIO == "Parceria"){
+                                $is_auxilio_1 = "checked='true'";
+                            } else if($view_solicitacao->BOLSA_AUXILIO == "Cliente"){
+                                $is_auxilio_2 = "checked='true'";
+                            } else {
+                                $is_auxilio_1 = "checked='true'";
+                            }
+                        ?>
+                        <h4 style="font-size: 120%;">13- Auxílio Bolsa</h4>
+                        <input type="radio" class="form-control-static" name="auxilio_bolsa"  id="auxilio_bolsa" value="Parceria" <?php echo $is_auxilio_1; ?>/> Parceria 
+                        <input type="radio" class="form-control-static" name="auxilio_bolsa"  id="auxilio_bolsa" value="Cliente" <?php echo $is_auxilio_2; ?>/> Cliente
+                    </div>
+                    <div class="col col-sm-4">
+                        <h4 style="font-size: 120%;">14- Valor da Bolsa</h4>
+                        <input type="text" class="form-control" id="valor_bolsa" name="valor_bolsa" maxlength="5" value="<?php echo $view_solicitacao->BOLSA_VALOR; ?>" placeholder="R$" onkeypress="formataValor(event, this, 12);" onkeydown="backspaceFormataValor(event, this)" style="width: 200px"/>
+                    </div>
+                    <div class="col col-sm-4">
+                        <?php
+                        
+                            if($view_solicitacao->BOLSA_BENEFICIOS == "Parceria"){
+                                $is_beneficios_1 = "checked='true'";
+                            } else if($view_solicitacao->BOLSA_BENEFICIOS == "Cliente"){
+                                $is_beneficios_2 = "checked='true'";
+                            } else {
+                                $is_beneficios_1 = "checked='true'";
+                            }
+                        ?>
+                        <h4 style="font-size: 120%;">15- Benefícios</h4>
+                        <input type="radio" class="form-control-static" name="beneficios"  id="beneficios" value="Parceria" <?php echo $is_beneficios_1; ?>/> Parceria 
+                        <input type="radio" class="form-control-static" name="beneficios"  id="beneficios" value="Cliente" <?php echo $is_beneficios_2; ?>/> Cliente
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center">
+                Quais serão os benefícios?
+            </div>
+            <div class="panel-body">
+                <div class="row">    
+                    <div class="col col-sm-4">
+                        <?php
+                        
+                            if($view_solicitacao->VALE_REFEICAO == "S"){
+                                $is_vr_1 = "checked='true'";
+                            } else if($view_solicitacao->VALE_REFEICAO == "N"){
+                                $is_vr_2 = "checked='true'";
+                            } else {
+                                $is_vr_1 = "checked='true'";
+                            }
+                        ?>
+                        <h4 style="font-size: 120%;">16- Vale refeição</h4>
+                        <input type="radio" class="form-control-static" name="vale_refeicao"  id="vale_refeicao" value="S" <?php echo $is_vr_1; ?>/> Sim
+                        <input type="radio" class="form-control-static" name="vale_refeicao"  id="vale_refeicao" value="N" <?php echo $is_vr_2; ?>/> Não
+                    </div>
+                    <div class="col col-sm-4">
+                        <?php
+                        
+                            if($view_solicitacao->VALE_TRANSPORTE == "S"){
+                                $is_vt_1 = "checked='true'";
+                            } else if($view_solicitacao->VALE_TRANSPORTE == "N"){
+                                $is_vt_2 = "checked='true'";
+                            } else {
+                                $is_vt_1 = "checked='true'";
+                            }
+                        ?>
+                        <h4 style="font-size: 120%;">17- Vale Transporte</h4>
+                        <input type="radio" class="form-control-static" name="vale_transporte"  id="vale_transporte" value="S" <?php echo $is_vt_1; ?>/> Sim
+                        <input type="radio" class="form-control-static" name="vale_transporte"  id="vale_transporte" value="N" <?php echo $is_vt_2; ?>/> Não
+                    </div>
+                    <div class="col col-sm-4">
+                         <?php
+                        
+                            if($view_solicitacao->ASS_MEDICA == "S"){
+                                $is_am_1 = "checked='true'";
+                            } else if($view_solicitacao->ASS_MEDICA == "N"){
+                                $is_am_2 = "checked='true'";
+                            } else {
+                                $is_am_1 = "checked='true'";
+                            }
+                        ?>
+                        <h4 style="font-size: 120%;">18- Assistência Médica</h4>
+                        <input type="radio" class="form-control-static" name="a_medica"  id="a_medica" value="S" <?php echo $is_am_1; ?>/> Sim
+                        <input type="radio" class="form-control-static" name="a_medica"  id="a_medica" value="N" <?php echo $is_am_2; ?>/> Não
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="row">    
+                    <div class="col col-sm-12">
+                        <h4 style="font-size: 120%;">19- Outros Beneficios</h4>
+                        <label>
+                            Adicionar mais benefícios 
+                            <img src="/web-files/img/less.png" class="datagrid datagrid-less" onclick="javascript: datagrid_beneficios_less()" style="cursor: pointer" alt="Tirar Noção de Informatica" title="Tirar Noção de Informatica" border="0"/>
+                            <img src="/web-files/img/plus.png" class="datagrid datagrid-plus" onclick="javascript: datagrid_beneficios_plus()" style="cursor: pointer" alt="Adicionar Noção de Informatica" title="Adicionar Noção de Informatica" border="0"/>
+                        </label><br/>
+                        <div id="data_beneficios_dg">
+                            
+                                <?php if($_POST) { 
+                            
+                            if($view_beneficios){
+                                
+                                
+                                foreach ($view_beneficios as $key => $valor){
+                                        ?>
+                                            <div class="row datagrid_beneficios_dg">
+                                            <br/>
+                                            <div class="col col-sm-12">
+                                                <input type="text" class="form-control" id="beneficios_<?php echo $key; ?>" name="beneficios_<?php echo $key; ?>" maxlength="255" value="<?php echo $valor; ?>" placeholder="Adicionar benefícios"/>
+                                            </div>
+                                            </div>
+                                            <?php
+                                                
+                                        
+                                    }
+                                }
+                            
+                            
+                        }  else { ?>        
+                                    <div class="row datagrid_beneficios_dg">
+                                    <br/>
+                                    <div class="col col-sm-12">
+                                        <input type="text" class="form-control" id="beneficios_0" name="beneficios_0" maxlength="255" value="" placeholder="Adicionar benefícios"/>
+                                    </div>
+                                    </div>
+
+                                <?php }  ?> 
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <h4>20- Local da apresentação dos estagiários</h4>
+                <label for="cep" class="required">CEP</label>
+                <div class="form-inline">
+                    <input type="text" class="form-control" id="cep" name="cep" maxlength="9" value="<?php if($_POST){ echo $view_solicitacao->CEP; } else { echo $view_cep; } ?>" placeholder="CEP" style="margin-right: 15px;" onkeypress="return formataCEP(event, this);"/>
+                    <span class="input-group" style="cursor: pointer; font-size: 15px;" id="pesquisar_endereco"><img src="/web-files/img/search-32.png" alt="Pesquisar" title="Pesquisar" border="0"></span>  
+                    <span class="Loader hide"><img src="/web-files/img/Loader.GIF" alt="Carregando..." title="Carregando..." border="0" style="width: 25px"/></span>
+                </div>
+
+                <label for="cep" class="required">Endereço</label>
+                <div class="row">
+                    <div class="col col-sm-8">
+                        <input type="text" class="form-control" id="logradouro" name="logradouro" maxlength="140" value="<?php if($_POST){ echo $view_solicitacao->LOGRADOURO; } else { echo $view_logradouro; } ?>" placeholder="Endereço"/>
+                    </div>
+                    <div class="col col-sm-4">
+                        <input type="text" class="form-control" id="numero" name="numero" maxlength="5" value="<?php if($_POST){ echo $view_solicitacao->NUMERO; } else { echo $view_numero; }  ?>" placeholder="Nº" onkeypress="return formataNumDV(event, this, 6);"/>
+                    </div>
+                </div>
+
+                <label for="cep" class="required">Completemento</label>
+                <input type="text" class="form-control" id="complemento" name="complemento" maxlength="100" value="<?php if($_POST){ echo $view_solicitacao->COMPLEMENTO; } else { echo $view_complemento; } ?>" placeholder="Complemento"/>
+
+                <label for="cep" class="required">Bairro</label>
+                <input type="text" class="form-control" id="bairro" name="bairro" maxlength="50" value="<?php if($_POST){ echo $view_solicitacao->BAIRRO; } else { echo $view_bairro; } ?>" placeholder="Bairro"/>
+
+                <label for="cep" class="required">Cidade / Estado</label>
+                <div class="row">
+                    <div class="col col-sm-8">
+                        <input type="text" class="form-control" id="cidade" name="cidade" maxlength="80" value="<?php if($_POST){ echo $view_solicitacao->CIDADE; } else { echo $view_cidade; } ?>" placeholder="Cidade"/>
+                    </div>
+                    <div class="col col-sm-4">
+                        <input type="text" class="form-control" id="estado" name="estado" maxlength="2" value="<?php if($_POST){ echo $view_solicitacao->UF; } else { echo $view_estado; } ?>" placeholder="UF"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label>21- Nome do supervisor do estágio</label>
+                <input type="text" class="form-control" id="nome_supervisor" name="nome_supervisor" value="<?php echo $view_solicitacao->SUPERVISOR_NOME; ?>" placeholder="Nome do supervisor"/>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label>22- Cargo do supervisor do estágio</label>
+                <input type="text" class="form-control" id="cargo_supervisor" name="cargo_supervisor" value="<?php echo $view_solicitacao->SUPERVISOR_CARGO; ?>" placeholder="Cargo do supervisor"/>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label>23- E-mail do supervisor do estágio</label>
+                <input type="text" class="form-control" id="email_supervisor" name="email_supervisor" value="<?php echo $view_solicitacao->SUPERVISOR_EMAIL; ?>" placeholder="E-mail do supervisor"/>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label>
+                    24- Telefones para contato do supervisor
+                    <img src="/web-files/img/less.png" class="datagrid datagrid-less" onclick="javascript: datagrid_less()" style="cursor: pointer" alt="Tirar telefone" title="Tirar telefone" border="0"/>
+                    <img src="/web-files/img/plus.png" class="datagrid datagrid-plus" onclick="javascript: datagrid_plus()" style="cursor: pointer" alt="Adicionar telefone" title="Adicionar telefone" border="0"/>
+                </label><br/>
+                <div id="data">
+                    <?php if($_POST) { 
+                            
+                            if($view_telefoness){
+                                
+                                
+                                foreach ($view_telefoness as $key => $valor){
+                                        ?>
+                                            
+                                             <div class="row datagrid">
+                                                <div class="col col-sm-2">
+                                                    <input type="text" class="form-control" id="ddd_<?php echo $key; ?>" name="ddd_<?php echo $key; ?>" maxlength="4" value="<?php echo $view_ddds[$key]; ?>" placeholder="DDD" onkeypress="return formataNumDV(event, this, 2);"/>
+                                                </div>
+                                                <div class="col col-sm-3">
+                                                    <input type="text" class="form-control" id="tel_<?php echo $key; ?>" name="tel_<?php echo $key; ?>" maxlength="10" value="<?php echo $valor; ?>" placeholder="Telefone ou celular" onkeypress="return formataNumDV(event, this, 9);"/>
+                                                </div>
+                                                <div class="col col-sm-7">
+                                                    <input type="text" class="form-control" id="ramal_<?php echo $key; ?>" name="ramal_<?php echo $key; ?>" maxlength="100" value="<?php echo $view_ramais[$key]; ?>" placeholder="Informações adicionais"/>    
+                                                </div>
+                                            </div>
+                                            <?php
+                                                
+                                        
+                                    }
+                                }
+                            
+                            
+                        }  else { ?>        
+
+                        <div class="row datagrid">
+                            <div class="col col-sm-2">
+                                <input type="text" class="form-control" id="ddd_0" name="ddd_0" maxlength="4" value="<?php echo $view_ddd; ?>" placeholder="DDD" onkeypress="return formataNumDV(event, this, 2);"/>
+                            </div>
+                            <div class="col col-sm-3">
+                                <input type="text" class="form-control" id="tel_0" name="tel_0" maxlength="10" value="<?php echo $view_tel; ?>" placeholder="Telefone ou celular" onkeypress="return formataNumDV(event, this, 9);"/>
+                            </div>
+                            <div class="col col-sm-7">
+                                <input type="text" class="form-control" id="ramal_0" name="ramal_0" maxlength="100" value="<?php echo $view_ramal; ?>" placeholder="Informações adicionais"/>    
+                            </div>
+                        </div>
+
+                    <?php }  ?> 
+                            
+                </div> 
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label>25- Atividades que serão desenvolvidas.</label>
+                <textarea class="form-control" id="atividades" name="atividades"> <?php echo $view_solicitacao->ATIVIDADES; ?> </textarea>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label>26- Etapas seletivas.</label>
+                <textarea class="form-control" id="etapas_seletivas" name="etapas_seletivas"> <?php echo $view_solicitacao->ETAPAS; ?> </textarea>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label>27- Outros comentários.</label>
+                <textarea class="form-control" id="outros_comentarios" name="outros_comentarios"> <?php echo $view_solicitacao->METODO; ?> </textarea>
+
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+    </div>
+    
+</form>
+
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

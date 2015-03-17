@@ -1,0 +1,8 @@
+Options -indexes
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !(web-files/js|web-files/img|web-files/css|web-files/bootstrap|web-files/font-awesome-4.1.0|web-files/crop|web-files/jquery-drag-n-drop|web-files/plugins|web-files/pongstagr.am-master|web-files/server|web-files/tinymce|web-files/upload|system|system/helpers|system/helpers/MPDF57|system/helpers/MPDF57/ttfontdata|application/views/contratos|application/controllers)
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+

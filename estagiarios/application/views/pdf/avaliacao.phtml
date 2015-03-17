@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title><?php echo TITLE . " - " . $view_pagina; ?></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" type="text/css" href="/web-files/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/web-files/font-awesome-4.1.0/css/font-awesome.css">
+    </head>
+    <body>
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="">
+                        <img src="/web-files/img/parceria250.png" border="0" alt="Parceria Consult" title="Parceria Consult" width="100px"/>
+                    </td>
+                    <td align="center">
+                        <div>PARCERIA CONSULTORIA EMPRESARIAL LTDA</div>
+                        <div>ACOMPANHAMENTO DE ESTÁGIO</div>
+                        <div>QUESTIONÁRIO DE AVALIAÇÃO</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 style="text-align: center;"><span class="label label-default">AVALIAÇÃO DO ESTAGIÁRIO</span></h2>
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="font-size: 10px;">Empresa</td>
+                    <td style="font-size: 10px;">Endereço ou local da Empresa</td>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo $view_estagiario_empresa->EMP_NOME; ?></td>
+                    <td valign="top">
+
+                        <?php
+                        echo "{$view_EMP_LOGRADOURO}, {$view_EMP_NUMERO}<br/>";
+                        echo "{$view_EMP_BAIRRO}, {$view_EMP_CEP}<br/>";
+                        if ($view_EMP_COMPLEMENTO != "") {
+                            echo "{$view_EMP_COMPLEMENTO}<br/>";
+                        }
+                        echo "{$view_EMP_CIDADE}/{$view_EMP_UF}<br/>";
+                        ?>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;"><br/>Supervisor do Estágio e Cargo</td>
+                    <td style="font-size: 10px;"><br/>Telefone ou Email</td>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo "{$view_estagiario_empresa->ADM_NOME}<br/><b style='font-size: 9px'>{$view_estagiario_empresa->ADM_CARGO}</b>"; ?></td>
+                    <td valign="top">
+                        <?php
+                        echo $view_estagiario_empresa->ADM_EMAIL;
+
+                        if ($view_telefones_supervisor) {
+                            echo "<br/>";
+                            foreach ($view_telefones_supervisor as $obj) {
+                                echo "({$obj->DDD}) {$obj->TELEFONE}<br/>";
+                            }
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;"><br/>Nome do Estagiário e Cargo</td>
+                    <td style="font-size: 10px;"><br/>Curso</td>
+                    <?php
+                        $dta_inicio = "";
+                        $dta_fim = "";
+                        $dta_fim_atual = date('d')."/".date('m')."/".date('Y');
+                        $stg_cargo = "";
+                        $stg_curso = "";
+
+                        if ($view_dados_complementares) {
+                            foreach ($view_dados_complementares as $obj) {
+                                $stg_curso = $obj->CURSO;
+                                $dta_inicio = $obj->DTA_INICIO;
+                                $dta_fim = $obj->DTA_FIM;
+                                $stg_cargo = $obj->CARGO;
+                            }
+                        }
+                    ?>
+                </tr>
+                <tr>
+                    <td valign="top"><?php echo "{$view_estagiario_empresa->STG_NOME}<br/><b style='font-size: 9px'>{$stg_cargo}</b>"; ?></td>
+                    <td valign="top"><?php echo $stg_curso; ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <br/>
+
+        <div class="form-group"> 
+
+            <div style=" border: 1px solid black; padding: 5px">
+
+                <label><strong>Renovação</strong></label>
+
+                <?php
+                if ((int) $view_avaliacao->RENOVACAO == 1) {
+                    $av_um = "checked='true'";
+                } else if ((int) $view_avaliacao->RENOVACAO == 2) {
+                    $av_dois = "checked='true'";
+                } else if ((int) $view_avaliacao->RENOVACAO == 3) {
+                    $av_tres = "checked='true'";
+                } else {
+                    $av_um = "checked='true'";
+                }
+                ?>
+
+                <p>
+                    <input type="radio" class="form-control-static" name="renovacao"  id="renovacao" value="1" <?php echo $av_um; ?>/> Primeira
+                    <input type="radio" class="form-control-static" name="renovacao"  id="renovacao" value="2" <?php echo $av_dois; ?>/> Segunda
+                    <input type="radio" class="form-control-static" name="renovacao"  id="renovacao" value="3" <?php echo $av_tres; ?>/> Terceira
+                </p>
+            </div>
+
+            <br/>
+
+            <div style=" border: 1px solid black; padding: 5px">  
+
+                <label><strong>1- Qual o método utilizado para avaliação e acompanhamento do Estágio ?</strong></label>
+                <p><?php echo $view_avaliacao->QUAL_METODO; ?></p>
+
+            </div>
+            <br/>  
+
+
+            <div style=" border: 1px solid black; padding: 5px">  
+                <label><strong>2- Informe os dias e os horários da Supervisão do estágio.</strong></label>
+                <p><?php echo $view_avaliacao->DIAS_HORARIOS; ?></p>
+
+            </div>
+            <br/>
+            <div class="panel panel-default" style=" border: 1px solid black; padding: 5px">
+                <div class="panel-heading">
+
+                    <div class="row">
+
+                        <div class="col col-sm-5">
+                            <strong>3- Avaliação do Estágio</strong>
+                            <br/>
+                        </div>
+
+                        <p class="col col-sm-7" style="border: 1px solid #333; padding: 5px;">
+                            <strong>LEGENDA = </strong>
+                            <span>[E] Excelente,</span>
+                            <span>[B] Bom,</span>
+                            <span>[R] Regular,</span>
+                            <span>[D] Desenvolver</span>
+                        </p>
+                    </div>
+                </div>
+                <table class="table" align="center" style="width: 100%">
+                    <tr> 
+                        <td align="center" style="border: 1px solid #333; padding: 5px;">CRITÉRIOS</td>
+                        <td style="border: 1px solid #333; padding: 5px;">E</td>
+                        <td style="border: 1px solid #333; padding: 5px;">B</td>
+                        <td style="border: 1px solid #333; padding: 5px;">R</td>
+                        <td style="border: 1px solid #333; padding: 5px;">D</td>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->ASSIDUIDADE == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->ASSIDUIDADE == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->ASSIDUIDADE == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->ASSIDUIDADE == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Assiduidade</td>
+                        <td><input type="radio" class="form-control-static" name="assiduidade" id="assiduidade" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="assiduidade" id="assiduidade" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="assiduidade" id="assiduidade" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="assiduidade" id="assiduidade" value="D" <?php echo $d; ?>/></td>
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->CRESCIMENTO == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->CRESCIMENTO == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->CRESCIMENTO == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->CRESCIMENTO == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Busca de crescimento e aprimoramento profissional</td>
+                        <td><input type="radio" class="form-control-static" name="crescimento" id="crescimento" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="crescimento" id="crescimento" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="crescimento" id="crescimento" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="crescimento" id="crescimento" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->CAPACIDADE == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->CAPACIDADE == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->CAPACIDADE == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->CAPACIDADE == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Capacidade no desempenho das atividades</td>
+                        <td><input type="radio" class="form-control-static" name="capacidade" id="capacidade" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="capacidade" id="capacidade" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="capacidade" id="capacidade" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="capacidade" id="capacidade" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->COOPERACAO == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->COOPERACAO == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->COOPERACAO == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->COOPERACAO == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Cooperação</td>
+                        <td><input type="radio" class="form-control-static" name="cooperacao" id="cooperacao" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="cooperacao" id="cooperacao" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="cooperacao" id="cooperacao" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="cooperacao" id="cooperacao" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->CUMPRIMENTO == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->CUMPRIMENTO == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->CUMPRIMENTO == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->CUMPRIMENTO == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Cumprimento de metas e de prazos estabelecidos</td>
+                        <td><input type="radio" class="form-control-static" name="cumprimento" id="cumprimento" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="cumprimento" id="cumprimento" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="cumprimento" id="cumprimento" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="cumprimento" id="cumprimento" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->DINAMISMO == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->DINAMISMO == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->DINAMISMO == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->DINAMISMO == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Dinamismo</td>
+                        <td><input type="radio" class="form-control-static" name="dinamismo" id="dinamismo" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="dinamismo" id="dinamismo" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="dinamismo" id="dinamismo" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="dinamismo" id="dinamismo" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->FLEXIBILIDADE == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->FLEXIBILIDADE == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->FLEXIBILIDADE == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->FLEXIBILIDADE == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Flexibilidade e facilidade de adaptação à mudançasnas atividades</td>
+                        <td><input type="radio" class="form-control-static" name="flexibilidade" id="flexibilidade" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="flexibilidade" id="flexibilidade" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="flexibilidade" id="flexibilidade" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="flexibilidade" id="flexibilidade" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->INICIATIVA == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->INICIATIVA == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->INICIATIVA == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->INICIATIVA == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Iniciativa</td>
+                        <td><input type="radio" class="form-control-static" name="iniciativa" id="iniciativa" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="iniciativa" id="iniciativa" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="iniciativa" id="iniciativa" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="iniciativa" id="iniciativa" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->INTERESSE == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->INTERESSE == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->INTERESSE == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->INTERESSE == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Interesse em aprofundar os conhecimentos nas atividades que desenvolve</td>
+                        <td><input type="radio" class="form-control-static" name="interesse" id="interesse" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="interesse" id="interesse" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="interesse" id="interesse" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="interesse" id="interesse" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->MOTIVACAO == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->MOTIVACAO == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->MOTIVACAO == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->MOTIVACAO == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Nível motivacional</td>
+                        <td><input type="radio" class="form-control-static" name="motivacao" id="motivacao" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="motivacao" id="motivacao" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="motivacao" id="motivacao" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="motivacao" id="motivacao" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->ORGANIZACAO == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->ORGANIZACAO == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->ORGANIZACAO == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->ORGANIZACAO == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Organização e exposição de idéias escritas de maneira clara e objetiva</td>
+                        <td><input type="radio" class="form-control-static" name="organizacao" id="organizacao" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="organizacao" id="organizacao" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="organizacao" id="organizacao" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="organizacao" id="organizacao" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->PONTUALIDADE == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->PONTUALIDADE == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->PONTUALIDADE == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->PONTUALIDADE == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Pontualidade</td>
+                        <td><input type="radio" class="form-control-static" name="pontualidade" id="pontualidade" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="pontualidade" id="pontualidade" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="pontualidade" id="pontualidade" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="pontualidade" id="pontualidade" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->RELACIONAMENTO == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->RELACIONAMENTO == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->RELACIONAMENTO == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->RELACIONAMENTO == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Relacionamento interpessoal</td>
+                        <td><input type="radio" class="form-control-static" name="relacionamento" id="relacionamento" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="relacionamento" id="relacionamento" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="relacionamento" id="relacionamento" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="relacionamento" id="relacionamento" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->RESPEITO == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->RESPEITO == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->RESPEITO == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->RESPEITO == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Respeito às normas e regulamentos da Empresa</td>
+                        <td><input type="radio" class="form-control-static" name="respeito" id="respeito" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="respeito" id="respeito" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="respeito" id="respeito" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="respeito" id="respeito" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                    <tr>
+
+                        <?php
+                        if ($view_avaliacao->RESPONSABILIDADE == "E") {
+                            $e = "checked='true'";
+                        } else if ($view_avaliacao->RESPONSABILIDADE == "B") {
+                            $b = "checked='true'";
+                        } else if ($view_avaliacao->RESPONSABILIDADE == "R") {
+                            $r = "checked='true'";
+                        } else if ($view_avaliacao->RESPONSABILIDADE == "D") {
+                            $d = "checked='true'";
+                        } else {
+                            $e = "checked='true'";
+                        }
+                        ?>
+
+                        <td align="right">Responsabilidade</td>
+                        <td><input type="radio" class="form-control-static" name="responsabilidade" id="responsabilidade" value="E" <?php echo $e; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="responsabilidade" id="responsabilidade" value="B" <?php echo $b; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="responsabilidade" id="responsabilidade" value="R" <?php echo $r; ?>/></td>
+                        <td><input type="radio" class="form-control-static" name="responsabilidade" id="responsabilidade" value="D" <?php echo $d; ?>/></td>
+
+
+                        <?php
+                        unset($e);
+                        unset($b);
+                        unset($r);
+                        unset($d);
+                        ?>
+                    </tr>
+                </table>
+            </div>
+
+            <br/>  
+
+            <div style=" border: 1px solid black; padding: 5px"> 
+                <br/> 
+                <label><strong>4- Resultado da avaliação do Estágio</strong> </label>
+                <p>
+
+                    <?php
+                    if ((int) $view_avaliacao->RESULTADO == 1) {
+                        $rs_um = "checked='true'";
+                    } else if ((int) $view_avaliacao->RESULTADO == 2) {
+                        $rs_dois = "checked='true'";
+                    } else if ((int) $view_avaliacao->RESULTADO == 3) {
+                        $rs_tres = "checked='true'";
+                    } else {
+                        $rs_um = "checked='true'";
+                    }
+                    ?>
+
+
+                    <input type="radio" class="form-control-static" name="resultado"  id="resultado" value="1" <?php echo $rs_um; ?>/> Renovar estágio
+                    <input type="radio" class="form-control-static" name="resultado"  id="resultado" value="2" <?php echo $rs_dois; ?>/> Efetivar estágio
+                    <input type="radio" class="form-control-static" name="resultado"  id="resultado" value="3" <?php echo $rs_tres; ?>/> Cancelar estágio
+                </p>
+            </div>
+
+            <br/>  
+
+
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>5- Comentários do Supervisor do Estágio.</strong> </label>
+                <p><?php echo $view_avaliacao->COMENTARIOS; ?></p>
+
+            </div>
+
+
+
+            <br/>  
+
+            <div style=" border: 1px solid black; padding: 5px">
+                <table style="width: 100%">
+                    <tr>
+                        <td  style="font-size: 10px; width: 100px; background: #ccc;" align="center" > Supervisor do<br/>Estágio </td>
+                        <td> 
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="font-size: 10px">Nome</td>
+                                    <td style="font-size: 10px"><strong><?php echo $view_estagiario_empresa->ADM_NOME; ?></strong></td>
+                                    <td style="font-size: 10px">Cargo</td>
+                                    <td style="font-size: 10px"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 10px">Data</td>
+                                    <td style="font-size: 10px"><strong><?php echo date('d') . "/" . date('m') . "/" . date('Y'); ?></strong></td>
+                                    <td style="font-size: 10px">Assinatura</td>
+                                    <td style="font-size: 10px"></td>                                    
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br/> 
+
+
+            <div style=" border: 1px solid black; padding: 5px">
+                <label><strong>6- Comentários da Parceria.</strong> </label>
+                <p><?php echo $view_avaliacao->PARCERIA; ?></p>
+
+            </div>
+
+            <br/>  
+
+            <div style=" border: 1px solid black; padding: 5px">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="font-size: 10px; width: 30%; background: #ccc;">Data</td>
+                        <td style="font-size: 10px; width: 40%; background: #ccc;">Assinatura do Estagiário</td>
+                        <td style="font-size: 10px; width: 40%; background: #ccc;">Visto da Parceria</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 10px; width: 30%; height: 40px; border-right: 1px solid black;"><strong><?php echo date('d') . "/" . date('m') . "/" . date('Y'); ?></strong></td>
+                        <td style="font-size: 10px; width: 40%; height: 40px; border-right: 1px solid black;"></td>
+                        <td style="font-size: 10px; width: 40%; height: 40px;"></td>
+                </table>
+            </div>
+
+            <br/> 
+        </div>
+
+
+
+
+
+    </body>
+</html>

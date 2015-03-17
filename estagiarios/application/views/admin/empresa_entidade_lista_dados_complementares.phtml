@@ -1,0 +1,169 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/empresas-entidades-lista-estagiarios/">Lista de Estagiarios Empresas / Entidades</a></li>
+    <li>Lista de Dados Complementares do Estágio</li>
+</ol>
+
+<?php if ($view_info_empresa) { ?>
+    <br/>
+    <label>Empresa:</label> <?php echo $view_info_empresa->NOME_RAZAO_SOCIAL; ?><br/>
+    <label>CNPJ:</label> <?php echo $view_info_empresa->CNPJ; ?><br/>
+<?php } ?>
+<br/>
+
+<form method="post" class="form" >
+
+    <div class="jumbotron">
+        <h4>Estagiario: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->STG_NOME}</span>"; ?></h4>
+        <h4>CPF: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->STG_CPF}</span>"; ?></h4>
+        <hr/>
+        <h4>Responsável: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->ADM_NOME}</span>"; ?></h4>
+        <h4>CPF: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->ADM_CPF}</span>"; ?></h4>
+        <hr/>
+        <h4>Empresa: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->EMP_NOME}</span>"; ?></h4>
+        <h4>CNPJ: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->EMP_CNPJ}</span>"; ?></h4>
+    </div>
+    <h2><span class="label label-default">Lista de Dados Complementares do Estágio</span></h2>
+
+    <?php if ($view_papel != "ESTAGIARIO") { ?>
+        <?php if ($view_qntdd_dados_complementares < 1) { ?>
+            <a href="/<?php echo $view_language; ?>/admin/dados-complementares-estagiario-empresa-entidade/<?php echo $view_codestagiario; ?>/<?php echo $view_codempresa; ?>" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Adicionar Dados Complementares</a>
+        <?php } ?>
+        <?php if ($view_qntdd_dados_complementares < 4 && $view_qntdd_dados_complementares >= 1) { ?>
+            <a href="/<?php echo $view_language; ?>/admin/dados-complementares-renovar-estagio/<?php echo $view_codestagiario; ?>/<?php echo $view_codempresa; ?>" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Renovar Estágio</a>
+        <?php } ?>
+    <?php } else { echo "<br/>"; } ?>
+        
+    <?php if ($view_dados_complementares == "") { ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                ATENÇÃO
+            </div>
+            <table class="table">
+                <thead>
+                <th>Nada na lista!</th>
+                </thead>
+            </table>
+        </div>
+
+        <?php
+    } else {
+        $i=0;
+        foreach ($view_dados_complementares as $dados_complementares) {
+            ?>           
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <div class="row">
+                        <div class="col col-sm-5">
+                            <?php echo $dados_complementares->DTA; ?>
+                            <?php if (!$dados_complementares->TERMO_ENTREGUE) {  ?> <br><span style="color: red; font-size: 10px; font-weight: bold"> * Estágio com pendência de entrega do Termo de Compromisso!</span> <?php } ?>
+                        </div>
+                        <div class="col col-sm-7" style="text-align: right">
+                            
+                            <strong>Ações: </strong>
+                            <?php if ($view_papel != "ESTAGIARIO") { ?>
+                                <a href="/<?php echo $view_language; ?>/admin/editar-dados-complementares-estagiario-empresa-entidade/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/document-edit-32.png" alt="Editar Dados Complementares do Estágio"  title="Editar Dados Complementares do Estágio" border="0"/></a> 
+                            <?php } else { ?>
+                                <a href="/<?php echo $view_language; ?>/admin/visualizar-dados-complementares-estagiario-empresa-entidade/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/document-edit-32.png" alt="Visualizar Dados Complementares do Estágio"  title="Visualizar Dados Complementares do Estágio" border="0"/></a> 
+                            <?php }  ?>
+                                
+                            <a href="/<?php echo $view_language; ?>/admin/ficha-desligamento/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/ficha-desligamento.png" alt="Ficha de Desligamento"  title="Ficha de Desligamento" border="0"/></a>
+                            
+                            <?php if ($view_papel == "ESTAGIARIO" || $view_papel == "MASTER") { ?>
+                            <a href="/<?php echo $view_language; ?>/admin/questionario-estagiario/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/questionario_estagiario.png" alt="Questionário do Estagiário"  title="Questionário do Estagiário" border="0"/></a>
+                             <?php } ?>
+                            
+                            
+                            <?php if ($view_papel != "ESTAGIARIO") { ?>
+                            <?php if ($dados_complementares->STATUS) { ?>
+
+                                <a href="/<?php echo $view_language; ?>/admin/status-dados-complementares/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/1/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/icon-star-on.png" alt="Desativar Estagiario Empresa/Entidade"  title="Desativar Estagiario Empresa/Entidade" border="0"/></a> 
+
+                            <?php } else { ?>
+
+                                <a href="/<?php echo $view_language; ?>/admin/status-dados-complementares/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/0/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/icon-star-off.png" alt="Ativar Estagiario Empresa/Entidade"  title="Ativar Estagiario Empresa/Entidade" border="0"/></a> 
+            
+                            <?php }} ?>
+                                
+                            <?php if ($view_papel == "MASTER") { ?>
+                            <?php if ($dados_complementares->TERMO_ENTREGUE) { ?>
+
+                                <a href="/<?php echo $view_language; ?>/admin/termo-dados-complementares/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/1/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/icon-star-on-green.png" alt="Desativar Entrega Termo de Compromisso"  title="Desativar Entrega Termo de Compromisso" border="0"/></a> 
+
+                            <?php } else { ?>
+
+                                <a href="/<?php echo $view_language; ?>/admin/termo-dados-complementares/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/0/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/icon-star-off.png" alt="Ativar Entrega Termo de Compromisso"  title="Ativar Entrega Termo de Compromisso" border="0"/></a> 
+            
+                            <?php }} ?>    
+                            
+                            <?php if ($view_papel != "ESTAGIARIO") { ?>
+                                <a href="/<?php echo $view_language; ?>/admin/avaliar-estagiario-empresa-entidade/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/dados_complementares2.png" alt="Avaliar Estagiario Empresa/Entidade"  title="Avaliar Estagiario Empresa/Entidade" border="0"/></a>
+                            <?php } ?>
+                                
+                            <?php if ($view_papel != "ESTAGIARIO") { ?>    
+                                <a target="_blank" href="/<?php echo $view_language; ?>/admin/pdf-avaliacao/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/pdf.png" alt="PDF - Avaliação"  title="PDF - Avaliação" border="0"/></a>
+                            <?php } ?>
+                                
+                                <a target="_blank" href="/<?php echo $view_language; ?>/admin/pdf-ficha-desligamento/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/pdf-2.png" alt="PDF - Ficha de Desligamento"  title="PDF - Ficha de Desligamento" border="0"/></a>
+                                
+                                <?php if($i == 0) { ?>
+                                    
+                                    <a target="_blank" href="/<?php echo $view_language; ?>/admin/pdf-acordo-cooperacao-termo-compromisso-estagio/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/pdf-3.png" alt="PDF - Acordo de Cooperação e Termo de Compromisso de Estágio"  title="PDF - Acordo de Cooperação e Termo de Compromisso de Estágio" border="0"/></a>
+                                
+                                <?php }  else { ?>
+                                
+                                    <a target="_blank" href="/<?php echo $view_language; ?>/admin/pdf-termo-aditivo-estagio/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/pdf-4.png" alt="PDF - Termo aditivo"  title="PDF - Termo aditivo" border="0"/></a>
+                                    
+                                <?php } ?>
+                            
+                            <?php if ($view_papel == "ESTAGIARIO" || $view_papel == "MASTER") { ?>    
+                                <a target="_blank" href="/<?php echo $view_language; ?>/admin/pdf-questionario-estagiario/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/pdf.png" alt="PDF - Quationário Estagiário"  title="PDF - Questionário Estagiário" border="0"/></a>
+                                <a href="/<?php echo $view_language; ?>/admin/delete-dados-complementares/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/trash-can-32.png" alt="Excluir Dado Complementare"  title="Excluir Dado Complementare" border="0"/></a>
+                            <?php } ?>    
+                                
+                                
+                        </div>
+                    </div>
+
+                </div>     
+                <table class="table">
+                    <thead>
+                        <th>Início</th>
+                        <th>Fim</th>
+                        <th>Bolsa</th>
+                        <th>Carga Horária</th>
+                        <th>Instituição / Cargo</th>
+                    </thead>
+                    <tr>
+                        <td style="width: 13%"><?php echo $dados_complementares->DTA_INICIO; ?></td>
+                        <td style="width: 13%"><?php echo $dados_complementares->DTA_FIM; ?></td>
+                        <td style="width: 13%">R$ <?php echo $dados_complementares->BOLSA_VALOR; ?></td>
+                        <td style="width: 13%"><?php echo $dados_complementares->CARGA_HORARIA; ?> hs.</td>
+                        <td>
+                            <?php 
+                                echo "<strong>Inst.:</strong> ".$dados_complementares->INTITUICAO_ENSINO."<br/>"; 
+                                echo "<strong>Cargo:</strong> ".$dados_complementares->CARGO."<br/>"; 
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <?php
+            $i++;
+        }
+    }
+    ?>
+
+</form>
+
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

@@ -1,0 +1,36 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+
+<div>
+
+    <h2><span class="label label-default">Alterar Senha</span></h2>
+    <br/>
+
+    <?php if ($view_erro == "") { ?>
+        <div class="alert alert-info" role="alert">Preencha todos os campos</div>
+    <?php } else { ?>
+        <div class="alert alert-danger" role="alert"><?php echo $view_erro; ?></div>
+    <?php } ?>
+
+    <form method="post" class="form">
+        <div class="form-group">
+            <label>Senha atual</label>
+            <input type="password" class="form-control" name="senha_atual" placeholder="Senha atual"/>
+        
+            <label>Nova senha</label>
+            <input type="password" class="form-control" name="senha_nova" placeholder="Nova senha"/>
+        
+            <label>Repetir senha</label>  
+            <input type="password" class="form-control" name="senha_repetir" placeholder="Repetir senha"/>
+        </div>
+        <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+    </form>
+
+
+</div>
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

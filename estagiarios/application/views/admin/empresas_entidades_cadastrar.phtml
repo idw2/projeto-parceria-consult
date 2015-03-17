@@ -1,0 +1,172 @@
+<?php require_once 'header.phtml'; ?>        
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/empresas-entidades/">Lista de Empresas / Entidades</a></li>
+    <li>Cadastro de Empresas / Entidades</li>
+</ol>
+
+<h2><span class="label label-default">Cadastro de Empresas / Entidades</span></h2>
+<br/>
+
+<?php if ($view_erro == "") { ?>
+    <div class="alert alert-info" role="alert">Preencha todos os campos</div>
+<?php } else { ?>
+    <div class="alert alert-danger" role="alert"><?php echo $view_erro; ?></div>
+<?php } ?>
+
+<form method="post" class="form" >
+
+    <div class="form-group"> 
+
+        <h4>Dados pessoais</h4>
+        <label>Nome Empresa/Entidade</label>
+        <input type="text" name="nome_empresa" class="form-control" value="<?php echo $view_nome_empresa; ?>" placeholder="Nome da Empresa/Entidade"/>
+
+        <label>CNPJ</label>
+        <input type="text" name="cnpj" class="form-control" value="<?php echo $view_cnpj; ?>" placeholder="CNPJ" onkeypress="return formataCNPJ(event, this);"/>
+
+        <label>Site</label>
+        <input type="text" class="form-control" name="site" value="<?php if($view_site == ""){ echo "http://"; } else { echo $view_site; } ?>" placeholder="http:// ou https://"/>
+        
+        <label>E-mail</label>
+        <input type="text" class="form-control" name="email" value="<?php echo $view_email_cadastro; ?>" placeholder="E-mail"/>
+        <input type="hidden" name="dia" value="30"/>
+        <input type="hidden" name="mes" value="10"/>
+        <input type="hidden" name="ano" value="1977"/>
+
+<!--        <label>Abertura/Fundação</label>
+        <div class="row">
+
+            <div class="col col-sm-4">
+                <select name="dia" class="form-control">
+                    <optgroup label="Dia">
+                        <?php
+                        $i = 1;
+                        while ($i < 32) {
+
+                            ( $view_dia == $i ) ? $selected = "selected" : $selected = "";
+
+                            if (strlen($i) == 1) {
+                                echo "<option value='0{$i}' {$selected}>0{$i}</option>";
+                            } else {
+                                echo "<option value='{$i}' {$selected}>{$i}</option>";
+                            }
+                            $i++;
+                        }
+                        ?>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="col col-sm-4">
+                <select name="mes" class="form-control">
+                    <optgroup label="Mês">
+                        <?php
+                        $i = 1;
+                        while ($i < 13) {
+
+                            ( $view_mes == $i ) ? $selected = "selected" : $selected = "";
+
+                            if (strlen($i) == 1) {
+                                echo "<option value='0{$i}' {$selected}>0{$i}</option>";
+                            } else {
+                                echo "<option value='{$i}' {$selected}>{$i}</option>";
+                            }
+                            $i++;
+                        }
+                        ?>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="col col-sm-4">
+                <select name="ano" class="form-control">
+                    <optgroup label="Ano">
+                        <?php
+                        $i = (int) date("Y");
+                        while ($i > 1929) {
+
+                            ( $view_ano == $i ) ? $selected = "selected" : $selected = "";
+
+                            echo "<option value='{$i}' {$selected}>{$i}</option>";
+                            $i--;
+                        }
+                        ?>
+                    </optgroup>
+                </select>
+            </div>
+
+        </div>-->
+
+        <hr/>
+        <label>
+            Telefone da instituição 
+            <img src="/web-files/img/less.png" class="datagrid datagrid-less" onclick="javascript: datagrid_less()" style="cursor: pointer" alt="Tirar telefone" title="Tirar telefone" border="0"/>
+            <img src="/web-files/img/plus.png" class="datagrid datagrid-plus" onclick="javascript: datagrid_plus()" style="cursor: pointer" alt="Adicionar telefone" title="Adicionar telefone" border="0"/>
+        </label><br/>
+        <div id="data">
+            <?php if ($view_datagrid == "") { ?>
+                <div class="row datagrid">
+                    <div class="col col-sm-2">
+                        <input type="text" class="form-control" id="ddd_0" name="ddd_0" maxlength="4" value="<?php echo $view_ddd; ?>" placeholder="DDD" onkeypress="return formataNumDV(event, this, 2);"/>
+                    </div>
+                    <div class="col col-sm-3">
+                        <input type="text" class="form-control" id="tel_0" name="tel_0" maxlength="10" value="<?php echo $view_tel; ?>" placeholder="Telefone ou celular" onkeypress="return formataNumDV(event, this, 9);"/>
+                    </div>
+                    <div class="col col-sm-7">
+                        <input type="text" class="form-control" id="ramal_0" name="ramal_0" maxlength="100" value="<?php echo $view_ramal; ?>" placeholder="Informações adicionais"/>    
+                    </div>
+                </div>
+            <?php } else {
+                echo $view_datagrid;
+            } ?>
+        </div>    
+
+       <hr/>
+        <h4>Endereço</h4>
+        <label for="cep" class="required">CEP</label>
+        <div class="form-inline">
+            <input type="text" class="form-control" id="cep" name="cep" maxlength="9" value="<?php echo $view_cep; ?>" placeholder="CEP" style="margin-right: 15px;" onkeypress="return formataCEP(event, this);"/>
+            <span class="input-group" style="cursor: pointer; font-size: 15px;" id="pesquisar_endereco"><img src="/web-files/img/search-32.png" alt="Pesquisar" title="Pesquisar" border="0"></span>  
+            <span class="Loader hide"><img src="/web-files/img/Loader.GIF" alt="Carregando..." title="Carregando..." border="0" style="width: 25px"/></span>
+        </div>
+
+        <label for="cep" class="required">Endereço</label>
+        <div class="row">
+            <div class="col col-sm-8">
+                <input type="text" class="form-control" id="logradouro" name="logradouro" maxlength="140" value="<?php echo $view_logradouro; ?>" placeholder="Endereço"/>
+            </div>
+            <div class="col col-sm-4">
+                <input type="text" class="form-control" id="numero" name="numero" maxlength="5" value="<?php echo $view_numero; ?>" placeholder="Nº" onkeypress="return formataNumDV(event, this, 6);"/>
+            </div>
+        </div>
+
+        <label for="cep" class="required">Completemento</label>
+        <input type="text" class="form-control" id="complemento" name="complemento" maxlength="100" value="<?php echo $view_complemento; ?>" placeholder="Complemento"/>
+
+        <label for="cep" class="required">Bairro</label>
+        <input type="text" class="form-control" id="bairro" name="bairro" maxlength="50" value="<?php echo $view_bairro; ?>" placeholder="Bairro"/>
+
+        <label for="cep" class="required">Cidade / Estado</label>
+        <div class="row">
+            <div class="col col-sm-8">
+                <input type="text" class="form-control" id="cidade" name="cidade" maxlength="80" value="<?php echo $view_cidade; ?>" placeholder="Cidade"/>
+            </div>
+            <div class="col col-sm-4">
+                <input type="text" class="form-control" id="estado" name="estado" maxlength="2" value="<?php echo $view_estado; ?>" placeholder="UF"/>
+            </div>
+        </div>
+    </div>
+
+    <hr/>        
+
+    <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+    <hr/>
+    <br/>
+    
+</form>
+
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

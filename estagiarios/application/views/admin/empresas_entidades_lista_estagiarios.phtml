@@ -1,0 +1,163 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+
+<div>
+
+    <ol class="breadcrumb">
+        <li>Empresas e Entidades</li>
+        <?php if ($view_papel != "ESTAGIARIO") { ?>
+            <li>Lista de Estagiários Empresas / Entidades</li>
+        <?php } else { ?>
+            <li>Meus Estágios</li>
+        <?php } ?>
+    </ol>
+
+    
+    <?php if ($view_papel != "ESTAGIARIO") { ?>
+        <h2><span class="label label-default">Lista de Estagiários Empresas / Entidades</span></h2>
+    <?php } else { ?>
+        <h2><span class="label label-default">Meus Estágios</span></h2>
+    <?php } ?>
+    
+
+    <?php if ($view_info_empresa) { ?>
+        <br/>
+        <label>Empresa:</label> <?php echo $view_info_empresa->NOME_RAZAO_SOCIAL; ?><br/>
+        <label>CNPJ:</label> <?php echo $view_info_empresa->CNPJ; ?><br/>
+    <?php } ?>
+    <br/>
+
+    <?php if ($view_papel != "ESTAGIARIO") { ?>
+    
+    <!--<a href="/<?php echo $view_language; ?>/admin/cadastrar-administrador-empresa-entidade" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Adicionar Administrador Empresa/Entidade</a>-->
+    <a href="/<?php echo $view_language; ?>/admin/adicionar-estagiario-empresa-entidade" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Adicionar Estagiários Empresa/Entidade</a>
+    <a href="/<?php echo $view_language; ?>/admin/pdf-relacao-estagiarios" target="_blank"><img src="/web-files/img/pdf.png" alt="PDF - Relação de Estagiarios"  title="PDF - Relação de Estagiarios" border="0"/></a> 
+
+    <?php } ?>
+    
+    <?php if ($view_lista_estagiarios == "") { ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                ATENÇÃO
+            </div>
+            <table class="table">
+                <thead>
+                <th>Nada na lista!</th>
+                </thead>
+            </table>
+        </div>
+
+        <?php
+    } else {
+        foreach ($view_lista_estagiarios as $empresa) {
+            ?>           
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <div class="row">
+                        <div class="col col-sm-6">
+                            <?php echo $empresa->STG_DTA; ?>
+                        </div>
+                        <div class="col col-sm-6" style="text-align: right">
+                            
+                            <strong>Ações: </strong>
+                            
+                            <a href="/<?php echo $view_language; ?>/admin/cadastrar-estagiario-empresa-entidade/<?php echo strtolower($empresa->STG_CODCADASTRO); ?>/<?php echo strtolower($empresa->EMP_CODCADASTRO); ?>"><img src="/web-files/img/document-edit-32.png" alt="Editar Estagiario Empresa/Entidade"  title="Editar Estagiario Empresa/Entidade" border="0"/></a> 
+                            
+                            <?php if ($view_papel != "ESTAGIARIO") { ?>  
+                            <?php if ($empresa->STG_STATUS_ESTAGIARIO) { ?>
+
+                                <a href="/<?php echo $view_language; ?>/admin/status-estagiario-empresa-entidade/<?php echo strtolower($empresa->STG_CODCADASTRO); ?>/1/<?php echo strtolower($empresa->EMP_CODCADASTRO); ?>"><img src="/web-files/img/icon-star-on.png" alt="Desativar Estagiario Empresa/Entidade"  title="Desativar Estagiario Empresa/Entidade" border="0"/></a> 
+
+                            <?php } else { ?>
+
+                                <a href="/<?php echo $view_language; ?>/admin/status-estagiario-empresa-entidade/<?php echo strtolower($empresa->STG_CODCADASTRO); ?>/0/<?php echo strtolower($empresa->EMP_CODCADASTRO); ?>"><img src="/web-files/img/icon-star-off.png" alt="Ativar Estagiario Empresa/Entidade"  title="Ativar Estagiario Empresa/Entidade" border="0"/></a> 
+
+                            <?php }} ?>
+                            
+                            <a href="/<?php echo $view_language; ?>/admin/lista-dados-complementares-estagiario-empresa-entidade/<?php echo strtolower($empresa->STG_CODCADASTRO); ?>/<?php echo strtolower($empresa->EMP_CODCADASTRO); ?>"><img src="/web-files/img/avaliacao32.png" alt="Dados complementares do estágio"  title="Dados complementares do estágio" border="0"/></a>     
+                            <a href="/<?php echo $view_language; ?>/admin/lista-documentos-estagiario/<?php echo strtolower($empresa->STG_CODCADASTRO); ?>/<?php echo strtolower($empresa->EMP_CODCADASTRO); ?>"><img src="/web-files/img/documents.png" alt="Documentos enviados"  title="Documentos enviados" border="0"/></a>     
+
+                        </div>
+                    </div>
+
+                </div>     
+                <table class="table">
+                    <thead>
+                        <?php if ($view_papel == "MASTER" || $view_papel == "GESTOR" || $view_papel == "ESTAGIARIO") { ?>   
+                            <th>Empresa / Entidade - CNPJ</th>
+                        <?php } ?> 
+                    <th>Responsável / Ficha - CPF</th>
+                        <?php if ($view_papel != "ESTAGIARIO") { ?>
+                            <th>Estagiário - CPF</th>
+                        <?php } ?>
+                </thead>
+                    <tr>
+                        <?php if ($view_papel == "MASTER" || $view_papel == "GESTOR" || $view_papel == "ESTAGIARIO") { ?>    
+
+                            <td style="width: 40%">
+                                <?php
+                                echo $empresa->EMP_NOME;
+                                echo "<br/><strong>CNPJ: </strong>" . $empresa->EMP_CNPJ;
+                                echo "<br/><strong>ID: </strong>" . $empresa->EMP_ID;
+                                echo "<br/><strong>EMAIL: </strong>" . $empresa->EMP_EMAIL;
+                                //echo "<br/><strong>Fund.: </strong>" . $empresa->EMP_FUNDADE_EM;
+                                ?>
+                            </td>
+                        <?php } ?> 
+                        <td style="<?php if ($view_papel == "EMPRESA_ENTIDADE") {
+                    echo "width: 50%";
+                } else {
+                    echo "width: 30%";
+                } ?> ">
+                            <?php
+                            echo $empresa->ADM_NOME;
+                            echo "<br/><strong>CPF: </strong>" . $empresa->ADM_CPF;
+                            echo "<br/><strong>ID: </strong>" . $empresa->ADM_ID;
+                            echo "<br/><strong>EMAIL: </strong>" . $empresa->ADM_EMAIL;
+                            echo "<br/><strong>Nasc.: </strong>" . $empresa->ADM_NASCIDO_EM;
+                            ?>
+                        </td>
+                        <?php if ($view_papel != "ESTAGIARIO") { ?>
+                        <td>
+                            <?php
+                            echo $empresa->STG_NOME;
+                            echo "<br/><strong>CPF: </strong>" . $empresa->STG_CPF;
+                            echo "<br/><strong>ID: </strong>" . $empresa->STG_ID;
+                            echo "<br/><strong>EMAIL: </strong>" . $empresa->STG_EMAIL;
+                            echo "<br/><strong>Nasc.: </strong>" . $empresa->STG_NASCIDO_EM;
+                            ?>
+                        </td>
+                          <?php } ?>
+        <!--                        <td>
+                            <a href="/<?php echo $view_language; ?>/admin/cadastrar-estagiario-empresa-entidade/<?php echo strtolower($empresa->CODCADASTRO); ?>"><img src="/web-files/img/document-edit-32.png" alt="Editar Estagiario Empresa/Entidade"  title="Editar Estagiario Empresa/Entidade" border="0"/></a> 
+                        <?php if ($empresa->ADMIN_STATUS) { ?>
+
+                                                    <a href="/<?php echo $view_language; ?>/admin/status-estagiario-empresa-entidade/<?php echo $empresa->CODCADASTRO; ?>/1/<?php echo $empresa->EMP_CODCADASTRO; ?>"><img src="/web-files/img/icon-star-on.png" alt="Desativar Estagiario Empresa/Entidade"  title="Desativar Estagiario Empresa/Entidade" border="0"/></a> 
+
+                        <?php } else { ?>
+
+                                                    <a href="/<?php echo $view_language; ?>/admin/status-estagiario-empresa-entidade/<?php echo $empresa->CODCADASTRO; ?>/0/<?php echo $empresa->EMP_CODCADASTRO; ?>"><img src="/web-files/img/icon-star-off.png" alt="Ativar Estagiario Empresa/Entidade"  title="Ativar Estagiario Empresa/Entidade" border="0"/></a> 
+
+            <?php } ?>
+                        </td>-->
+                    </tr>
+                </table>
+            </div>
+        <?php
+    }
+}
+?>
+
+
+
+
+</div>
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

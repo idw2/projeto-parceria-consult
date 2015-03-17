@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Lof SliderNews 1.0 - Mootool 1.1</title>
+<link rel="stylesheet" type="text/css" href="css/layout.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script language="javascript" type="text/javascript" src="js/mootools.svn.js"></script>
+<script language="javascript" type="text/javascript" src="js/lofslidernews.mt11.js"></script>
+
+</head>
+
+<body>
+	<div id="container">      
+<!------------------------------------- THE CONTENT ------------------------------------------------->
+<div id="lofslidecontent45" class="lof-slidecontent">
+<div class="preload"><div></div></div>
+ <!-- MAIN CONTENT --> 
+  <div class="lof-main-wapper">
+  		<div class="lof-main-item">
+        		<img src="images/1.jpg" title="Newsflash 2" height="300" width="900">           
+                 <div class="lof-main-item-desc" style="background:url(images/iso.png) no-repeat center right">
+                <h3><a target="_parent" title="Newsflash 2" href="http://parceriaconsult.com.br/index/index.php/qualidade/">Parceria</a></h3>
+                <p>Gestão de Qualidade</p>
+             </div>
+        </div> 
+        
+       <div class="lof-main-item">
+        	<img src="images/2.jpg" title="Newsflash 1" height="300" width="900">            <div class="lof-main-item-desc">
+                <h3><a target="_parent" title="Newsflash 1" href="http://parceriaconsult.com.br/index/index.php/treinamento/">Assessoria</a></h3>
+                <p>E treinamento personalizado</p>
+             </div>
+        </div> 
+        
+       <div class="lof-main-item">
+        	<img src="images/3.jpg" title="Newsflash 3" height="300" width="900">            <div class="lof-main-item-desc">
+                <h3><a target="_parent" title="Newsflash 3" href="http://parceriaconsult.com.br/index/index.php/lei-do-estagio/">Nova Lei de Estágio</a></h3>
+                <p>Fique por dentro</p>
+             </div>
+        </div> 
+        <div class="lof-main-item">
+
+        	<img src="images/4.jpg" title="Newsflash 5" height="300" width="900">            <div class="lof-main-item-desc">
+                <h3><a target="_parent" title="Newsflash 5" href="http://parceriaconsult.com.br/index/index.php/servicos/">Serviços</a></h3>
+                <p>Nós temos o que você precisa</p>
+             </div>
+        </div> 
+        
+        	
+  </div>
+  <!-- END MAIN CONTENT --> 
+    <!-- NAVIGATOR -->
+
+  <div class="lof-navigator-outer">
+  		<ul class="lof-navigator">
+            <li>
+            	<div>
+                	<h3>Qualidade</h3>
+                  	Sabemos que quando uma empresa procura uma prestadora de serviços é porque necessita de maior eficiência...
+                </div>    
+            </li>
+             <li>
+             	<div>
+                 	<h3>Assessoria</h3>
+                  	O diferencial da Parceria é que desenvolvemos para cada cliente um projeto para suprir as suas necessidades.
+                </div>    
+            </li>
+
+            <li>
+            	<div>
+                    <h3>Lei do Estágio</h3>
+                	Dispõe sobre o estágio de estudantes; altera a redação do art. 428 da Consolidação das Leis do Trabalho – CLT...
+                </div>     
+            </li>
+            
+           <li>
+           		<div>
+                    <h3>Serviços</h3>
+                    Conheça todos os tipos de serviços que nos da Parceria Consult podemos oferecer para o seu crescimento.
+                </div>
+            </li>    
+
+
+        </ul>
+  </div>
+ </div> 
+<script type="text/javascript">
+	var _lofmain =  $('lofslidecontent45');
+	var _lofscmain = _lofmain.getElement('.lof-main-wapper');
+	var _lofnavigator = _lofmain.getElement('.lof-navigator-outer .lof-navigator');
+	var object = new LofFlashContent( _lofscmain, 
+									  _lofnavigator,
+									  _lofmain.getElement('.lof-navigator-outer'),
+									  { fxObject:{ transition:Fx.Transitions.Quad.easeInOut,  duration:800},
+									 	 interval:3000,
+							 			 direction:'opacity' } );
+	object.start( true, _lofmain.getElement('.preload') );
+</script>
+
+<!------------------------------------- END OF THE CONTENT ------------------------------------------------->
+</div>
+    </div>
+</body>
+</html>

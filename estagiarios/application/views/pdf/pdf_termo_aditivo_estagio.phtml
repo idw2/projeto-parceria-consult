@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title><?php echo TITLE . " - " . $view_pagina; ?></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" type="text/css" href="/web-files/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/web-files/font-awesome-4.1.0/css/font-awesome.css">
+    </head>
+    <body>
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="">
+                        <img src="/web-files/img/parceria250.png" border="0" alt="Parceria Consult" title="Parceria Consult" width="100px"/>
+                    </td>
+                    <td align="center">
+                        <div>ADITIVO AO TERMO DE COMPROMISSO DE ESTÁGIO</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <br/>
+        
+        <?php
+        $dta_inicio = "";
+        $dta_fim = "";
+        $dta_fim_atual = date('d') . "/" . date('m') . "/" . date('Y');
+        $stg_cargo = "";
+        $stg_curso = "";
+
+        if ($view_dados_complementares) {
+            foreach ($view_dados_complementares as $obj) {
+                $stg_curso = $obj->CURSO;
+                $dta_inicio = $obj->DTA_INICIO;
+                $dta_fim = $obj->DTA_FIM;
+                $stg_cargo = $obj->CARGO;
+            }
+        }
+
+        $di = explode("/", $dta_inicio);
+
+        switch ($di[1]) {
+            case "01": $di[1] = "Janeiro";
+                break;
+            case "02": $di[1] = "Fevereiro";
+                break;
+            case "03": $di[1] = "Março";
+                break;
+            case "04": $di[1] = "Abriu";
+                break;
+            case "05": $di[1] = "Maio";
+                break;
+            case "06": $di[1] = "Junho";
+                break;
+            case "07": $di[1] = "Julho";
+                break;
+            case "08": $di[1] = "Agosto";
+                break;
+            case "09": $di[1] = "Setembro";
+                break;
+            case "10": $di[1] = "Outubro";
+                break;
+            case "11": $di[1] = "Novembro";
+                break;
+            case "12": $di[1] = "Dezembro";
+                break;
+        }
+
+        $df = explode("/", $dta_fim);
+
+        switch ($df[1]) {
+            case "01": $df[1] = "Janeiro";
+                break;
+            case "02": $df[1] = "Fevereiro";
+                break;
+            case "03": $df[1] = "Março";
+                break;
+            case "04": $df[1] = "Abriu";
+                break;
+            case "05": $df[1] = "Maio";
+                break;
+            case "06": $df[1] = "Junho";
+                break;
+            case "07": $df[1] = "Julho";
+                break;
+            case "08": $df[1] = "Agosto";
+                break;
+            case "09": $df[1] = "Setembro";
+                break;
+            case "10": $df[1] = "Outubro";
+                break;
+            case "11": $df[1] = "Novembro";
+                break;
+            case "12": $df[1] = "Dezembro";
+                break;
+        }
+        ?>
+        
+        
+         <div style=" border: 1px solid black; padding: 5px"> 
+            <h4 style="text-align: center;">AGENTE DE INTEGRAÇÃO</h4>
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Razão Social:</b> </td>
+                    <td style="font-size: 12px;" valign="top">PARCERIA CONSULTORIA EMPRESARIAL LTDA</td>
+                </tr>
+
+                <?php
+                if ($view_EMP_COMPLEMENTO != "") {
+                    $complemento = "{$view_EMP_COMPLEMENTO}<br/>";
+                }
+                ?>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Endereço:</b> </td>
+                    <td style="font-size: 12px;" valign="top">Rua Uruguaiana, 10 - Centro - Rio de Janeiro/RJ , <span style='font-size: 10px;'><b>Cep:</b></span> 20050-090</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>CNPJ/MF:</b> </td>
+                    <td style="font-size: 12px;" valign="top">01.194.833/0001-01</td>
+                </tr>
+<!--                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Supervisor(a):</b> </td>
+                    <td style="font-size: 12px;" valign="top">//<?php echo $view_estagiario_empresa->ADM_NOME; ?>, <span style="font-size: 10px;"><b>Cargo:</b></span> <?php echo $view_estagiario_empresa->ADM_CARGO; ?></td>
+                </tr>-->
+            </table>
+        </div> 
+
+        <br/>
+       
+
+<!--
+        <p>
+            - Instrumento Jurídico de que trata a Lei nº 11.788 de 25/09/2008.<br/>
+            Aos <?php echo "{$di[0]} {$di[1]} de {$di[2]} ao dia {$df[0]} do mês de {$df[1]} de {$df[2]}"; ?> na cidade do Rio de Janeiro TCE este ato as partes a seguir nomeadas.
+        </p>-->
+
+        <?php
+        if ($view_dados_complementares) {
+            foreach ($view_dados_complementares as $obj) {
+                $stg_curso = $obj->CURSO;
+                $dta_inicio = $obj->DTA_INICIO;
+                $dta_fim = $obj->DTA_FIM;
+                $stg_cargo = $obj->CARGO;
+                $stg_ctps = $obj->CTPS;
+                $stg_serie = $obj->SERIE;
+                $nome_instituicao = $obj->INTITUICAO_ENSINO;
+                $representante_intituicao = $obj->REPRESENTANTE_INTITUICAO;
+                $cargo_instituicao = $obj->CARGO_REPRESENTANTE;
+                $stg_ctps = $obj->CTPS;
+                $stg_serie = $obj->SERIE;
+            }
+        }
+
+        if ($view_INST_COMPLEMENTO != "") {
+            $complemento_inst = "{$view_INST_COMPLEMENTO}<br/>";
+        }
+        ?>
+
+        <div style=" border: 1px solid black; padding: 5px"> 
+            <h4 style="text-align: center;">INSTITUIÇÃO DE ENSINO</h4>
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Razão Social:</b>  </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo $nome_instituicao; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Endereço:</b>  </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo "{$view_INST_LOGRADOURO} , {$view_INST_NUMERO}- {$view_INST_BAIRRO}- {$complemento_inst} - {$view_INST_CIDADE}/{$view_INST_UF}, <span style='font-size: 10px;'><b>Cep:</b></span> {$view_INST_CEP}"; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Representada por:</b> </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo $representante_intituicao; ?>, <span style="font-size: 10px;"><b>Cargo:</b></span> <?php echo $cargo_instituicao; ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <br/>
+
+        <div style=" border: 1px solid black; padding: 5px"> 
+            <h4 style="text-align: center;">UNIDADE CONCEDENTE</h4>
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Razão Social:</b> </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo $view_estagiario_empresa->EMP_NOME; ?></td>
+                </tr>
+
+                <?php
+                if ($view_EMP_COMPLEMENTO != "") {
+                    $complemento = "{$view_EMP_COMPLEMENTO}<br/>";
+                }
+                ?>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Endereço:</b> </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo "{$view_EMP_LOGRADOURO} , {$view_EMP_NUMERO}- {$view_EMP_BAIRRO}- {$complemento} - {$view_EMP_CIDADE}/{$view_EMP_UF}, <span style='font-size: 10px;'><b>Cep:</b></span> {$view_EMP_CEP}"; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>CNPJ/MF:</b> </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo $view_estagiario_empresa->EMP_CNPJ; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Supervisor(a):</b> </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo $view_estagiario_empresa->ADM_NOME; ?>, <span style="font-size: 10px;"><b>Cargo:</b></span> <?php echo $view_estagiario_empresa->ADM_CARGO; ?></td>
+                </tr>
+            </table>
+        </div> 
+
+        <br/>
+
+        <?php
+        if ($view_STG_COMPLEMENTO != "") {
+            $complemento_stg = "{$view_STG_COMPLEMENTO}<br/>";
+        }
+        ?>
+
+        <div style=" border: 1px solid black; padding: 5px"> 
+            <h4 style="text-align: center;">ESTAGIARIO</h4>
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Nome:</b> </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo $view_estagiario_empresa->STG_NOME; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Endereço:</b> </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo "{$view_STG_LOGRADOURO} , {$view_STG_NUMERO}- {$view_STG_BAIRRO}- {$complemento_stg} - {$view_STG_CIDADE}/{$view_STG_UF}, <span style='font-size: 10px;'><b>Cep:</b></span> {$view_STG_CEP}"; ?></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>Curso:</b> </td>
+                    <td style="font-size: 12px;" valign="top">Ciências Econômicas</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 10px;" valign="top" align="right"><b>CTPS:</b> </td>
+                    <td style="font-size: 12px;" valign="top"><?php echo $stg_ctps; ?> <span style="font-size: 10px;"><b>Série:</b></span> <?php echo $stg_serie; ?></td>
+                </tr>
+            </table>
+        </div> 
+
+        <br/>
+
+
+
+
+        <p>Tendo Entre Si, Justo E Acordado O Presente Termo do Aditivo ao Termo de Compromisso de Estágio, <b><?php echo date('d/m/Y'); ?></b>.</p>
+        <p>1- O Termo de Compromisso de Estágio, assinado pelas partes em <?php echo date('d/m/Y'); ?> fica prorrogado por interesse múltuo, por mais um periodo, sendo o novo período vigente de <?php echo $dta_inicio; ?> e <?php echo $dta_fim; ?>.</p>
+
+        <p>2- O Todas as demais cláusulas e condições do Termo de Compromisso de Estágio assinado pelas partes continuam em vigos.</p>
+
+<br/>
+<br/>
+<br/>
+<br/>
+        
+        
+        <p style="text-align: center; font-weight: bold">Rio de Janeiro / RJ,  <?php echo date("d/m/Y"); ?></p>
+        
+        
+<br/>
+<br/>
+<br/>
+<br/>
+
+                    <table style="width: 100%">
+                        <tr>
+                            <td align="center">____________________________________</td>
+                            <td align="center">____________________________________</td>
+                        </tr>
+                        <tr>
+                            <td align="center">INSTITUIÇÃO DE ENSINO</td>
+                            <td align="center">ESTAGIÁRIO(A)</td>
+                        </tr>
+                        <tr>
+                            <td align="center"><br/></td>
+                            <td align="center"><br/></td>
+                        </tr>
+                        <tr>
+                            <td align="center"><br/></td>
+                            <td align="center"><br/></td>
+                        </tr>
+                        <tr>
+                            <td align="center">____________________________________</td>
+                            <td align="center">____________________________________</td>
+                        </tr>
+                        <tr>
+                            <td align="center">UNIDADE CONCEDENTE</td>
+                            <td align="center">AGENTE DE INTEGRAÇÃO</td>
+                        </tr>
+                        <tr>
+                            <td align="center"><br/></td>
+                            <td align="center"><br/></td>
+                        </tr>
+                    </table>
+
+                    </p>
+
+
+                    </body>
+                    </html>

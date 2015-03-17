@@ -1,0 +1,91 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+
+<div>
+
+
+    <ol class="breadcrumb">
+        <li>Empresas e Entidades</li>
+        <li>Lista de Empresas / Entidades</li>
+    </ol>
+
+    <h2><span class="label label-default">Lista de Empresas / Entidades</span></h2>
+    <br/>
+
+    <a href="/<?php echo $view_language; ?>/admin/cadastrar-empresa-entidade" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Adicionar Empresa/Entidade</a>
+    <a href="/<?php echo $view_language; ?>/admin/pdf-relacao-empresas" target="_blank"><img src="/web-files/img/pdf.png" alt="PDF - Relação de Empresas"  title="PDF - Relação de Empresas" border="0"/></a> 
+
+    <?php if ($view_lista_cadastro == "") { ?>
+       <div class="panel panel-default">
+            <div class="panel-heading">
+                ATENÇÃO
+            </div>
+            <table class="table">
+                <thead>
+                <th>Nada na lista!</th>
+                </thead>
+            </table>
+        </div>
+
+    <?php
+    } else {
+        foreach ($view_lista_cadastro as $empresa) {
+            ?>           
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    
+                    <div class="row">
+                        <div class="col col-sm-6">
+                            <?php echo $empresa->DTA; ?>
+                        </div>
+                        <div class="col col-sm-6" style="text-align: right">
+                            <strong>Ações: </strong>
+                            <a href="/<?php echo $view_language; ?>/admin/editar-empresa-entidade/codcadastro/<?php echo $empresa->CODCADASTRO; ?>"><img src="/web-files/img/document-edit-32.png" alt="Editar Empresa/Entidade"  title="Editar Empresa/Entidade" border="0"/></a> 
+
+                            <?php if ($empresa->STATUS) { ?>
+                                <a href="/<?php echo $view_language; ?>/admin/status-empresa-entidade/codcadastro/<?php echo $empresa->CODCADASTRO; ?>/stt/1"><img src="/web-files/img/icon-star-on.png" alt="Desativar Empresa/Entidade"  title="Desativar Empresa/Entidade" border="0"/></a> 
+                            <?php } else { ?>
+                                <a href="/<?php echo $view_language; ?>/admin/status-empresa-entidade/codcadastro/<?php echo $empresa->CODCADASTRO; ?>/stt/0"><img src="/web-files/img/icon-star-off.png" alt="Ativar Empresa/Entidade"  title="Ativar Empresa/Entidade" border="0"/></a> 
+                            <?php } ?>
+
+                            <?php if ($view_id == "DL" || $view_id == "ADMIN" ) { ?>    
+                                <span style="cursor: pointer;" onclick="javascript:trash('/<?php echo $view_language; ?>/admin/delete-empresa-entidade/codcadastro/<?php echo $empresa->CODCADASTRO; ?>')"><img src="/web-files/img/trash-can-32.png" alt="Excluir Empresa/Entidade"  title="Excluir Empresa/Entidade" border="0"/></span>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                </div>
+                <table class="table">
+                    <thead>
+                    <th>ID</th>
+                    <th>Razão Social</th>
+                    <th>CNPJ</th>
+                    </thead>
+                    <tr>
+                        <td style="width: 10%"><?php echo $empresa->ID; ?></td>
+                        <td><?php echo $empresa->NOME_RAZAO_SOCIAL; ?></td>
+                        <td style="width: 20%"><?php echo $empresa->CPF_CNPJ; ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><img style="cursor: pointer" onclick="javascript:open_list_estagiarios('<?php echo $empresa->CODCADASTRO; ?>');" class="arrow_lista_<?php echo $empresa->CODCADASTRO; ?>" src="/web-files/img/arrow-right-01-32.png" border="0" alt="Lista de Estagiários" title="Lista de Estagiários"></td>
+                    </tr>
+                    <tr class="hide hide_<?php echo $empresa->CODCADASTRO; ?>">
+                        <td colspan="3" class="lista_<?php echo $empresa->CODCADASTRO; ?>"></td>
+                    </tr>
+                </table>
+            </div>
+        <?php
+        }
+    }
+    ?>
+
+
+
+
+</div>
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

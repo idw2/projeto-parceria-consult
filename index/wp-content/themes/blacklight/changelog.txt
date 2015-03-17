@@ -1,0 +1,4 @@
+*** BlackLight Changelog ***
+
+2012.04.05 - version 1.0
+ * First release!

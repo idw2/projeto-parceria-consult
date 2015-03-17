@@ -1,0 +1,239 @@
+/* Media */
+
+
+@media screen and (min-width: $desktop){
+
+    .thumbnail{
+        width: auto;
+    }
+
+    .produto-sidebar{
+
+        .thumbs-slider, .panel{
+            float: right;
+            width: 260px;
+        }
+    }
+
+    .checkout-panel.active{
+        margin-left: 734px;
+        position: fixed;
+        z-index: 850;
+        top: 80px;
+    }
+
+    .checkout-panel.active.onFooter{
+        position: absolute;
+        top: inherit;
+        bottom: 0;
+    }
+
+}
+
+@media screen and (min-width: $lg-desktop){
+
+    .produto-sidebar{   
+        .thumbs-slider{
+            float: none;
+        }
+    }
+
+    .checkout-panel.active{
+        margin-left: 904px;
+    }
+
+}
+
+@media screen and (min-width: $tablet){
+
+}
+
+@media screen and (max-width: $menu-break){
+    body{
+        padding-top: 0!important;
+        max-width: 100%;
+        overflow-x: hidden;
+        @include transition(.33s cubic-bezier(.694,.0482,.335,1));
+    }
+
+    .navbar.navbar-fixed-top{
+        display: none;
+    }
+
+    .navbar-collapse.collapse{
+        display: block;
+        position: relative;
+        top: 80px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .search-wrap{
+        width: 100%;
+    }
+
+    .search-wrap .form-control{
+        padding: 0 40px 0 15px;
+        width: 100%;
+    }
+
+    .navbar-collapse.collapse .navbar-nav{
+        display: none;
+    }
+
+    .header{
+        position: relative;
+    }
+
+    .carrinho-wrap{
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        padding: 10px;
+
+        > img{
+            max-width: 42px;
+        }
+    }
+    .carrinho-wrap #item_carrinho{
+        display: none;
+    }
+
+    .header-brand{
+
+        .col-brand{
+            text-align: center;
+            top: 69px;
+        }
+        .col-chart{
+            top: -61px;
+            padding: 0;
+        }
+    }
+
+    .brand{
+        position: relative;
+        max-width: 240px;
+        margin: 10px 0;
+        z-index: 2;
+    }
+
+    .navbar-default{
+        position: relative;
+        display: block;
+        vertical-align: top;
+        top: -122px;
+        margin: 0;
+        height: 62px;
+        z-index: 1;
+    }
+
+    .navbar-default .hamburger{
+        display: block;
+        height: 62px;
+    }
+
+    .mobile-menu{
+        display: block;
+    }
+
+
+    .menu-open{
+        @include transform(translate3d( $mobile-menu-width , 0,0));
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
+    .menu-fixed-top, .brand-circle{ display: none !important }
+
+    .hide-mobile{
+        display: none !important;
+    }
+
+
+}
+
+
+@media screen and (max-width: $lg-desktop-max){
+
+    .checkout-panel{
+        width: 220px;
+    }
+
+    #n_input .minus,
+    #n_input .plus{
+        display: none;
+    }
+
+    .pag-section{ margin-bottom: 30px; }
+
+    .theme-default{
+
+        .thumbnail{
+            max-width: none;
+            width: 211px;
+            height: 395px;
+
+            .thumbnail-img{
+                max-width: none;
+                width: 209px;
+                height: auto;
+            }
+
+            .thumbnail-title{
+                font-size: 20px;
+                font-size: 2rem;
+                line-height: 28px;
+                line-height: 2.8rem;
+            }
+            .thumbnail-subtitle{
+                font-size: 12px;
+                font-size: 1.2rem;
+                line-height: 30px;
+                line-height: 1.6rem;
+            }
+        }
+
+    }
+    .thumbnail-instagram .thumbnail{
+        height: 208px;
+    }
+}
+
+@media screen and (max-width: $desktop-max){
+
+    .navbar-center{
+        display: none;
+    }
+
+    .pag-section{ margin-bottom: 30px; }
+
+    .theme-default{
+
+        .thumbnail{
+            max-width: none;
+            width: 158px;
+            height: 330px;
+
+            .thumbnail-img{
+                max-width: none;
+                width: 156px;
+                height: 173px;
+            }
+
+            .thumbnail-title{
+                font-size: 20px;
+                font-size: 2rem;
+                line-height: 28px;
+                line-height: 2.8rem;
+            }
+            .thumbnail-subtitle{
+                font-size: 12px;
+                font-size: 1.2rem;
+                line-height: 30px;
+                line-height: 1.6rem;
+            }
+        }
+
+    }
+}

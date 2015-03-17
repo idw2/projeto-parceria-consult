@@ -1,0 +1,49 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+
+<div>
+
+    <h2><span class="label label-default">Primeiro Acesso</span></h2>
+    <br/>
+
+    <?php if ($view_erro == "") { ?>
+        <div class="alert alert-info" role="alert">Preencha todos os campos</div>
+    <?php } else { ?>
+        <div class="alert alert-danger" role="alert"><?php echo $view_erro; ?></div>
+    <?php } ?>
+
+    <form method="post" class="form">
+        <div class="form-group">
+            
+            <h4>Dados da conta</h4>
+            <?php if($view_cadastro->TIPO_CONTA == "pj"){ ?>
+                <label>Empresa: </label> <?php echo $view_cadastro->NOME_RAZAO_SOCIAL; ?> <br/>
+                <label>Seu ID: </label> <?php echo $view_cadastro->ID; ?> <br/>
+                <label>E-mail: </label> <?php echo $view_cadastro->EMAIL; ?> <br/>
+            <?php } else { ?>
+                <label>Nome: </label> <?php echo $view_cadastro->NOME_RAZAO_SOCIAL; ?> <br/>
+                <label>Seu ID: </label> <?php echo $view_cadastro->ID; ?> <br/>
+                <label>E-mail: </label> <?php echo $view_cadastro->EMAIL; ?> <br/>
+            <?php } ?>
+            
+            <h4> </h4>    
+            <label>Definir senha</label>
+            <input type="password" class="form-control" name="senha_nova" placeholder="Definir senha"/>
+        
+            <label>Repetir senha</label>  
+            <input type="password" class="form-control" name="senha_repetir" placeholder="Repetir senha"/>
+            
+            <label>Lembre de senha</label>  
+            <input type="text" class="form-control" name="lembrete" placeholder="Lembrete de senha"/>
+        </div>
+        <input type="submit" class="btn btn-primary btn-lg" role="button" value="Enviar"/>
+    </form>
+
+
+</div>
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title><?php echo TITLE . " - " . $view_pagina; ?></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" type="text/css" href="/web-files/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/web-files/font-awesome-4.1.0/css/font-awesome.css">
+        <?php if ($view_page == "index") { ?>
+            <link rel="stylesheet" type="text/css" href="/web-files/css/login.css">
+        <?php } ?>
+    </head>
+    <body>
+
+        <div class="container">
+
+            <?php if ($view_page != "index") { ?>
+                <div class="row">
+                    <div class="col col-lg-3">
+                        <br/>
+                        <img src="/web-files/img/logo_parceria.png" alt="Parceria" title="Parceria" border="0" class="img-responsive" style="border-radius: 5px;"/>
+                    </div>
+                    <div class="col col-lg-9">
+                        <?php if ($view_page_search) { ?>
+                            <br/>
+                            <?php require_once 'search.phtml'; ?> 
+                        <?php } ?>
+                    </div>
+                </div>
+            <?php } ?>
+
+            <div class="row">
+                <?php require_once 'navbar.phtml'; ?>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

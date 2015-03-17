@@ -5560,6 +5560,7 @@ img {
   max-width: 100%;
   /*@include transition(opacity 0.2s);*/ }
 
+/* see gallery_shortcode() in wp-includes/media.php */
 /*a {
 color: $link-color;
 }*/

@@ -1,0 +1,148 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li>Meus documentos</li>
+</ol>
+
+<?php if ($view_info_empresa) { ?>
+    <br/>
+    <label>Empresa:</label> <?php echo $view_info_empresa->NOME_RAZAO_SOCIAL; ?><br/>
+    <label>CNPJ:</label> <?php echo $view_info_empresa->CNPJ; ?><br/>
+<?php } ?>
+<br/>
+
+
+<form id="multipleDocs" class="form" enctype="multipart/form-data" method="post">
+    <div class="form-group"> 
+        <h4>Selecione os documentos</h4>  
+        <b>Extensões permitidas:</b><br>.jpg, .png, .gif, .bmp, .pdf, .zip, .rar, .xml, .docx, .docm, .dotx, .dotm, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .pptx, .pptm, .potx, .potm, .ppam, .ppsx, .ppsm, .sldx, .sldm, .thmx<br>  
+        <div id="mulitplefileuploader" class="fileuploader">Upload</div>
+        <div id="status"></div>
+        <input type="hidden" name="codcadastro" id="codcadastro" value="<?php echo $view_codcadastro; ?>"/>
+    </div>
+</form>
+
+<div id="responseHTML">
+
+    <?php if ($view_arquivos != NULL) { ?>
+
+        <?php foreach ($view_arquivos as $arquivo) { ?>
+
+            <div class="panel panel-default myResponse" id="<?php echo $arquivo->CODARQUIVO; ?>">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col col-sm-6"><?php echo $arquivo->DTA; ?></div>
+                        <div class="col col-sm-6" style="text-align: right">
+                            <strong>Ações: </strong>
+                            <span style="cursor: pointer;" onclick="javascript:trash_arquivo('/pt/admin/delete-arquivo/<?php echo $arquivo->CODARQUIVO; ?>')"><img src="/web-files/img/trash-can-32.png" alt="Excluir Arquivo"  title="Excluir Arquivo" border="0"/></span>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                    <th>Nome do arquivo</th>
+                    <th>download</th>
+                    </thead>
+                    <tr>
+                        <td style="width: 50%"><?php echo $arquivo->NOME_IMAGEM_ORIGINAL; ?></td>
+                        <td><a href="<?php echo $arquivo->LINK; ?>" download="<?php echo $arquivo->NOME_IMAGEM_ORIGINAL; ?>"><img src="/web-files/img/download.png" alt="Download"  title="Download" border="0"/></a></td>
+                    </tr>
+                </table>
+            </div>
+
+        <?php } ?>
+
+    <?php } else { ?>
+
+        <div class="panel panel-default responseRemove">
+            <div class="panel-heading">
+                ATENÇÃO
+            </div>
+            <table class="table">
+                <thead>
+                <th>Nada na lista!</th>
+                </thead>
+            </table>
+        </div>
+
+    <?php } ?>
+
+</div>
+
+<?php require_once 'footer.phtml'; ?>
+
+
+<script>
+    $(document).ready(function() {
+        var settings = {
+            url: "/pt/admin/upload-documento/",
+            method: "POST",
+            allowedTypes: "jpg,png,gif,bmp,pdf,zip,rar,xml,docx,docm,dotx,dotm,xlsx,xlsm,xltx,xltm,xlsb,xlam,pptx,pptm,potx,potm,ppam,ppsx,ppsm,sldx,sldm,thmx",
+            fileName: "myfile",
+            multiple: true,
+            onSuccess: function(files, data, xhr)
+            {
+                var str = '<div class="panel panel-default myResponse" id="' + data['CODARQUIVO'] + '">'
+                        + '<div class="panel-heading">'
+                        + '<div class="row">'
+                        + '<div class="col col-sm-6">' + data['DATA'] + '</div>'
+                        + '<div class="col col-sm-6" style="text-align: right">'
+                        + '<strong>Ações: </strong>'
+                        + '<span style="cursor: pointer;" onclick="javascript:trash_arquivo(\'/pt/admin/delete-arquivo/' + data['CODARQUIVO'] + '\')"><img src="/web-files/img/trash-can-32.png" alt="Excluir Arquivo"  title="Excluir Arquivo" border="0"/></span>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '<table class="table">'
+                        + '<thead>'
+                        + '<th>Nome do arquivo</th>'
+                        + '<th>download</th>'
+                        + '</thead>'
+                        + '<tr>'
+                        + '<td style="width: 50%">' + data['NOME_IMAGEM_ORIGINAL'] + '</td>'
+                        + '<td><a href="' + data['LINK'] + '" download="' + data['NOME_IMAGEM_ORIGINAL'] + '"><img src="/web-files/img/download.png" alt="Download"  title="Download" border="0"/></a></td>'
+                        + '</tr>'
+                        + '</table>'
+                        + '</div>';
+
+                $("#responseHTML").append(str);
+                $(".responseRemove").remove();
+
+                $("#status").html("<font color='green'>Upload realizado com sucesso!</font>");
+
+            },
+            onError: function(files, status, errMsg)
+            {
+                $("#status").html("<font color='red'>Falha ao realizar o upload!</font>");
+            }
+        }
+        $("#mulitplefileuploader").uploadFile(settings);
+//        $(".fileuploader").each(function() {
+//            $(this).uploadFile(settings);
+//        });
+    });
+
+    function trash_arquivo(url) {
+        if (confirm('ATENÇÃO: Esta ação não poderá ser desfeita!\n Deseja continuar?')) {
+            $.ajax({
+                type: 'post',
+                data: null,
+                url: url,
+                success: function(data) {
+                    $("#" + data["CODARQUIVO"]).remove();
+                    if(!$(".myResponse").hasClass("myResponse")){
+                        var str = '<div class="panel panel-default responseRemove"><div class="panel-heading">ATENÇÃO</div><table class="table"><thead><th>Nada na lista!</th></thead></table></div>';
+                        $("#responseHTML").append(str);
+                    }
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+
+
+

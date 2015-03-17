@@ -1,0 +1,175 @@
+@charset "utf-8";
+/* CSS Document */
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+h3 {
+	margin: 0;
+}
+
+.lof-slidecontent{
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    width: 1000px;;
+}
+.lof-slidecontent .preload{
+	height:100%;
+	width:100%;
+	background:#FFF;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:100000;
+	color:#FFF;
+	text-align:center
+}
+.lof-slidecontent .preload div{
+	height:100%;
+	width:100%;
+	background:transparent url(../images/load-indicator.gif) no-repeat scroll 50% 50%;
+}
+/* main flash */
+.lof-main-wapper{
+	margin-right:auto;
+	overflow:hidden;
+	background:transparent url(../images/load-indicator.gif) no-repeat scroll 50% 50%;
+	padding:0px;
+	height:100%;
+	width:725px;
+	position:relative;
+	overflow:hidden;
+}
+
+.lof-main-wapper .lof-main-item{
+	overflow:hidden;
+	padding:0px;
+	margin:0px;
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+.lof-main-wapper .lof-main-item img{
+	padding:0px;	
+	width:725px;
+}
+
+.lof-main-item-desc{
+	z-index:100px;
+	position:absolute;
+	padding: 15px;
+	top:150px;
+	left:50px;
+	width:400px;
+	background:url(../images/transparent_bg.png);
+
+	/* filter:0.7(opacity:60) */
+}
+.lof-main-item-desc p{
+    color: #2E2C2C;
+    font-size: 25px;
+    margin: 0 8px;
+    padding: 0px;
+}
+.lof-main-item-desc h3 a{
+	color:#254f92;	
+	margin:0;
+	font-size:30px;
+	font-weight: bold;
+	padding:20px 8px 2px;
+	font-family:Arial,Verdana,sans-serif;
+}
+.lof-main-item-desc h3 a:hover{
+	color:#254f92;
+	text-decoration:underline;
+}
+
+
+/* item navigator */
+ul.lof-navigator{
+	top:0;
+	padding:0;
+	margin:0;
+	position:absolute;
+	width:100%;
+}
+ul.lof-navigator li{
+	cursor:hand; 
+	cursor:pointer;
+	list-style:none;
+	width:100%;
+	padding:0;
+	margin:0;
+	overflow:hidden;
+}
+.lof-navigator-outer{
+	position:absolute;
+	right:0;
+	top:00px;
+	z-index:100;
+	height:300px;
+	width:310px;
+	overflow:hidden;
+	color:#FFF
+}
+.lof-navigator li.active{
+	background:url(../images/arrow-bg.png) no-repeat scroll left center; 
+	color:#FFF
+}
+.lof-navigator li:hover{
+}
+
+.lof-navigator li h3{
+    color: #4978C9;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    padding: 15px 0 5px !important;
+}
+.lof-navigator li div{
+	background:url(../images/transparent_bg.jpg);
+	color:#FFF;
+	height:100%;
+	position:relative;
+	margin-left:7px;
+	padding-left:11px;
+	border-top:1px solid #272625;
+}
+
+.lof-navigator li.active div{
+	background:url(../images/grad-bg.jpg);
+	color:#FFF;
+}
+.lof-navigator li img{
+	height:60px;
+	width:60px;
+	margin:15px 15px 10px 0px;
+	float:left;
+	padding:3px;
+	border:#C5C5C5 solid 1px;
+}
+.lof-navigator li.active img{
+	border:##6C8E5C  solid 1px;
+}
+.lof-navigator li.active h3{
+	color:#323030;
+}
+.lof-next{
+	position:absolute;
+	top:0;
+	height:30px;
+	background:#F9F9F9;
+	display:block;
+	width:100%;
+}
+.lof-previous{
+	position:absolute;
+	bottom:0;
+	height:30px;
+	background:#F9F9F9;
+	display:block;
+	width:100%;
+}

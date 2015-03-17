@@ -1,0 +1,96 @@
+<?php require_once 'header.phtml'; ?>        
+
+
+<ol class="breadcrumb">
+    <li>Empresas e Entidades</li>
+    <li><a href="/<?php echo $view_language; ?>/admin/empresas-entidades-lista-estagiarios/">Lista de Estagiarios Empresas / Entidades</a></li>
+    <li>Lista de Avaliações</li>
+</ol>
+
+
+<form method="post" class="form" >
+
+    <div class="jumbotron">
+        <h4>Estagiario: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->STG_NOME}</span>"; ?></h4>
+        <h4>CPF: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->STG_CPF}</span>"; ?></h4>
+        <hr/>
+        <h4>Responsável: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->ADM_NOME}</span>"; ?></h4>
+        <h4>CPF: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->ADM_CPF}</span>"; ?></h4>
+        <hr/>
+        <h4>Empresa: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->EMP_NOME}</span>"; ?></h4>
+        <h4>CNPJ: <?php echo "<span style='font-size: 22px; color: #428bca'>{$view_estagiario_empresa->EMP_CNPJ}</span>"; ?></h4>
+    </div>
+
+    <h2><span class="label label-default">Lista de Avaliações</span></h2>
+    <br/>
+
+    <a href="/<?php echo $view_language; ?>/admin/avaliar-estagiario-empresa-entidade/<?php echo $view_codestagiario; ?>/<?php echo $view_codempresa; ?>" class="btn btn-default navbar-btn"><i class="fa fa-exchange"></i> Adicionar avaliação</a>
+
+    <?php if ($view_dados_complementares == "") { ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">* Nada na lista!</div>
+        </div>
+
+        <?php
+    } else {
+        foreach ($view_dados_complementares as $dados_complementares) {
+            ?>           
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <div class="row">
+                        <div class="col col-sm-6">
+                            <?php echo $dados_complementares->DTA; ?>
+                        </div>
+                        <div class="col col-sm-6" style="text-align: right">
+                            <strong>Ações: </strong>
+                            <a href="/<?php echo $view_language; ?>/admin/editar-dados-complementares-estagiario-empresa-entidade/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/document-edit-32.png" alt="Editar Estagiario Empresa/Entidade"  title="Editar Estagiario Empresa/Entidade" border="0"/></a> 
+                            <?php if ($dados_complementares->STATUS) { ?>
+
+                                <a href="/<?php echo $view_language; ?>/admin/status-dados-complementares/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/1/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/icon-star-on.png" alt="Desativar Estagiario Empresa/Entidade"  title="Desativar Estagiario Empresa/Entidade" border="0"/></a> 
+
+                            <?php } else { ?>
+
+                                <a href="/<?php echo $view_language; ?>/admin/status-dados-complementares/<?php echo strtolower($dados_complementares->CODESTAGIARIO); ?>/0/<?php echo strtolower($dados_complementares->CODEMPRESA); ?>/<?php echo strtolower($dados_complementares->CODDADOSCOMPLEMENTARES); ?>"><img src="/web-files/img/icon-star-off.png" alt="Ativar Estagiario Empresa/Entidade"  title="Ativar Estagiario Empresa/Entidade" border="0"/></a> 
+
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                </div>     
+                <table class="table">
+                    <thead>
+                        <th>Início</th>
+                        <th>Fim</th>
+                        <th>Bolsa</th>
+                        <th>Carga Horária</th>
+                        <th>Instituição / Cargo</th>
+                    </thead>
+                    <tr>
+                        <td style="width: 13%"><?php echo $dados_complementares->DTA_INICIO; ?></td>
+                        <td style="width: 13%"><?php echo $dados_complementares->DTA_FIM; ?></td>
+                        <td style="width: 13%">R$ <?php echo $dados_complementares->BOLSA_VALOR; ?></td>
+                        <td style="width: 13%"><?php echo $dados_complementares->CARGA_HORARIA; ?> hs.</td>
+                        <td>
+                            <?php 
+                                echo "<strong>Inst.:</strong> ".$dados_complementares->INTITUICAO_ENSINO."<br/>"; 
+                                echo "<strong>Cargo:</strong> ".$dados_complementares->CARGO."<br/>"; 
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <?php
+        }
+    }
+    ?>
+
+</form>
+
+
+
+<?php require_once 'footer.phtml'; ?>
+        
+

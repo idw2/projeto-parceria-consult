@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title><?php echo TITLE . " - " . $view_pagina; ?></title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" type="text/css" href="/web-files/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/web-files/font-awesome-4.1.0/css/font-awesome.css">
+    </head>
+    <body>
+
+        <div style=" border: 1px solid black; padding: 5px">
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="">
+                        <img src="/web-files/img/parceria250.png" border="0" alt="Parceria Consult" title="Parceria Consult" width="100px"/>
+                    </td>
+                    <td align="center">
+                        <div>PARCERIA CONSULTORIA EMPRESARIAL LTDA</div>
+                        <div style="font-size: 9pt"><b>RELAÇÃO DE ESTAGIARIOS</b></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br/>
+        
+        <div>
+
+    <?php if ($view_lista_estagiarios == "") { ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                ATENÇÃO
+            </div>
+            <table class="table">
+                <thead>
+                <th>Nada na lista!</th>
+                </thead>
+            </table>
+        </div>
+
+        <?php
+    } else {
+        
+        ?>
+            <table border='1' style="width: 100%">
+            <?php
+        $i=0;
+        foreach ($view_lista_estagiarios as $empresa) {
+            ($i % 2 == 0 ) ? $background = "style='color: #fff; background: #ccc'" : $background = "";
+            ?>
+            
+                <tr <?php echo $background; ?>>
+                    <td align='center'>Data Cadastro</td>
+                    <td align='center'><?php echo $empresa->STG_DTA; ?></td>
+                </tr>
+                <tr <?php echo $background; ?>>
+                    <td align='center'>Empresa</td>
+                    <td align='center'>
+                         <?php
+                            echo $empresa->EMP_NOME;
+                            echo "<br/><strong>CNPJ: </strong>" . $empresa->EMP_CNPJ;
+                            echo "<br/><strong>ID: </strong>" . $empresa->EMP_ID;
+                            echo "<br/><strong>EMAIL: </strong>" . $empresa->EMP_EMAIL;
+                        ?>
+                    </td>
+                </tr>
+                <tr <?php echo $background; ?>>
+                    <td align='center'>Responável</td>
+                    <td align='center'>
+                        <?php
+                            echo $empresa->ADM_NOME;
+                            echo "<br/><strong>CPF: </strong>" . $empresa->ADM_CPF;
+                            echo "<br/><strong>ID: </strong>" . $empresa->ADM_ID;
+                            echo "<br/><strong>EMAIL: </strong>" . $empresa->ADM_EMAIL;
+                            echo "<br/><strong>Nasc.: </strong>" . $empresa->ADM_NASCIDO_EM;
+                        ?>
+                    </td>
+                </tr>
+                <tr <?php echo $background; ?>>
+                    <td align='center'>Estagiario</td>
+                    <td align='center'>
+                        <?php
+                            echo $empresa->STG_NOME;
+                            echo "<br/><strong>CPF: </strong>" . $empresa->STG_CPF;
+                            echo "<br/><strong>ID: </strong>" . $empresa->STG_ID;
+                            echo "<br/><strong>EMAIL: </strong>" . $empresa->STG_EMAIL;
+                            echo "<br/><strong>Nasc.: </strong>" . $empresa->STG_NASCIDO_EM;
+                        ?>
+                        
+                    </td>
+                </tr>
+                <tr <?php echo $background; ?>>
+                    <td align='center'>Situação do Estagio</td>
+                    <td align='center'>
+                        <?php ($empresa->STG_STATUS_ESTAGIARIO) ? $str="Ativo" : $str="Inativo"; echo $str;  ?>
+                        
+                    </td>
+                </tr>
+                <tr <?php echo $background; ?>>
+                    <td align='center'>Termo de compromisso</td>
+                    <td align='center'>
+                        <?php ($empresa->STG_TERMO_ENTREGUE) ? $str="<span style='color: green'>Entregue</span>" : $str="<span style='color: red'>Não entregue</span>"; echo $str;  ?>
+                        
+                    </td>
+                </tr>
+            
+            <?php
+            $i++;
+        }
+        
+        ?>
+            </table>
+            
+            <?php
+        
+        
+}
+?>
+
+
+
+
+</div>
+
+
+
+    </body>
+</html>

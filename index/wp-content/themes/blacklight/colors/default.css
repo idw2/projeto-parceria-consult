@@ -1,0 +1,31 @@
+/* =Color Style
+----------------------------------------------- */
+a,
+a:visited,
+a:active{
+    color: #254f92;
+}
+a:hover {
+	color: #254f92;
+}
+#submit{
+    color:#ffffff;
+}
+
+#news-ticker a,
+.entry-cat a:hover,
+#secondary-nav .nav li a:hover,
+#secondary-nav .nav li.sfHover a,
+.entry-list .entry-meta a:hover,
+footer .widget a:hover,
+#breadcrumbs a:hover {
+    color: #254f92;
+}
+/* =Background Color Style
+----------------------------------------------- */
+body{
+    background-color: #f0f0f0;
+}
+.widget_tag_cloud a:hover {
+    background-color: #254f92;
+}

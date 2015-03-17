@@ -33,12 +33,15 @@
                 </div>
                 <ul class="list list-2">
                     <li><a href="#" class="filter_force" data-text="">TODOS</a></li>
-                    <li><a href="#1" class="filter_force" data-text="PROCESSO SELETIVO N� 04-2014">PROGRAMA TRAINEE 2014</a></li>
-                    <li><a href="#2" class="filter_force" data-text="PROCESSO SELETIVO N� 05-2014 ANALISTA I">ANALISTA I - GERÊNCIA ADMINISTRATIVA E FINANCEIRA</a></li>
-                    <li><a href="#3" class="filter_force" data-text="PROCESSO SELETIVO N� 06/2014">PARA CENTRAL DE RELACIONAMENTO</a></li>
-                    <li><a href="#4" class="filter_force" data-text="PROCESSO SELETIVO N� 07/2014">ANALISTA III ASSESSORIA DE COMUNICAÇÃO</a></li>
-                    <li><a href="#5" class="filter_force" data-text="PROCESSO SELETIVO N� 08/2014">ANALISTA III - ÁREA DE TECNOLOGIA DA INFORMAÇÃO E PROCESSOS CORPORATIVOS</a></li>
+                    <li><a href="#1" class="filter_force" data-text="PROCESSO SELETIVO Nº 04-2014">PROGRAMA TRAINEE 2014</a></li>
+                    <li><a href="#2" class="filter_force" data-text="PROCESSO SELETIVO Nº 05-2014 ANALISTA I">ANALISTA I - GERÊNCIA ADMINISTRATIVA E FINANCEIRA</a></li>
+                    <li><a href="#3" class="filter_force" data-text="PROCESSO SELETIVO Nº 06/2014">PARA CENTRAL DE RELACIONAMENTO</a></li>
+                    <li><a href="#4" class="filter_force" data-text="PROCESSO SELETIVO Nº 07/2014">ANALISTA III ASSESSORIA DE COMUNICAÇÃO</a></li>
+                    <li><a href="#5" class="filter_force" data-text="PROCESSO SELETIVO Nº 08/2014">ANALISTA III - ÁREA DE TECNOLOGIA DA INFORMAÇÃO E PROCESSOS CORPORATIVOS</a></li>
                     <li><a href="#6" class="filter_force" data-text="PROCESSO SELETIVO 09/2014">PARA CENTRAL DE RELACIONAMENTO (PCD)</a></li>
+                    <li><a href="#7" class="filter_force" data-text="PROCESSO SELETIVO Nº 01/2015">PROCESSO SELETIVO Nº 01/2015</a></li>
+                    <li><a href="#8" class="filter_force" data-text="PROCESSO SELETIVO Nº 02/2015">PROCESSO SELETIVO Nº 02/2015</a></li>
+                    <li><a href="#9" class="filter_force" data-text="PROCESSO SELETIVO Nº 03/2015">PROCESSO SELETIVO Nº 03/2015</a></li>
                 </ul>
             </div>
             <div class="col-sm-8" data-id="list-oportunidades">
@@ -160,7 +163,7 @@
                     <hr>
                 </div>
                 <div class="filter-item">
-                    <div id="6" class="section-title">
+                    <div id="7" class="section-title">
                         <h2>PROCESSO SELETIVO nº 01/2015</h2>
                         <p class="text-md">PARA PROGRAMA TRAINEE</p>
                     </div>
@@ -168,13 +171,14 @@
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/02/Manual do Candidato - Processo Seletivo - n 01-2015 - Programa TRAINEE.pdf">Manual do candidato</a></li>
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/RESULTADO DA ANALISE CURRICULAR.pdf">Resultado da análise curricular</a></li>
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/Convocacao para Prova Objetiva.pdf">Convocação para prova objetiva</a></li>
+                        <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/GABARITO TRAINE E ANALISTA I- ATUALIZADA.pdf">Gabarito da prova Objetiva</a></li>
                     </ul>
                     
                     <hr>
                 </div>
                 
                 <div class="filter-item">
-                    <div id="6" class="section-title">
+                    <div id="8" class="section-title">
                         <h2>PROCESSO SELETIVO nº 02/2015</h2>
                         <p class="text-md">PARA PROGRAMA TRAINEE</p>
                     </div>
@@ -185,12 +189,14 @@
                 </div>
                 
                 <div class="filter-item">
-                    <div id="6" class="section-title">
+                    <div id="9" class="section-title">
                             <h2>PROCESSO SELETIVO nº 03/2015</h2>
                         <p class="text-md">PARA CENTRAL DE RELACIONAMENTO</p>
                     </div>
                     <ul     class="list">
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/02/Manual do Candidato - Processo Seletivo n 03-2015 - Central de Relacionamento.pdf">Manual do candidato</a></li>
+                        <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/RESULTADO DA ANALISE CURRICULAR - central de relacionamento.pdf">Resultado da Análise Curricular</a></li>
+                        <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/CONVOCACAO PARA PROVA OBJETIVA_032015.pdf">Convocação para prova objetiva</a></li>
                     </ul>
                 </div>
                 
