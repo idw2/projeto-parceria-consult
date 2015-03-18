@@ -172,6 +172,7 @@
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/RESULTADO DA ANALISE CURRICULAR.pdf">Resultado da análise curricular</a></li>
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/Convocacao para Prova Objetiva.pdf">Convocação para prova objetiva</a></li>
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/GABARITO TRAINE E ANALISTA I- ATUALIZADA.pdf">Gabarito da prova Objetiva</a></li>
+                        <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/RESULTADO DA  PROVA OBJETIVA_012015.pdf">Resultado da prova Objetiva</a></li>
                     </ul>
                     
                     <hr>
@@ -197,6 +198,8 @@
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/02/Manual do Candidato - Processo Seletivo n 03-2015 - Central de Relacionamento.pdf">Manual do candidato</a></li>
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/RESULTADO DA ANALISE CURRICULAR - central de relacionamento.pdf">Resultado da Análise Curricular</a></li>
                         <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/CONVOCACAO PARA PROVA OBJETIVA_032015.pdf">Convocação para prova objetiva</a></li>
+                        <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/CARTAO RESPOSTA CENTRAL DE RELACIONAMENTO.pdf">Gabarito da prova Objetiva</a></li>
+                        <li><a target="_blank" href="http://parceriaconsult.com.br/uploads/2015/03/RESULTADO DA PROVA OBJETIVA.pdf">Resultado da prova Objetiva</a></li>
                     </ul>
                 </div>
                 
